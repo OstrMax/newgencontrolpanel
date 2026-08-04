@@ -170,6 +170,7 @@ body.rail-collapsed .nav-sub{display:none}
 .sw{width:42px;height:24px;border-radius:20px;background:var(--track);border:1px solid var(--hair);position:relative;cursor:pointer;flex-shrink:0;transition:.2s}
 .sw::after{content:"";position:absolute;top:1.5px;left:2px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.2s}
 .sw.on{background:var(--ink-1);border-color:var(--ink-1)} .sw.on::after{transform:translateX(18px)}
+[data-theme="dark"] .sw.on{background:var(--grad);border-color:transparent}
 
 /* billing */
 .bill-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:18px}
