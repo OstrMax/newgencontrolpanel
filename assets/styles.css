@@ -16,7 +16,7 @@
 }
 [data-theme="dark"]{
   --canvas:#0a0f1c; --surface:rgba(255,255,255,.05); --card-2:rgba(255,255,255,.06);
-  --hair:rgba(255,255,255,.14); --divider:rgba(255,255,255,.16);
+  --hair:rgba(255,255,255,.08); --divider:rgba(255,255,255,.08);
   --ink-1:#f4f7fd; --ink-2:#ccd5e6; --ink-3:#a2adc2; --ink-4:#8d97ac;
   --violet:#ccbcff; --violet-tint:rgba(150,130,255,.16); --violet-soft:rgba(150,130,255,.13); --grad-icon:#cbb8ff;
   --grad:linear-gradient(180deg,#f48ad6 0%,#c79bf2 55%,#b0a6ff 110%);--g1:#f48ad6;--g2:#c79bf2;--g3:#b0a6ff;

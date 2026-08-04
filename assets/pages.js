@@ -479,8 +479,50 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
     var s=document.getElementById('brandStyle');if(s)s.textContent='';
     localStorage.removeItem('brandColor');markSwatch('');});});
 
-  /* restore saved brand on load */
+  /* ---- white-label logo ---- */
+  function applyLogo(kind,url,save){
+    var full=kind==='full';
+    var img=document.querySelector(full?'.brand-logo-full':'.brand-logo-mini');
+    var prev=document.getElementById(full?'logoFullPrev':'logoMiniPrev');
+    var clr=document.getElementById(full?'logoFullClear':'logoMiniClear');
+    if(img)img.src=url;
+    if(prev)prev.innerHTML='<img alt="" src="'+url+'">';
+    if(clr)clr.hidden=false;
+    document.body.classList.add(full?'has-logo':'has-mini');
+    if(save!==false){try{localStorage.setItem(full?'brandLogoFull':'brandLogoMini',url);}catch(e){}}
+  }
+  function clearLogo(kind){
+    var full=kind==='full';
+    var img=document.querySelector(full?'.brand-logo-full':'.brand-logo-mini');
+    var prev=document.getElementById(full?'logoFullPrev':'logoMiniPrev');
+    var clr=document.getElementById(full?'logoFullClear':'logoMiniClear');
+    if(img)img.removeAttribute('src');
+    if(prev)prev.innerHTML='<span class="bp-logo-ph">'+(full?'Full logo':'Icon')+'</span>';
+    if(clr)clr.hidden=true;
+    localStorage.removeItem(full?'brandLogoFull':'brandLogoMini');
+    if(full)document.body.classList.remove('has-logo');
+    if(!full)document.body.classList.remove('has-mini');
+  }
+  function wireUp(kind){
+    var full=kind==='full';
+    var btn=document.getElementById(full?'logoFullBtn':'logoMiniBtn');
+    var file=document.getElementById(full?'logoFullFile':'logoMiniFile');
+    var clr=document.getElementById(full?'logoFullClear':'logoMiniClear');
+    if(btn&&file)btn.addEventListener('click',function(){file.click();});
+    if(file)file.addEventListener('change',function(){
+      var f=file.files&&file.files[0];if(!f)return;
+      if(f.size>1024*512){alert('Please choose an image under 512 KB.');file.value='';return;}
+      var rd=new FileReader();rd.onload=function(){applyLogo(kind,rd.result,true);};rd.readAsDataURL(f);
+      file.value='';
+    });
+    if(clr)clr.addEventListener('click',function(){clearLogo(kind);});
+  }
+  wireUp('full');wireUp('mini');
+
+  /* restore saved brand + logo on load */
   var savedC=localStorage.getItem('brandColor');if(savedC)applyBrand(savedC,false);
+  var lf=localStorage.getItem('brandLogoFull');if(lf)applyLogo('full',lf,false);
+  var lm=localStorage.getItem('brandLogoMini');if(lm)applyLogo('mini',lm,false);
 })();
 
 /* ===================== Tooltips ===================== */

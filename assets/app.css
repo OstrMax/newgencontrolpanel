@@ -293,8 +293,9 @@ tr.row-fail{background:rgba(253,234,239,.5)!important}
 @media(max-width:1240px){.appcards{grid-template-columns:repeat(2,1fr)}}
 
 /* ===================== White-label branding (Company Profile) ===================== */
-.brand-cfg{display:grid;grid-template-columns:1fr;gap:26px;margin:6px 0 4px}
-.bp-lab{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);font-weight:700;margin-bottom:11px}
+.brand-cfg{display:grid;grid-template-columns:1fr;gap:24px;margin:6px 0 4px}
+.brand-cfg .bp-sec+.bp-sec{padding-top:24px;border-top:1px solid var(--divider)}
+.bp-lab{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);font-weight:700;margin-bottom:13px}
 .bp-sw{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
 .bp-sw button{width:30px;height:30px;border-radius:50%;background:var(--s);border:2px solid transparent;
   box-shadow:0 0 0 1px var(--hair) inset;cursor:pointer;padding:0;transition:transform .12s,box-shadow .12s}
@@ -305,7 +306,33 @@ tr.row-fail{background:rgba(253,234,239,.5)!important}
 .bp-custom input[type=color]{width:38px;height:28px;border:none;background:none;padding:0;border-radius:6px;cursor:pointer}
 .bp-custom input[type=color]::-webkit-color-swatch-wrapper{padding:0}
 .bp-custom input[type=color]::-webkit-color-swatch{border:1px solid var(--hair);border-radius:6px}
-.bp-hint{font-size:12px;color:var(--ink-4);margin-top:11px}
+.bp-hint{font-size:12px;color:var(--ink-4);margin-top:13px}
+/* logo uploader */
+.bp-logos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.bp-logo{display:flex;align-items:center;gap:14px;border:1px solid var(--hair);border-radius:12px;padding:14px}
+.bp-logo-prev{flex-shrink:0;width:104px;height:56px;border-radius:8px;border:1px dashed var(--divider);
+  background:var(--card-2);display:grid;place-items:center;overflow:hidden}
+.bp-logo-prev.sm{width:56px;height:56px}
+.bp-logo-prev img{max-width:88%;max-height:80%;width:auto;height:auto;object-fit:contain;display:block}
+.bp-logo-ph{font-size:11px;color:var(--ink-4);font-weight:600;letter-spacing:.02em}
+.bp-logo-meta{min-width:0}
+.bp-logo-t{font-size:13.5px;font-weight:600;color:var(--ink-1)}
+.bp-logo-d{font-size:12px;color:var(--ink-3);line-height:1.45;margin:3px 0 10px}
+.bp-logo-act{display:flex;align-items:center;gap:12px}
+.btn-sm{height:32px;padding:0 14px;font-size:12px}
+.bp-remove{background:none;border:none;padding:0;font-size:12px;font-weight:600;color:var(--ch6);cursor:pointer;
+  letter-spacing:.01em;text-transform:uppercase}
+.bp-remove:hover{text-decoration:underline}
+@media(max-width:720px){.bp-logos{grid-template-columns:1fr}}
+/* white-label logo in the sidebar */
+.brand-logo-full{height:30px;max-width:152px;width:auto;object-fit:contain;display:none}
+.brand-logo-mini{height:28px;max-width:40px;width:auto;object-fit:contain;display:none}
+body.has-logo .brand-full,body.has-logo .brand-mini,body.has-logo .brand-mini-dark{display:none}
+body.has-logo .brand-logo-full{display:block}
+@media(min-width:821px){
+  body.has-logo.has-mini.rail-collapsed .brand-logo-full{display:none}
+  body.has-logo.has-mini.rail-collapsed .brand-logo-mini{display:block}
+}
 
 /* ===================== Tooltips ===================== */
 .tip{position:fixed;z-index:9999;background:var(--ink-1);color:var(--surface);font-size:12px;font-weight:500;
