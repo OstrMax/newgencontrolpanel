@@ -39,6 +39,7 @@ document.addEventListener('click',function(e){
     sel.querySelectorAll('.isel-opt').forEach(function(o){o.classList.remove('sel');});
     opt.classList.add('sel');
     var lab=sel.querySelector('.isel-btn .o-lab'); if(lab)lab.textContent=opt.querySelector('.o-nm').textContent;
+    var rc=sel.closest('.role-cell'); if(rc){var tr=sel.closest('tr'); if(tr)tr.dataset.role=opt.querySelector('.o-nm').textContent;}
     sel.classList.remove('open');}
 });
 
@@ -147,6 +148,9 @@ function initials(n){return n.split(' ').map(function(w){return w[0];}).join('')
 function avatar(n){return '<span class="uav">'+initials(n)+'</span>';}
 function liselCell(val){var opts='';LIC_OPTS.forEach(function(o){opts+='<div class="isel-opt'+(o===val?' sel':'')+'"><span class="o-nm">'+o+'</span><span class="chk">'+CHK+'</span></div>';});
   return '<span class="lic-cell"><span class="isel"><button class="isel-btn"><span class="o-lab">'+val+'</span>'+CEV+'</button><div class="isel-menu">'+opts+'</div></span></span>';}
+var ROLE_OPTS=['Admin','Member'];
+function roleCell(val){var opts='';ROLE_OPTS.forEach(function(o){opts+='<div class="isel-opt'+(o===val?' sel':'')+'"><span class="o-nm">'+o+'</span><span class="chk">'+CHK+'</span></div>';});
+  return '<span class="role-cell"><span class="isel"><button class="isel-btn role-pill"><span class="o-lab">'+val+'</span>'+CEV+'</button><div class="isel-menu" style="min-width:140px">'+opts+'</div></span></span>';}
 
 /* toolbar + stat builders */
 function statStrip(el,segs){var h='';segs.forEach(function(s){h+='<div class="glass"><div class="k">'+s[0]+'</div><div class="v mono">'+s[1]+'</div></div>';});el.innerHTML=h;}
@@ -197,7 +201,7 @@ function renderLic(cfg){
   UC_USERS.forEach(function(u,i){
     rows+='<tr data-i="'+i+'" data-role="'+u.r+'"><td><input type="checkbox" class="ck" data-row></td>'+
       '<td><span class="cell-ic">'+avatar(u.n)+'<b style="font-weight:600">'+u.n+'</b></span></td>'+
-      '<td class="muted">'+u.e+'</td>'+(cfg.role?'<td>'+u.r+'</td>':'')+
+      '<td class="muted">'+u.e+'</td>'+(cfg.role?'<td class="role-td">'+roleCell(u.r)+'</td>':'')+
       '<td class="lic-td">'+liselCell(u.lic)+'</td></tr>';
   });
   mount.innerHTML='<div class="tw"><div class="tscroll"><table><thead><tr>'+cols+'</tr></thead><tbody>'+rows+'</tbody></table></div>'+pager()+'</div>';
@@ -298,7 +302,7 @@ function renderUsers(){
   UC_USERS.forEach(function(u,i){
     var on=[u.lic!=='Unlicensed',u.lic!=='Unlicensed',!!u.did,true];
     var tg=on.map(function(v){return '<td style="text-align:center"><span class="sw'+(v?' on':'')+'" style="display:inline-block;vertical-align:middle"></span></td>';}).join('');
-    rows+='<tr data-role="'+u.r+'"><td><input type="checkbox" class="ck" data-row></td><td><span class="cell-ic">'+avatar(u.n)+'<b style="font-weight:600">'+u.n+'</b></span></td><td class="muted">'+u.e+'</td><td>'+u.r+'</td>'+tg+'</tr>';
+    rows+='<tr data-role="'+u.r+'"><td><input type="checkbox" class="ck" data-row></td><td><span class="cell-ic">'+avatar(u.n)+'<b style="font-weight:600">'+u.n+'</b></span></td><td class="muted">'+u.e+'</td><td class="role-td">'+roleCell(u.r)+'</td>'+tg+'</tr>';
   });
   mount.innerHTML='<div class="tw"><div class="tscroll"><table><thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>'+pager()+'</div>';
 }
@@ -358,44 +362,30 @@ function renderInvoices(){
   mount.querySelectorAll('tbody tr').forEach(function(tr){tr.addEventListener('click',function(e){
     if(e.target.closest('.ck')||e.target.closest('.kebab'))return;openInvoice(tr.dataset.inv);});});
 }
-function invoiceDoc(id){var num=id.replace('#','');
-  var oneTime='<table class="inv-tbl"><thead><tr><th>Item</th><th>Description</th><th class="r">Qty</th><th class="r">Price Per Item</th><th class="r">Price</th></tr></thead><tbody>'+
-    '<tr><td>1</td><td>Onboarding &amp; Setup</td><td class="r">1</td><td class="r">$499.00</td><td class="r">$499.00</td></tr>'+
-    '<tr><td>2</td><td>Number Porting</td><td class="r">12</td><td class="r">$15.00</td><td class="r">$180.00</td></tr>'+
-    '</tbody><tfoot><tr><td colspan="4" class="r">Subtotal</td><td class="r">$679.00</td></tr></tfoot></table>';
-  var monthly='<table class="inv-tbl"><thead><tr><th>Item</th><th>Description</th><th class="r">Qty</th><th class="r">Price Per Item</th><th class="r">Price</th></tr></thead><tbody>'+
-    '<tr><td>1</td><td>UC Standard License</td><td class="r">560</td><td class="r">$18.99</td><td class="r">$10,634.40</td></tr>'+
-    '<tr><td>2</td><td>DID Numbers</td><td class="r">120</td><td class="r">$1.00</td><td class="r">$120.00</td></tr>'+
-    '</tbody><tfoot><tr><td colspan="4" class="r">Subtotal</td><td class="r">$10,754.40</td></tr></tfoot></table>';
-  return '<div class="inv-top"><div class="inv-logo">Sangoma</div>'+
-    '<div class="inv-note"><span class="ico">i</span>Please note that [Application Name] will reach its end of life (EOL) on [Date], and will no longer be supported or maintained thereafter.</div></div>'+
-    '<div class="inv-addr"><b>SANGOMA US INC.</b><br>100 North Cutlerman Road, Suite 500<br>Sarasota, FL 34231 USA<br>Phone: +1 (877) 344-4183 &nbsp;·&nbsp; Fax: +1 (256) 428-6050</div>'+
-    '<div class="inv-grid">'+
-      '<div class="ib"><div class="ib-k">Invoice</div><div class="ib-v">SI'+num+'</div><div class="ib-k">Date</div><div class="ib-v">'+INV_DATE+'</div></div>'+
-      '<div class="ib"><div class="ib-k">Billed To</div><div class="ib-v">M. Roberts Media<br>3300 Sunset Blvd<br>Los Angeles, CA 90026</div></div>'+
-      '<div class="ib"><div class="ib-k">Shipped To</div><div class="ib-v">M. Roberts Media<br>3300 Sunset Blvd<br>Los Angeles, CA 90026</div></div>'+
-    '</div>'+
-    '<div class="inv-grid">'+
-      '<div class="ib"><div class="ib-k">Customer ID</div><div class="ib-v">04728041</div><div class="ib-k">Account ID</div><div class="ib-v">130308062</div><div class="ib-k">Other Ref</div><div class="ib-v">NSP4590YR9</div></div>'+
-      '<div class="ib"><div class="ib-k">Service Period</div><div class="ib-v">Sep 2023</div><div class="ib-k">Payment Terms</div><div class="ib-v">Due Upon Receipt</div></div>'+
-      '<div class="ib pay"><div class="ib-k">Total to Pay</div><div class="ib-v big">$12,143.32</div><div class="ib-k">Due Date</div><div class="ib-v">Oct 21, 2023</div></div>'+
-    '</div>'+
-    '<div class="inv-sec">One Time Items</div>'+oneTime+
-    '<div class="inv-sec">Monthly Recurring Items</div>'+monthly+
-    '<div class="inv-sec">Useful Links</div><a class="lnk">Terms &amp; Conditions</a><div class="inv-fine">Need help understanding your invoice? Learn more here.</div>';
+var INV_IMG='assets/img/invoice-template.png';
+function invoiceDoc(id){
+  return '<div class="inv-imgwrap"><img class="inv-img" src="'+INV_IMG+'" alt="Invoice '+id+' — Sangoma"></div>';
 }
 function openInvoice(id){
   var doc=document.getElementById('inv-doc');if(doc)doc.innerHTML=invoiceDoc(id);
-  var dr=document.getElementById('inv-drawer');if(dr){dr.classList.add('open');dr.setAttribute('aria-hidden','false');}
+  var dr=document.getElementById('inv-drawer');if(dr){dr.classList.add('open');dr.setAttribute('aria-hidden','false');dr.dataset.inv=id;}
   var sc=document.getElementById('inv-scrim');if(sc){sc.hidden=false;requestAnimationFrame(function(){sc.classList.add('show');});}
 }
 function closeInvoice(){
   var dr=document.getElementById('inv-drawer');if(dr){dr.classList.remove('open');dr.setAttribute('aria-hidden','true');}
   var sc=document.getElementById('inv-scrim');if(sc){sc.classList.remove('show');setTimeout(function(){sc.hidden=true;},260);}
 }
+function openLightbox(){var lb=document.getElementById('inv-lightbox');if(lb){lb.hidden=false;requestAnimationFrame(function(){lb.classList.add('show');});}}
+function closeLightbox(){var lb=document.getElementById('inv-lightbox');if(lb){lb.classList.remove('show');setTimeout(function(){lb.hidden=true;},220);}}
 (function(){var c=document.getElementById('inv-close');if(c)c.addEventListener('click',closeInvoice);
   var sc=document.getElementById('inv-scrim');if(sc)sc.addEventListener('click',closeInvoice);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeInvoice();});})();
+  var pv=document.getElementById('inv-preview');if(pv)pv.addEventListener('click',openLightbox);
+  var img=document.getElementById('inv-doc');if(img)img.addEventListener('click',function(e){if(e.target.closest('.inv-img'))openLightbox();});
+  var lbx=document.getElementById('inv-lb-close');if(lbx)lbx.addEventListener('click',closeLightbox);
+  var lb=document.getElementById('inv-lightbox');if(lb)lb.addEventListener('click',function(e){if(e.target===lb)closeLightbox();});
+  var pr=document.getElementById('inv-print');if(pr)pr.addEventListener('click',function(){var w=window.open('','_blank');if(w){w.document.write('<img src="'+INV_IMG+'" style="width:100%" onload="print()">');w.document.close();}});
+  var dl=document.getElementById('inv-download');if(dl)dl.addEventListener('click',function(){var a=document.createElement('a');a.href=INV_IMG;a.download='invoice.png';document.body.appendChild(a);a.click();a.remove();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeLightbox();closeInvoice();}});})();
 renderInvoices();
 
 /* wire every search box to its table */
