@@ -453,32 +453,34 @@
 
   <!-- ============================ BILLING ============================ -->
   <section class="vpage" id="v-billing" data-active="billing">
-    <div class="phead"><div class="ttl-row"><h1 class="ttl">Billing</h1></div><span class="upd">Next invoice • <b>Jun 1, 2024</b></span></div>
-    <div class="bill-grid">
-      <div class="sec-card" style="margin:0">
-        <h3>Current Plan</h3><div class="sub">Sangoma Business — Enterprise</div>
-        <div class="plan-price">$4,820<small>/month</small></div>
-        <div class="mrow"><span class="lft">2000 UC licenses</span><b class="mono">$3,200</b></div>
-        <div class="mrow"><span class="lft">1,240 DID numbers</span><b class="mono">$1,120</b></div>
-        <div class="mrow"><span class="lft">CPaaS usage</span><b class="mono">$500</b></div>
-        <div class="form-actions"><button class="btn btn-ghost">Change Plan</button><button class="btn btn-p"><span class="lbl">View Details</span></button></div>
-      </div>
-      <div class="sec-card" style="margin:0">
-        <h3>Payment Method</h3><div class="sub">Charged automatically each cycle.</div>
-        <div class="paycard"><div class="brand-cc">VISA</div><div><div style="font-weight:600">•••• •••• •••• 4242</div><div class="ov-sub">Expires 08/2027</div></div><span class="lnk" style="margin-left:auto">Edit</span></div>
-        <div style="margin-top:16px"><div class="mrow"><span class="lft">Billing email</span><b>billing@sangoma.com</b></div><div class="mrow"><span class="lft">Auto-pay</span><span class="sw on"></span></div></div>
+    <div class="phead">
+      <div class="ttl-row"><h1 class="ttl">Billing</h1></div>
+      <button class="btn btn-p" id="pay-btn"><span class="lbl">Make a Payment</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5h5v5"/><path d="M19 5l-8 8"/><path d="M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></button>
+    </div>
+    <div class="bill-tools">
+      <div class="tot"><div class="tot-k">Total</div><div class="tot-v mono">1760</div></div>
+      <div class="bill-filters">
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input placeholder="Search Invoices" data-search data-table="inv-table"></div>
+        <div class="chip" data-opts="Any time,Last 7 days,Last 30 days,Last 90 days,This year" style="min-width:120px"><span class="lab">Any time</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
       </div>
     </div>
-    <div class="tw"><div class="tscroll"><table>
-      <thead><tr><th>Invoice</th><th>Date</th><th>Amount</th><th>Status</th><th></th></tr></thead>
-      <tbody>
-        <tr><td class="mono">INV-2024-005</td><td>May 1, 2024</td><td class="mono">$4,820.00</td><td><span class="tag ok">Paid</span></td><td><span class="lnk">Download</span></td></tr>
-        <tr><td class="mono">INV-2024-004</td><td>Apr 1, 2024</td><td class="mono">$4,760.00</td><td><span class="tag ok">Paid</span></td><td><span class="lnk">Download</span></td></tr>
-        <tr><td class="mono">INV-2024-003</td><td>Mar 1, 2024</td><td class="mono">$4,760.00</td><td><span class="tag ok">Paid</span></td><td><span class="lnk">Download</span></td></tr>
-        <tr><td class="mono">INV-2024-002</td><td>Feb 1, 2024</td><td class="mono">$4,610.00</td><td><span class="tag ok">Paid</span></td><td><span class="lnk">Download</span></td></tr>
-      </tbody>
-    </table></div></div>
+    <div id="inv-table"></div>
   </section>
+
+  <!-- Invoice Details drawer -->
+  <div class="drawer-scrim" id="inv-scrim" hidden></div>
+  <aside class="drawer" id="inv-drawer" aria-hidden="true" aria-label="Invoice Details">
+    <div class="drawer-head">
+      <h3>Invoice Details</h3>
+      <button class="drawer-x" id="inv-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="drawer-actions">
+      <button class="btn btn-ghost sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg><span>Preview</span></button>
+      <button class="btn btn-ghost sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg><span>Download</span></button>
+      <button class="btn btn-ghost sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg><span>Print</span></button>
+    </div>
+    <div class="invoice-doc" id="inv-doc"></div>
+  </aside>
 
   <!-- ============================ SECURITY ============================ -->
   <section class="vpage" id="v-security" data-active="security">

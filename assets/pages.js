@@ -322,6 +322,82 @@ toolbar(document.getElementById('sms-tools'),false,'sms-table','All Licenses,Lic
 renderSMS();
 renderUsers();
 
+/* ===================== Billing — invoices (Figma: SCP Billing) ===================== */
+var INVOICES=['#9151','#8811','#5045','#2798','#9374','#3933','#9359','#8861','#6025','#1577','#1148'];
+var INV_DATE='Sep 21, 2023';
+var PIC='<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg>';
+function chevBtn(d,dis,lab){return '<button'+(dis?' disabled':'')+' aria-label="'+lab+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+d+'</svg></button>';}
+function billPager(){
+  return '<div class="pag bill-pag">'+
+    '<div class="jump">Jump to page <span class="sel" data-opts="1,2,3,4,5" style="min-width:52px"><span class="lab">1</span>'+CEV+'</span></div>'+
+    '<div class="right">'+
+      '<div class="rows">Rows per page <span class="sel" data-opts="10,25,50,100" style="min-width:60px"><span class="lab">50</span>'+CEV+'</span></div>'+
+      '<span class="range">1-10 of 50</span>'+
+      '<div class="arrows">'+
+        chevBtn('<path d="M18 6l-6 6 6 6"/><path d="M11 6l-6 6 6 6"/>',true,'First page')+
+        chevBtn('<path d="M15 18l-6-6 6-6"/>',true,'Previous page')+
+        chevBtn('<path d="M9 6l6 6-6 6"/>',false,'Next page')+
+        chevBtn('<path d="M6 6l6 6-6 6"/><path d="M13 6l6 6-6 6"/>',false,'Last page')+
+      '</div>'+
+    '</div></div>';
+}
+function renderInvoices(){
+  var mount=document.getElementById('inv-table');if(!mount)return;
+  var head='<th style="width:44px"><input type="checkbox" class="ck" data-head></th><th>Invoice ID</th><th>Created</th><th style="width:52px"></th>';
+  var rows='';
+  INVOICES.forEach(function(id){
+    rows+='<tr data-inv="'+id+'"><td><input type="checkbox" class="ck" data-row></td>'+
+      '<td><span class="cell-ic"><b style="font-weight:600">'+id+'</b></span></td>'+
+      '<td class="muted">'+INV_DATE+'</td>'+
+      '<td><div class="kebab" data-opts="View,Download,Print,Delete">'+PIC+'</div></td></tr>';
+  });
+  mount.innerHTML='<div class="tw"><div class="tscroll"><table><thead><tr>'+head+'</tr></thead><tbody>'+rows+'</tbody></table></div>'+billPager()+'</div>';
+  var hd=mount.querySelector('[data-head]'),rws=[].slice.call(mount.querySelectorAll('[data-row]'));
+  if(hd){hd.addEventListener('change',function(){rws.forEach(function(r){r.checked=hd.checked;});});
+    rws.forEach(function(r){r.addEventListener('change',function(){var n=rws.filter(function(x){return x.checked;}).length;hd.indeterminate=n>0&&n<rws.length;hd.checked=n===rws.length;});});}
+  mount.querySelectorAll('tbody tr').forEach(function(tr){tr.addEventListener('click',function(e){
+    if(e.target.closest('.ck')||e.target.closest('.kebab'))return;openInvoice(tr.dataset.inv);});});
+}
+function invoiceDoc(id){var num=id.replace('#','');
+  var oneTime='<table class="inv-tbl"><thead><tr><th>Item</th><th>Description</th><th class="r">Qty</th><th class="r">Price Per Item</th><th class="r">Price</th></tr></thead><tbody>'+
+    '<tr><td>1</td><td>Onboarding &amp; Setup</td><td class="r">1</td><td class="r">$499.00</td><td class="r">$499.00</td></tr>'+
+    '<tr><td>2</td><td>Number Porting</td><td class="r">12</td><td class="r">$15.00</td><td class="r">$180.00</td></tr>'+
+    '</tbody><tfoot><tr><td colspan="4" class="r">Subtotal</td><td class="r">$679.00</td></tr></tfoot></table>';
+  var monthly='<table class="inv-tbl"><thead><tr><th>Item</th><th>Description</th><th class="r">Qty</th><th class="r">Price Per Item</th><th class="r">Price</th></tr></thead><tbody>'+
+    '<tr><td>1</td><td>UC Standard License</td><td class="r">560</td><td class="r">$18.99</td><td class="r">$10,634.40</td></tr>'+
+    '<tr><td>2</td><td>DID Numbers</td><td class="r">120</td><td class="r">$1.00</td><td class="r">$120.00</td></tr>'+
+    '</tbody><tfoot><tr><td colspan="4" class="r">Subtotal</td><td class="r">$10,754.40</td></tr></tfoot></table>';
+  return '<div class="inv-top"><div class="inv-logo">Sangoma</div>'+
+    '<div class="inv-note"><span class="ico">i</span>Please note that [Application Name] will reach its end of life (EOL) on [Date], and will no longer be supported or maintained thereafter.</div></div>'+
+    '<div class="inv-addr"><b>SANGOMA US INC.</b><br>100 North Cutlerman Road, Suite 500<br>Sarasota, FL 34231 USA<br>Phone: +1 (877) 344-4183 &nbsp;·&nbsp; Fax: +1 (256) 428-6050</div>'+
+    '<div class="inv-grid">'+
+      '<div class="ib"><div class="ib-k">Invoice</div><div class="ib-v">SI'+num+'</div><div class="ib-k">Date</div><div class="ib-v">'+INV_DATE+'</div></div>'+
+      '<div class="ib"><div class="ib-k">Billed To</div><div class="ib-v">M. Roberts Media<br>3300 Sunset Blvd<br>Los Angeles, CA 90026</div></div>'+
+      '<div class="ib"><div class="ib-k">Shipped To</div><div class="ib-v">M. Roberts Media<br>3300 Sunset Blvd<br>Los Angeles, CA 90026</div></div>'+
+    '</div>'+
+    '<div class="inv-grid">'+
+      '<div class="ib"><div class="ib-k">Customer ID</div><div class="ib-v">04728041</div><div class="ib-k">Account ID</div><div class="ib-v">130308062</div><div class="ib-k">Other Ref</div><div class="ib-v">NSP4590YR9</div></div>'+
+      '<div class="ib"><div class="ib-k">Service Period</div><div class="ib-v">Sep 2023</div><div class="ib-k">Payment Terms</div><div class="ib-v">Due Upon Receipt</div></div>'+
+      '<div class="ib pay"><div class="ib-k">Total to Pay</div><div class="ib-v big">$12,143.32</div><div class="ib-k">Due Date</div><div class="ib-v">Oct 21, 2023</div></div>'+
+    '</div>'+
+    '<div class="inv-sec">One Time Items</div>'+oneTime+
+    '<div class="inv-sec">Monthly Recurring Items</div>'+monthly+
+    '<div class="inv-sec">Useful Links</div><a class="lnk">Terms &amp; Conditions</a><div class="inv-fine">Need help understanding your invoice? Learn more here.</div>';
+}
+function openInvoice(id){
+  var doc=document.getElementById('inv-doc');if(doc)doc.innerHTML=invoiceDoc(id);
+  var dr=document.getElementById('inv-drawer');if(dr){dr.classList.add('open');dr.setAttribute('aria-hidden','false');}
+  var sc=document.getElementById('inv-scrim');if(sc){sc.hidden=false;requestAnimationFrame(function(){sc.classList.add('show');});}
+}
+function closeInvoice(){
+  var dr=document.getElementById('inv-drawer');if(dr){dr.classList.remove('open');dr.setAttribute('aria-hidden','true');}
+  var sc=document.getElementById('inv-scrim');if(sc){sc.classList.remove('show');setTimeout(function(){sc.hidden=true;},260);}
+}
+(function(){var c=document.getElementById('inv-close');if(c)c.addEventListener('click',closeInvoice);
+  var sc=document.getElementById('inv-scrim');if(sc)sc.addEventListener('click',closeInvoice);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeInvoice();});})();
+renderInvoices();
+
 /* wire every search box to its table */
 document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.dataset.table;if(!t)return;
   FILTERS[t]=FILTERS[t]||{};

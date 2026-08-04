@@ -448,3 +448,70 @@ thead th{position:sticky;top:0;z-index:2;background:var(--surface)}
 .vpage.on{display:block;animation:vin .28s cubic-bezier(.2,.8,.2,1)}
 @keyframes vin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.vpage.on{animation:none}}
+
+/* ===================== Billing (Figma: SCP Billing) ===================== */
+.bill-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.tot{display:flex;flex-direction:column;gap:2px;padding:0 4px}
+.tot-k{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.tot-v{font-size:15px;font-weight:600;color:var(--ink-1)}
+.bill-filters{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bill-filters .search{min-width:300px}
+#inv-table tbody tr{cursor:pointer}
+.bill-pag .jump{display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--ink-2)}
+.bill-pag .range{white-space:nowrap}
+
+/* ===================== Invoice Details drawer ===================== */
+.drawer-scrim{position:fixed;inset:0;background:rgba(8,16,28,.42);z-index:60;opacity:0;transition:opacity .26s ease}
+.drawer-scrim.show{opacity:1}
+[data-theme="dark"] .drawer-scrim{background:rgba(0,0,0,.55)}
+.drawer{position:fixed;top:0;right:0;height:100%;width:460px;max-width:92vw;background:var(--surface);z-index:61;
+  display:flex;flex-direction:column;padding:16px;box-shadow:-8px 0 34px rgba(8,20,40,.18);
+  transform:translateX(102%);transition:transform .3s cubic-bezier(.2,.8,.2,1);border-left:1px solid var(--hair)}
+.drawer.open{transform:none}
+[data-theme="dark"] .drawer{background:var(--rail)}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.drawer-head h3{font-size:16px;font-weight:600;color:var(--ink-1);letter-spacing:.02em}
+.drawer-x{width:32px;height:32px;border:none;background:transparent;border-radius:8px;cursor:pointer;color:var(--ink-2);display:grid;place-items:center}
+.drawer-x:hover{background:var(--card-2);color:var(--ink-1)}
+.drawer-x svg{width:20px;height:20px}
+.drawer-actions{display:flex;gap:10px;padding:16px 0;flex-shrink:0}
+.drawer-actions .btn.sm{flex:1;justify-content:center;padding:6px 10px;font-size:12px;font-weight:700;letter-spacing:.04em}
+.drawer-actions .btn.sm svg{width:15px;height:15px}
+
+/* invoice template */
+.invoice-doc{flex:1;overflow-y:auto;border:1px solid var(--hair);border-radius:10px;padding:20px;background:var(--card-2);
+  font-size:12px;color:var(--ink-2);line-height:1.55}
+.inv-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+.inv-logo{font-size:20px;font-weight:800;letter-spacing:-.01em;color:#158FCF}
+.inv-note{flex:1;max-width:250px;display:flex;gap:8px;font-size:10.5px;line-height:1.45;color:var(--ink-3);
+  background:var(--info-tint);border-radius:8px;padding:8px 10px}
+.inv-note .ico{flex-shrink:0;width:15px;height:15px;border-radius:50%;background:var(--info);color:#fff;
+  display:grid;place-items:center;font-size:10px;font-weight:700;font-style:italic}
+.inv-addr{font-size:11px;color:var(--ink-3);line-height:1.5;padding-bottom:14px;border-bottom:1px solid var(--hair);margin-bottom:14px}
+.inv-addr b{color:var(--ink-1);font-weight:700}
+.inv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+.ib{display:flex;flex-direction:column;gap:2px}
+.ib-k{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);margin-top:6px}
+.ib-k:first-child{margin-top:0}
+.ib-v{font-size:11.5px;color:var(--ink-1);line-height:1.4}
+.ib.pay{background:var(--info);border-radius:8px;padding:10px 12px}
+.ib.pay .ib-k{color:rgba(255,255,255,.75)}
+.ib.pay .ib-v{color:#fff}
+.ib.pay .ib-v.big{font-size:16px;font-weight:700}
+[data-theme="dark"] .ib.pay{background:var(--info);}
+[data-theme="dark"] .ib.pay .ib-k{color:rgba(0,10,25,.6)}
+[data-theme="dark"] .ib.pay .ib-v{color:#06101f}
+.inv-sec{font-size:12px;font-weight:700;color:var(--ink-1);margin:14px 0 8px}
+.inv-tbl{width:100%;min-width:0;border-collapse:collapse;font-size:10.5px;table-layout:fixed}
+.inv-tbl th{text-align:left;font-weight:700;letter-spacing:.03em;text-transform:uppercase;font-size:8.5px;color:#fff;
+  background:var(--info);padding:6px 8px;line-height:1.25}
+.inv-tbl th.r,.inv-tbl td.r{text-align:right}
+.inv-tbl th:nth-child(1),.inv-tbl td:nth-child(1){width:8%}
+.inv-tbl th:nth-child(2),.inv-tbl td:nth-child(2){width:33%}
+.inv-tbl th:nth-child(3),.inv-tbl td:nth-child(3){width:12%}
+.inv-tbl th:nth-child(4),.inv-tbl td:nth-child(4){width:22%}
+.inv-tbl th:nth-child(5),.inv-tbl td:nth-child(5){width:25%;white-space:nowrap}
+.inv-tbl td{padding:6px 8px;border-bottom:1px solid var(--hair);color:var(--ink-2);overflow:hidden;text-overflow:ellipsis}
+.inv-tbl tfoot td{font-weight:700;color:var(--ink-1);border-bottom:none}
+.inv-fine{font-size:10.5px;color:var(--ink-4);margin-top:4px}
+@media(max-width:600px){.inv-grid{grid-template-columns:1fr}}

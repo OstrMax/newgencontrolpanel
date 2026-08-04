@@ -3,20 +3,19 @@
    Reuses all base tokens, spacing, radii, typography from styles.css
    ============================================================ */
 
-/* ---- refined chart palette (jewel-toned, harmonised with brand violet) ---- */
+/* ---- chart palette — matches NetOps dashboard (blue / green / amber / red / slate) ---- */
 :root{
-  --ch1:#6c4cd1;   /* indigo-violet (primary) */
-  --ch2:#9d8bec;   /* lavender */
-  --ch3:#2fb4a6;   /* jewel teal */
-  --ch4:#5b9bf3;   /* sky blue */
-  --ch5:#eaa64f;   /* warm amber */
-  --ch6:#e77fa6;   /* rose */
-  --ch-ok:#3fae82; /* calm green (healthy/online) */
-  --ch-mut:#cdd4de;/* muted neutral */
+  --ch1:var(--info);   /* blue (primary)  */
+  --ch2:#1e88e5;       /* secondary blue  */
+  --ch3:var(--ok);     /* green (healthy) */
+  --ch4:var(--deg);    /* slate           */
+  --ch5:var(--warn);   /* amber           */
+  --ch6:var(--bad);    /* red             */
+  --ch-ok:var(--ok);   /* healthy / online */
+  --ch-mut:var(--deg); /* muted neutral   */
 }
 [data-theme="dark"]{
-  --ch1:#a794f2; --ch2:#b8abf0; --ch3:#4fd0c2; --ch4:#7fb2ff;
-  --ch5:#f0bd78; --ch6:#f0a0be; --ch-ok:#5fc79a; --ch-mut:#79838f;
+  --ch2:#8ea2ff;       /* secondary blue (dark) */
 }
 
 /* nav sub-items (Sangoma UC children) */
