@@ -3,6 +3,22 @@
    Reuses all base tokens, spacing, radii, typography from styles.css
    ============================================================ */
 
+/* ---- unified calm chart palette (harmonised with brand violet) ---- */
+:root{
+  --ch1:#6b2a8f;   /* brand violet (primary) */
+  --ch2:#a884cf;   /* soft violet */
+  --ch3:#5fb3ac;   /* calm teal */
+  --ch4:#8ea2ff;   /* soft periwinkle */
+  --ch5:#e0b268;   /* muted amber */
+  --ch6:#d68aa4;   /* soft rose */
+  --ch-ok:#57ac83; /* calm green (healthy/online) */
+  --ch-mut:#c2c8d0;/* muted neutral */
+}
+[data-theme="dark"]{
+  --ch1:#c79bf2; --ch2:#a99ae0; --ch3:#6fd0c8; --ch4:#9fb0ff;
+  --ch5:#e6c07f; --ch6:#e6a5bd; --ch-ok:#6fc79b; --ch-mut:#7a8496;
+}
+
 /* nav sub-items (Sangoma UC children) */
 .nav-sub{display:none;margin:1px 0 3px}
 .nav-group.open .nav-sub{display:block}
@@ -48,8 +64,8 @@ body.rail-collapsed .nav-sub{display:none}
 /* sparkline / line chart */
 .lchart{width:100%;height:auto;display:block}
 .trk{display:flex;gap:3px;margin-top:8px}
-.trk i{flex:1;height:30px;border-radius:3px;background:var(--ok)}
-.trk i.bad{background:var(--bad)} .trk i.warn{background:var(--warn)} .trk i.deg{background:var(--deg)}
+.trk i{flex:1;height:30px;border-radius:3px;background:var(--ch-ok)}
+.trk i.bad{background:var(--ch6)} .trk i.warn{background:var(--ch5)} .trk i.deg{background:var(--ch-mut)}
 
 /* ---- app-license / apps grid ---- */
 .app-hero{display:flex;align-items:center;gap:16px;margin-bottom:20px}
@@ -153,7 +169,7 @@ body.rail-collapsed .nav-sub{display:none}
 /* toggle switch (settings) */
 .sw{width:42px;height:24px;border-radius:20px;background:var(--track);border:1px solid var(--hair);position:relative;cursor:pointer;flex-shrink:0;transition:.2s}
 .sw::after{content:"";position:absolute;top:1.5px;left:2px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.2s}
-.sw.on{background:var(--grad)} .sw.on::after{transform:translateX(18px)}
+.sw.on{background:var(--ink-1);border-color:var(--ink-1)} .sw.on::after{transform:translateX(18px)}
 
 /* billing */
 .bill-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:18px}
@@ -207,6 +223,19 @@ tr.row-fail{background:rgba(253,234,239,.5)!important}
 
 /* toolbar (search + filters above tables) */
 .toolbar{display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+
+/* generic dropdown (chips, pickers, kebabs) */
+.chip,.sel,.kebab{position:relative}
+.dd-menu{position:absolute;top:calc(100% + 6px);right:0;min-width:180px;background:var(--surface);border:1px solid var(--hair);
+  border-radius:var(--r-md);box-shadow:var(--shadow-pop);padding:6px;z-index:50;animation:vin .16s ease}
+.sel .dd-menu,.chip .dd-menu{left:0;right:auto}
+.dd-opt{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:8px;cursor:pointer;font-size:13.5px;color:var(--ink-1);white-space:nowrap}
+.dd-opt:hover{background:var(--card-2)}
+.dd-opt.sel{background:var(--violet-soft);font-weight:600}
+.dd-opt .chk{margin-left:auto;color:var(--violet);opacity:0;display:grid;place-items:center}
+.dd-opt .chk svg{width:15px;height:15px}
+.dd-opt.sel .chk{opacity:1}
+.chip.dd-on,.sel.dd-on{border-color:var(--violet)}
 .isel-opt .chk{margin-left:auto;color:var(--violet);opacity:0;display:grid;place-items:center}
 .isel-opt .chk svg{width:16px;height:16px}
 .isel-opt.sel .chk{opacity:1}
