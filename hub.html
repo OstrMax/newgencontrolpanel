@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sangoma Control Panel — Pages</title>
+<style>
+  :root{
+    --bg:#f4f5f7; --card:#ffffff; --ink:#0e1b33; --ink-2:#41506b; --ink-3:#7b879c;
+    --hair:#e5e6e8; --accent:#6d28d9; --accent-2:#db2777; --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px rgba(16,24,40,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#0b1220;--card:#111a2e;--ink:#eaf0fb;--ink-2:#aab6cc;--ink-3:#7486a3;--hair:rgba(255,255,255,.08);--shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35)}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink);
+    letter-spacing:-.005em;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:56px 24px 80px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .logo{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:20px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  h1{font-size:30px;font-weight:650;letter-spacing:-.02em;margin:0}
+  .sub{color:var(--ink-3);font-size:15px;margin:2px 0 0}
+  h2{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);
+    margin:44px 0 14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+  a.card{display:flex;flex-direction:column;gap:4px;text-decoration:none;background:var(--card);border:1px solid var(--hair);
+    border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);transition:transform .12s ease,border-color .12s ease}
+  a.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+  a.card .nm{font-size:15px;font-weight:600;color:var(--ink)}
+  a.card .ds{font-size:12.5px;color:var(--ink-3)}
+  a.card .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));margin-bottom:6px}
+  .hero-cta{display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:11px 18px;border-radius:11px;box-shadow:var(--shadow)}
+  footer{margin-top:56px;color:var(--ink-3);font-size:12.5px}
+  footer a{color:var(--ink-2)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo">S</div>
+      <div>
+        <h1>Sangoma Control Panel</h1>
+        <p class="sub">SCP — Phase One · all pages in one place</p>
+      </div>
+    </div>
+    <a class="hero-cta" href="index.html">Open the full app &rarr;</a>
+
+    <h2>App views</h2>
+    <div class="grid" id="appGrid"></div>
+
+    <h2>Standalone pages (for Figma / sharing)</h2>
+    <div class="grid" id="figGrid"></div>
+
+    <footer>
+      Single-page app — inside the full app, use the left sidebar to move between views.
+      Standalone pages are self-contained copies (inlined CSS) ready to upload via the
+      <b>html.to.design</b> Figma plugin.
+    </footer>
+  </div>
+
+  <script>
+    var APP=[
+      ['home','Dashboard','Usage overview & charts'],
+      ['billing','Billing','Invoices & payments'],
+      ['company','Company Profile','Organization details'],
+      ['inventory','Inventory & Usage','Numbers & consumption'],
+      ['security','Security','Access & policies'],
+      ['users','Users','Roles: Admin / Member'],
+      ['prodapps','Productivity Apps','App management'],
+      ['chat','Chat','Chat licences'],
+      ['sms','SMS','SMS licences'],
+      ['video','Video','Video licences'],
+      ['voice','Voice','Voice licences'],
+      ['cpaas','CPaaS','Programmable comms'],
+      ['reports','Analytics','Reports']
+    ];
+    var FIG=[
+      ['figma-export/dashboard.html','Dashboard','Home / metrics'],
+      ['figma-export/users.html','Users','Role dropdowns + toggles'],
+      ['figma-export/billing.html','Billing','Invoice list'],
+      ['figma-export/sangoma-uc-chat.html','Sangoma UC — Chat','Licence table'],
+      ['figma-export/invoice.html','Invoice Document','Full invoice image']
+    ];
+    function card(href,nm,ds){
+      return '<a class="card" href="'+href+'"><span class="dot"></span>'+
+             '<span class="nm">'+nm+'</span><span class="ds">'+ds+'</span></a>';
+    }
+    document.getElementById('appGrid').innerHTML=APP.map(function(v){return card('index.html#'+v[0],v[1],v[2]);}).join('');
+    document.getElementById('figGrid').innerHTML=FIG.map(function(v){return card(v[0],v[1],v[2]);}).join('');
+  </script>
+</body>
+</html>
