@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sangoma Control Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<svg aria-hidden="true" width="0" height="0" style="position:absolute" focusable="false"><defs><linearGradient id="pgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--g1)"/><stop offset="0.8" stop-color="var(--g2)"/><stop offset="1" stop-color="var(--g3)"/></linearGradient></defs></svg>
+
+<aside class="rail">
+  <a class="brand" href="#home" aria-label="Sangoma — home"><svg class="brand-full" viewBox="26 110 248 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M95.2052 142.088C90.9704 142.088 87.8265 143.255 85.8374 144.163L85.5166 144.293L87.3132 148.573L87.634 148.444C87.7623 148.379 90.9063 146.887 94.8844 146.887C98.7983 146.887 101.172 148.703 101.172 151.751V154.41C99.2474 152.983 96.6167 152.14 93.7936 152.14C89.238 152.14 82.501 154.54 82.501 161.219C82.501 165.888 85.5808 171.336 94.3711 171.336C101.044 171.336 104.701 169.001 106.305 167.639L106.434 167.575V152.918C106.369 145.331 103.033 142.088 95.2052 142.088ZM101.172 159.468V164.851C99.5041 165.953 97.2584 166.537 94.6919 166.537C90.1363 166.537 88.0831 164.008 88.0831 161.543C88.0831 159.209 90.0722 156.874 94.4352 156.874C97.8358 156.874 100.21 158.625 101.172 159.468Z" fill="currentColor"/>
+<path d="M125.298 142.088C121.384 142.088 118.496 143.904 116.892 145.266V142.801H111.503V170.493H116.892V150.389C117.983 149.157 120.678 147.211 123.694 147.211C127.992 147.211 129.597 149.287 129.597 154.864V170.558H134.986V152.399C134.986 145.59 131.714 142.088 125.298 142.088Z" fill="currentColor"/>
+<path d="M70.246 151.167C67.2303 149.676 64.6638 148.378 64.6638 145.979C64.6638 144.228 66.0112 142.477 69.0269 142.477C71.9784 142.477 74.7373 144.747 75.4431 145.525L75.8923 145.979L78.5871 141.115L78.3304 140.856C76.5981 139.105 73.005 137.03 68.3852 137.03C62.4823 137.03 57.9909 141.05 57.9909 146.238C57.9909 151.232 62.4823 153.631 66.3962 155.707C69.5402 157.393 72.235 158.82 72.235 161.219C72.235 165.629 68.2569 165.953 67.0378 165.953H56.836H55.8735V171.336H67.2945C74.224 171.336 78.9079 167.185 78.9079 161.154C78.8437 155.447 74.2882 153.177 70.246 151.167Z" fill="currentColor"/>
+<path d="M154.427 142.088C150.449 142.088 146.792 143.385 144.097 145.785C141.146 148.444 139.542 152.205 139.542 156.615C139.542 162.062 141.723 165.435 143.584 167.315C145.958 169.715 149.23 171.206 152.438 171.206C155.261 171.206 158.341 169.909 160.394 167.899V172.179C160.394 177.691 157.892 180.48 152.951 180.48C149.166 180.48 145.701 178.988 143.905 177.756L143.648 177.562L141.21 181.777L141.466 181.972C143.263 183.204 147.177 185.214 152.951 185.214C155.39 185.214 158.854 184.695 161.613 182.361C164.372 180.026 165.72 176.394 165.72 171.66V145.396L165.592 145.331C162.255 143.191 158.662 142.088 154.427 142.088ZM160.394 148.379V162.451C158.983 164.786 156.16 166.472 153.465 166.472C147.434 166.472 145.188 160.636 145.188 156.744C145.188 149.481 150.192 146.952 154.491 146.952C157.379 146.887 159.496 147.925 160.394 148.379Z" fill="currentColor"/>
+<path d="M184.84 142.088C176.627 142.088 170.211 148.508 170.211 156.68C170.211 164.851 176.627 171.271 184.776 171.271C192.925 171.271 199.277 164.851 199.277 156.68C199.277 148.508 192.925 142.088 184.84 142.088ZM193.631 156.744C193.631 162.646 190.037 166.602 184.648 166.602C179.771 166.602 175.793 162.192 175.793 156.874C175.793 150.973 179.451 146.887 184.776 146.887C189.717 146.887 193.631 151.232 193.631 156.744Z" fill="currentColor"/>
+<path d="M233.54 142.088C229.498 142.088 225.969 144.423 224.044 146.044C222.504 143.45 220.13 142.088 216.986 142.088C213.136 142.088 210.185 144.034 208.709 145.266V142.737H203.319V170.428H208.709V150.324C209.736 149.222 212.366 147.211 215.125 147.211C218.59 147.211 220.13 148.897 220.13 152.724V170.558H225.52V150.324C226.931 148.897 229.434 147.276 232.128 147.276C235.465 147.276 237.005 148.962 237.005 152.918V170.623H242.394V152.205C242.266 145.59 239.25 142.088 233.54 142.088Z" fill="currentColor"/>
+<path d="M258.82 142.088C254.585 142.088 251.441 143.255 249.452 144.163L249.131 144.293L250.928 148.573L251.249 148.444C251.377 148.379 254.521 146.887 258.499 146.887C262.413 146.887 264.787 148.703 264.787 151.751V154.41C262.862 152.983 260.231 152.14 257.408 152.14C252.853 152.14 246.116 154.54 246.116 161.219C246.116 165.888 249.196 171.336 257.986 171.336C264.659 171.336 268.316 169.001 269.92 167.639L270.048 167.575V152.918C270.048 145.331 266.648 142.088 258.82 142.088ZM264.787 159.468V164.851C263.119 165.953 260.873 166.537 258.307 166.537C253.751 166.537 251.698 164.008 251.698 161.543C251.698 159.209 253.687 156.874 258.05 156.874C261.451 156.874 263.825 158.625 264.787 159.468Z" fill="currentColor"/>
+<path d="M85.3242 135.862C85.8375 135.733 86.415 135.603 86.9283 135.603L87.8266 135.538C87.8907 135.538 87.9549 135.538 87.9549 135.538C90.3931 135.538 92.5746 136.316 94.3712 137.678C97.1301 137.03 99.3758 136.965 101.237 137.354C98.6059 133.333 94.2428 130.61 89.2381 130.22C86.03 121.012 77.4322 114.786 67.8078 114.786C56.3227 114.786 46.4417 123.865 45.1584 135.473C36.4323 136.706 29.9519 144.358 29.9519 153.372C29.9519 163.294 37.9081 171.401 47.6608 171.401H50.7406V166.018H47.6608C40.7954 166.018 35.2132 160.311 35.2132 153.307C35.2132 147.341 39.2555 142.283 44.8376 140.921C45.8001 140.661 46.8267 140.532 47.9174 140.532C48.8157 140.532 49.714 140.661 50.5481 140.791C50.4198 139.818 50.2914 138.846 50.2914 137.873C50.2914 128.08 58.1193 120.039 67.8078 120.039C69.2194 120.039 70.5668 120.233 71.9142 120.558C79.0363 122.244 84.4259 128.34 85.3242 135.862Z" fill="url(#paint0_linear_713_6190)"/>
+<defs>
+<linearGradient id="paint0_linear_713_6190" x1="65.5853" y1="114.771" x2="65.5853" y2="171.425" gradientUnits="userSpaceOnUse">
+<stop offset="3.89459e-07" stop-color="#158FCF"/>
+<stop offset="1" stop-color="#158FCF" stop-opacity="0"/>
+</linearGradient>
+</defs></svg><svg class="brand-mini" viewBox="0 0 479 321" fill="none" xmlns="http://www.w3.org/2000/svg"><g filter="url(#filter0_i_223_261)">
+<path d="M429.713 178.201C429.155 130.696 391.806 90.9846 344.106 87.2166C325.524 35.0196 275.664 0 219.735 0C153.006 0 95.5498 51.2735 88.4003 116.917C37.9444 123.972 6.10352e-05 167.193 6.10352e-05 217.986C6.10352e-05 274.247 46.1365 320.053 102.885 320.053H120.61V289.798H102.885C62.9675 289.798 30.497 257.586 30.497 217.986C30.497 184.407 53.8073 155.631 86.3895 148.132C92.0495 146.728 97.9702 145.915 104.077 145.915C109.365 145.915 114.503 146.506 119.456 147.541C118.562 142.11 118.115 136.606 118.115 131.065C118.115 75.5065 163.693 30.2912 219.697 30.2912C227.815 30.2912 235.784 31.2886 243.417 33.1357C284.527 42.5555 315.992 76.8363 320.87 119.17C323.923 118.394 327.051 117.84 330.254 117.545L335.616 117.286C335.914 117.286 336.211 117.249 336.509 117.249C371.065 117.249 399.142 145.139 399.142 179.383C399.142 181.895 398.918 184.555 398.471 187.769L396.461 202.471L411.281 204.724C432.096 207.901 447.81 226.076 447.81 246.984C447.81 270.589 428.447 289.798 404.653 289.798H310.853C309.177 302.949 301.953 313.477 290.745 320.053H404.69C445.315 320.053 478.344 287.25 478.344 246.984C478.344 215.991 458.832 188.508 429.676 178.275L429.713 178.201Z" fill="url(#paint0_linear_223_261)"/>
+</g>
+<path d="M235.132 205.633L234.907 206.041L235.095 205.633C217.53 197.156 202.324 189.864 202.324 176.279C202.324 166.395 210.264 156.4 227.941 156.4C245.619 156.4 261.124 169.208 265.281 173.687L267.753 176.353L283.408 148.96L281.985 147.553C271.985 137.669 250.75 126.083 223.934 126.083C189.328 126.083 163.261 148.59 163.261 178.426C163.261 206.67 189.365 220.144 212.399 232.027C230.788 241.503 246.63 249.684 246.63 263.011C246.63 287.849 223.372 289.774 216.219 289.774L156.857 289.7L151.127 289.774V320.054H217.717C258.165 320.054 285.356 296.807 285.356 262.233C285.356 229.769 258.69 216.924 235.132 205.596V205.633Z" fill="currentColor"/>
+<defs>
+<filter id="filter0_i_223_261" x="6.10352e-05" y="0" width="478.344" height="324.053" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.14 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_223_261"/>
+</filter>
+<linearGradient id="paint0_linear_223_261" x1="303.7" y1="300.598" x2="223.61" y2="-0.261576" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0"/>
+<stop offset="1" stop-color="#158FD0"/>
+</linearGradient>
+</defs></svg><svg class="brand-mini-dark" viewBox="0 0 479 321" fill="none" xmlns="http://www.w3.org/2000/svg"><g filter="url(#filter0_i_718_6190)"><path d="M429.713 178.201C429.155 130.696 391.806 90.9846 344.106 87.2166C325.524 35.0196 275.664 0 219.735 0C153.006 0 95.5498 51.2735 88.4003 116.917C37.9444 123.972 6.10352e-05 167.193 6.10352e-05 217.986C6.10352e-05 274.247 46.1365 320.053 102.885 320.053H120.61V289.799H102.885C62.9675 289.799 30.497 257.586 30.497 217.986C30.497 184.407 53.8073 155.631 86.3895 148.132C92.0495 146.728 97.9702 145.915 104.077 145.915C109.365 145.915 114.503 146.506 119.456 147.541C118.562 142.11 118.115 136.606 118.115 131.065C118.115 75.5065 163.693 30.2912 219.697 30.2912C227.815 30.2912 235.784 31.2886 243.417 33.1357C284.527 42.5555 315.992 76.8363 320.87 119.17C323.923 118.394 327.051 117.84 330.254 117.545L335.616 117.286C335.914 117.286 336.211 117.249 336.509 117.249C371.065 117.249 399.142 145.139 399.142 179.383C399.142 181.895 398.918 184.555 398.471 187.769L396.461 202.471L411.281 204.724C432.096 207.901 447.81 226.076 447.81 246.984C447.81 270.589 428.447 289.799 404.653 289.799H310.853C309.177 302.949 301.954 313.477 290.745 320.053H404.69C445.315 320.053 478.344 287.25 478.344 246.984C478.344 215.991 458.832 188.508 429.676 178.275L429.713 178.201Z" fill="url(#paint0_linear_718_6190)"/></g><path d="M235.132 205.633L234.907 206.041L235.095 205.633C217.53 197.156 202.324 189.864 202.324 176.279C202.324 166.395 210.264 156.4 227.941 156.4C245.619 156.4 261.124 169.208 265.281 173.687L267.753 176.353L283.408 148.96L281.985 147.553C271.985 137.669 250.75 126.083 223.934 126.083C189.328 126.083 163.261 148.59 163.261 178.426C163.261 206.67 189.365 220.144 212.399 232.027C230.788 241.503 246.63 249.684 246.63 263.011C246.63 287.849 223.372 289.774 216.219 289.774L156.857 289.7L151.127 289.774V320.054H217.717C258.165 320.054 285.356 296.807 285.356 262.233C285.356 229.769 258.69 216.924 235.132 205.596V205.633Z" fill="white"/><defs><filter id="filter0_i_718_6190" x="6.10352e-05" y="0" width="478.344" height="324.053" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/><feOffset dy="4"/><feGaussianBlur stdDeviation="2"/><feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/><feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.14 0"/><feBlend mode="normal" in2="shape" result="effect1_innerShadow_718_6190"/></filter><linearGradient id="paint0_linear_718_6190" x1="303.7" y1="300.598" x2="223.61" y2="-0.261576" gradientUnits="userSpaceOnUse"><stop stop-color="white" stop-opacity="0"/><stop offset="1" stop-color="#158FD0"/></linearGradient></defs></svg><img class="brand-logo-img" alt="Brand logo"></a>
+  <div class="acct" tabindex="0" role="button"><span>Sangoma Technologies</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+
+  <div class="nav-item" data-key="home" data-go="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg><span class="lbl">Home</span></div>
+
+  <div class="nav-cap">Account Settings</div>
+  <div class="nav-item" data-key="billing" data-go="billing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg><span class="lbl">Billing</span></div>
+  <div class="nav-item" data-key="company" data-go="company"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h.01M9 13h.01M9 17h.01M15 9h.01M15 13h.01M15 17h.01"/></svg><span class="lbl">Company Profile</span></div>
+  <div class="nav-item" data-key="inventory" data-go="inventory"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7 12 3l9 4-9 4-9-4Z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg><span class="lbl">Inventory &amp; Usage</span></div>
+  <div class="nav-item" data-key="security" data-go="security"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z"/></svg><span class="lbl">Security</span></div>
+  <div class="nav-item" data-key="users" data-go="users"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 5.6"/><path d="M17.5 20a5.5 5.5 0 0 0-3-4.9"/></svg><span class="lbl">Users</span></div>
+
+  <div class="nav-cap">Service Configuration</div>
+  <div class="nav-item" data-key="prodapps" data-go="prodapps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span class="lbl">Productivity Apps</span></div>
+  <div class="nav-group open" id="ucGroup">
+    <div class="nav-item parent" id="ucParent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 4Z"/></svg><span class="lbl">Sangoma UC</span><span class="cev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></div>
+    <div class="nav-sub">
+      <div class="nav-item child" data-key="chat" data-go="chat"><span class="lbl">Chat</span></div>
+      <div class="nav-item child" data-key="sms" data-go="sms"><span class="lbl">SMS</span></div>
+      <div class="nav-item child" data-key="video" data-go="video"><span class="lbl">Video</span></div>
+      <div class="nav-item child" data-key="voice" data-go="voice"><span class="lbl">Voice</span></div>
+    </div>
+  </div>
+  <div class="nav-item" data-key="cpaas" data-go="cpaas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="19" cy="17" r="2"/></svg><span class="lbl">CPaaS</span></div>
+
+  <div class="nav-cap">Reports</div>
+  <div class="nav-item" data-key="reports" data-go="reports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span class="lbl">Analytics</span></div>
+</aside>
+
+<main class="main">
+  <header class="topbar">
+    <button class="tb-ic" id="railT" title="Collapse sidebar" aria-label="Collapse sidebar" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/><path d="m14.5 9.5-2.5 2.5 2.5 2.5"/></svg></button>
+    <div class="tb-ic" id="navT" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
+    <div class="crumb">Control Panel <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg> <b id="crumbPage">Home</b></div>
+    <div class="sp"></div>
+    <div class="accsw" role="group" aria-label="Accent color"><button type="button" data-accent="a" class="on" title="Accent A · Violet">A</button><button type="button" data-accent="b" title="Accent B · Navy">B</button></div>
+    <button class="tsw" id="tsw" role="switch" aria-checked="false"><span class="l">Light</span>
+      <span class="tr"><span class="kn"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 4l1.5 1.5M18.5 18.5 20 20M2 12h2M20 12h2M4 20l1.5-1.5M18.5 5.5 20 4"/></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></span></button>
+    <div class="tb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+    <div class="av">MO</div>
+  </header>
+
+  <div class="scroll"><div class="page">
+
+  <!-- ============================ HOME / DASHBOARD ============================ -->
+  <section class="vpage" id="v-home" data-active="home">
+    <div class="phead">
+      <div class="ttl-row"><h1 class="ttl">Dashboard</h1></div>
+      <div style="display:flex;align-items:center;gap:20px">
+        <span class="upd">Current Month • <b>May 2024</b></span>
+        <div class="svc-pick">Service: <span class="sel" data-opts="All,Chat,Meet,SMS,Voice,CPaaS" style="min-width:120px"><span class="lab">All</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></div>
+      </div>
+    </div>
+
+    <!-- Account Overview -->
+    <div class="ov-grid">
+      <div class="glass ov-card">
+        <div class="ov-k">Total Users</div>
+        <div class="ov-v mono">5000</div>
+        <div class="pbar-lab"><span>Seats Assigned</span><b class="mono">2657</b></div>
+        <div class="pbar"><span style="width:53%"></span></div>
+      </div>
+      <div class="glass ov-card">
+        <div class="ov-sub">Current Month • May 2024</div>
+        <div class="ov-v" style="margin:2px 0 12px">Total Calls</div>
+        <svg class="lchart" viewBox="0 0 320 44" preserveAspectRatio="none"><polyline fill="none" stroke="url(#pgrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="0,34 40,28 80,30 120,18 160,22 200,10 240,16 280,6 320,12"/></svg>
+      </div>
+      <div class="glass ov-card">
+        <div class="row-flex">
+          <div class="ring"><div id="d-sms" class="donut-c"></div><div class="rv mono">75%</div></div>
+          <div>
+            <div class="ov-v mono">$340/$45</div>
+            <div class="ov-sub">SMS / Voice Minute • May 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sangoma Talk -->
+    <div class="sec-t first">Sangoma Talk</div>
+    <div class="dgrid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="card">
+        <div class="card-h"><div><div class="t">Extensions and DIDs</div><div class="s">Last updated May 2024</div></div></div>
+        <div class="card-b">
+          <div class="donut-wrap"><div class="donut-c"><div id="d-ext"></div><div class="dc-v mono">7302</div></div></div>
+          <div class="legend-grid"><div><i style="background:var(--ch1)"></i>Extensions</div><div><i style="background:var(--ch3)"></i>DIDs</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="t">Call Log</div><div class="s">Current Month • May 2024</div></div></div>
+        <div class="card-b">
+          <div class="donut-wrap"><div class="donut-c"><div id="d-call"></div><div class="dc-v mono">1220</div></div></div>
+          <div class="legend-grid"><div><i style="background:var(--ch3)"></i>Inbound</div><div><i style="background:var(--ch1)"></i>Outbound</div><div><i style="background:var(--ch6)"></i>Missed</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="t">Talk Activity</div><div class="s">Current Month • May 2024</div></div></div>
+        <div class="card-b">
+          <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="8" rx="4"/><circle cx="7.5" cy="14" r="2"/><circle cx="16.5" cy="14" r="2"/></svg>Voicemails</span><b class="mono">1152</b></div>
+          <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></svg>Recordings</span><b class="mono">552</b></div>
+          <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 5.2a3 3 0 0 1 0 5.6M17.5 19a5.5 5.5 0 0 0-3-4.9"/></svg>Ring Groups</span><b class="mono">458</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sangoma CX -->
+    <div class="sec-t">Sangoma CX</div>
+    <div class="dgrid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="card">
+        <div class="card-h"><div><div class="t">My Agents</div><div class="s">Last updated May 2024</div></div></div>
+        <div class="card-b" style="text-align:center">
+          <div class="donut-wrap"><div class="ring" style="width:160px;height:160px"><div id="d-agents" class="donut-c"></div><div class="rv mono" style="font-size:32px">75%</div></div></div>
+          <div style="font-weight:600;margin-top:12px">Occupation</div>
+          <div class="s" style="color:var(--ink-3)">Total 753 &nbsp;|&nbsp; Online 78 &nbsp;|&nbsp; Offline 175</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="t">Calls</div><div class="s">Current Month • May 2024</div></div></div>
+        <div class="card-b">
+          <div class="donut-wrap"><div class="donut-c"><div id="d-cxcall"></div><div class="dc-v mono">195</div></div></div>
+          <div class="legend-grid"><div><i style="background:var(--ch3)"></i>Answered</div><div><i style="background:var(--ch1)"></i>Abandoned</div><div><i style="background:var(--ch6)"></i>Missed</div><div><i style="background:var(--ch5)"></i>Overflow</div><div><i style="background:var(--ch4)"></i>Other</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="t">SLA Durations</div><div class="s"><span class="ov-v" style="font-size:22px">10,234</span></div></div></div>
+        <div class="card-b">
+          <div class="bars" style="padding:6px 0">
+            <div class="bar"><span class="l">0-30s</span><span class="t"><span style="width:82%;background:var(--ch3)"></span></span></div>
+            <div class="bar"><span class="l">30-60s</span><span class="t"><span style="width:64%;background:var(--ch1)"></span></span></div>
+            <div class="bar"><span class="l">1-3m</span><span class="t"><span style="width:41%;background:var(--ch5)"></span></span></div>
+            <div class="bar"><span class="l">3-5m</span><span class="t"><span style="width:22%;background:var(--ch6)"></span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sangoma CPaaS -->
+    <div class="sec-t">Sangoma CPaaS</div>
+    <div class="dgrid" style="grid-template-columns:repeat(2,1fr)">
+      <div class="card">
+        <div class="card-h"><div><div class="t">SMS Usage</div><div class="s">Last 3 months</div></div></div>
+        <div class="card-b">
+          <svg class="lchart" viewBox="0 0 500 200" preserveAspectRatio="none">
+            <line x1="0" y1="10" x2="500" y2="10" stroke="var(--hair)"/><line x1="0" y1="60" x2="500" y2="60" stroke="var(--hair)"/><line x1="0" y1="110" x2="500" y2="110" stroke="var(--hair)"/><line x1="0" y1="160" x2="500" y2="160" stroke="var(--hair)"/>
+            <polyline fill="none" stroke="var(--ch3)" stroke-width="2.5" points="0,150 100,120 200,130 300,80 400,95 500,60"/>
+            <polyline fill="none" stroke="var(--ch1)" stroke-width="2.5" points="0,170 100,150 200,110 300,120 400,70 500,90"/>
+            <polyline fill="none" stroke="var(--ch4)" stroke-width="2.5" points="0,120 100,100 200,90 300,60 400,80 500,40"/>
+          </svg>
+          <div class="legend-grid" style="justify-content:flex-start"><div><i style="background:var(--ch3)"></i>Delivered</div><div><i style="background:var(--ch1)"></i>Sent</div><div><i style="background:var(--ch4)"></i>Received</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="t">Email Usage</div><div class="s">Last 3 months</div></div></div>
+        <div class="card-b">
+          <svg class="lchart" viewBox="0 0 500 200" preserveAspectRatio="none">
+            <line x1="0" y1="10" x2="500" y2="10" stroke="var(--hair)"/><line x1="0" y1="60" x2="500" y2="60" stroke="var(--hair)"/><line x1="0" y1="110" x2="500" y2="110" stroke="var(--hair)"/><line x1="0" y1="160" x2="500" y2="160" stroke="var(--hair)"/>
+            <polyline fill="none" stroke="var(--ch3)" stroke-width="2.5" points="0,140 100,110 200,120 300,70 400,90 500,50"/>
+            <polyline fill="none" stroke="var(--ch1)" stroke-width="2.5" points="0,160 100,140 200,100 300,110 400,60 500,80"/>
+            <polyline fill="none" stroke="var(--ch6)" stroke-width="2.5" points="0,110 100,95 200,85 300,55 400,75 500,35"/>
+          </svg>
+          <div class="legend-grid" style="justify-content:flex-start"><div><i style="background:var(--ch3)"></i>Delivered</div><div><i style="background:var(--ch1)"></i>Opened</div><div><i style="background:var(--ch6)"></i>Bounced</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Managed Services -->
+    <div class="sec-t">Managed Services</div>
+    <div class="dgrid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="card">
+        <div class="card-h"><div><div class="t">Devices Status</div><div class="s">Current Month • May 2024</div></div></div>
+        <div class="card-b">
+          <div class="donut-wrap"><div class="donut-c"><div id="d-dev"></div></div></div>
+          <div class="legend-grid"><div><i style="background:var(--ch-ok)"></i>Online</div><div><i style="background:var(--ch5)"></i>Idle</div><div><i style="background:var(--ch6)"></i>Offline</div><div><i style="background:var(--ch-mut)"></i>Unknown</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="t">Links Status</div><div class="s">Current Month • May 2024</div></div></div>
+        <div class="card-b">
+          <div class="donut-wrap"><div class="donut-c"><div id="d-links"></div></div></div>
+          <div class="legend-grid"><div><i style="background:var(--ch-ok)"></i>Healthy</div><div><i style="background:var(--ch5)"></i>Degraded</div><div><i style="background:var(--ch6)"></i>Down</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="t">Status</div><div class="s">Sangoma • May 2024</div></div></div>
+        <div class="card-b">
+          <div style="font-weight:600;font-size:13.5px">Uptime 92%</div>
+          <div class="trk" id="trk1"></div>
+          <div style="font-weight:600;font-size:13.5px;margin-top:18px">Uptime 92%</div>
+          <div class="trk" id="trk2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sales -->
+    <div class="sec-t">Sales</div>
+    <div class="dgrid" style="grid-template-columns:repeat(2,1fr)">
+      <div class="card">
+        <div class="card-h">
+          <div><div class="t">Total Billing</div><div class="s">Last 3 months</div></div>
+          <div style="text-align:right"><div class="ov-v" style="font-size:22px">196.26</div><div class="s" style="color:var(--ok-ink)">+2.69%</div></div>
+        </div>
+        <div class="card-b">
+          <div class="mrow"><span>March 2024</span><b class="mono">$118.1K</b></div>
+          <div class="mrow"><span>February 2024</span><b class="mono">$90.3K</b></div>
+          <div class="mrow"><span>January 2024</span><b class="mono">$120.1K</b></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h">
+          <div><div class="t">Total Quotes</div><div class="s">Last 3 months</div></div>
+          <div style="text-align:right"><div class="ov-v" style="font-size:22px">196.26</div><div class="s" style="color:var(--ok-ink)">+2.69%</div></div>
+        </div>
+        <div class="card-b">
+          <div class="mrow"><span>March 2024</span><b class="mono">$118.1K</b></div>
+          <div class="mrow"><span>February 2024</span><b class="mono">$90.3K</b></div>
+          <div class="mrow"><span>January 2024</span><b class="mono">$120.1K</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ VOICE ============================ -->
+  <section class="vpage" id="v-voice" data-active="voice">
+    <div class="phead">
+      <div class="ttl-row"><h1 class="ttl">Voice</h1><span class="ttl-sub">Configuration settings leading to CommUnity Portal / Business Voice Portal</span></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-p"><span class="lbl">Community Portal</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+        <button class="btn btn-p"><span class="lbl">Business Voice Portal</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+      </div>
+    </div>
+    <div id="voice-body"></div>
+  </section>
+
+  <!-- ============================ CHAT LICENCES ============================ -->
+  <section class="vpage" id="v-chat" data-active="chat">
+    <div class="phead">
+      <div class="ttl-row"><h1 class="ttl">Chat Licences</h1></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-p"><span class="lbl">Buy Licenses</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+        <button class="btn btn-p"><span class="lbl">Manage Users</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+      </div>
+    </div>
+    <div class="lstat" id="chat-stat"></div>
+    <div class="toolbar" id="chat-tools"></div>
+    <div id="chat-table"></div>
+  </section>
+
+  <!-- ============================ MEET LICENCES (video key) ============================ -->
+  <section class="vpage" id="v-video" data-active="video">
+    <div class="phead">
+      <div class="ttl-row"><h1 class="ttl">Meet Licences</h1></div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-p"><span class="lbl">Buy Licenses</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+        <button class="btn btn-p"><span class="lbl">Manage Users</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+      </div>
+    </div>
+    <div class="lstat" id="meet-stat"></div>
+    <div class="toolbar" id="meet-tools"></div>
+    <div id="meet-table"></div>
+  </section>
+
+  <!-- ============================ SMS LICENCES ============================ -->
+  <section class="vpage" id="v-sms" data-active="sms">
+    <div class="phead">
+      <div class="ttl-row"><h1 class="ttl">SMS Licences</h1></div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="btn btn-p"><span class="lbl">Buy Numbers</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+        <button class="btn btn-p"><span class="lbl">Manage Users</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+        <div class="kebab" data-opts="Export DIDs,Import DIDs,Bulk assign,Release numbers"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></div>
+      </div>
+    </div>
+    <div class="lstat" id="sms-stat"></div>
+    <div class="toolbar" id="sms-tools"></div>
+    <div id="sms-table"></div>
+  </section>
+
+  <!-- ============================ CPaaS ============================ -->
+  <section class="vpage" id="v-cpaas" data-active="cpaas">
+    <div class="phead"><div class="ttl-row"><h1 class="ttl">CPaaS</h1><span class="ttl-sub">Communications Platform as a Service</span></div></div>
+    <div class="lstat">
+      <div class="glass"><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>SMS Sent</div><div class="v mono">128,540</div></div>
+      <div class="glass"><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Emails</div><div class="v mono">86,102</div></div>
+      <div class="glass"><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Voice Minutes</div><div class="v mono">45,900</div></div>
+      <div class="glass"><div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Balance</div><div class="v mono">$1,240<small> /mo</small></div></div>
+    </div>
+    <div class="dgrid" style="grid-template-columns:repeat(2,1fr)">
+      <div class="card">
+        <div class="card-h"><div><div class="t">Messaging Volume</div><div class="s">Last 6 months</div></div></div>
+        <div class="card-b">
+          <svg class="lchart" viewBox="0 0 500 200" preserveAspectRatio="none">
+            <line x1="0" y1="10" x2="500" y2="10" stroke="var(--hair)"/><line x1="0" y1="60" x2="500" y2="60" stroke="var(--hair)"/><line x1="0" y1="110" x2="500" y2="110" stroke="var(--hair)"/><line x1="0" y1="160" x2="500" y2="160" stroke="var(--hair)"/>
+            <polyline fill="none" stroke="url(#pgrad)" stroke-width="2.5" points="0,150 100,120 200,130 300,80 400,95 500,55"/>
+          </svg>
+          <div class="legend-grid" style="justify-content:flex-start"><div><i style="background:var(--ch1)"></i>SMS</div><div><i style="background:var(--ch3)"></i>Email</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><div><div class="t">API Keys</div><div class="s">Active integrations</div></div></div>
+        <div class="card-b">
+          <div class="mrow"><span class="lft">Production Key</span><span class="tag ok">Active</span></div>
+          <div class="mrow"><span class="lft">Staging Key</span><span class="tag ok">Active</span></div>
+          <div class="mrow"><span class="lft">Legacy Key</span><span class="tag warn">Expiring</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ COMPANY PROFILE ============================ -->
+  <section class="vpage" id="v-company" data-active="company">
+    <div class="phead"><div class="ttl-row"><h1 class="ttl">Company Profile</h1></div></div>
+    <div class="sec-card">
+      <h3>Company Information</h3><div class="sub">Basic details about your organization.</div>
+      <div class="form-grid">
+        <div class="field"><label>Company Name</label><input class="inp" value="Sangoma Technologies"></div>
+        <div class="field"><label>Account Number</label><input class="inp" value="SNG-100482" readonly></div>
+        <div class="field"><label>Industry</label><input class="inp" value="Telecommunications"></div>
+        <div class="field"><label>Company Size</label><input class="inp" value="1000-5000 employees"></div>
+        <div class="field"><label>Phone</label><input class="inp" value="+1 (256) 428-6000"></div>
+        <div class="field"><label>Website</label><input class="inp" value="www.sangoma.com"></div>
+        <div class="field full"><label>Address</label><input class="inp" value="100 Renfrew Drive, Suite 100, Markham, ON L3R 9R6, Canada"></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Save Changes</span></button></div>
+    </div>
+    <div class="sec-card">
+      <h3>Brand &amp; White-labeling</h3><div class="sub">Applied across the entire portal for everyone in this company.</div>
+      <div class="brand-cfg">
+        <div class="bp-sec">
+          <div class="bp-lab">Brand color</div>
+          <div class="bp-sw" id="brandSwatches">
+            <button type="button" data-c="#7a1f86" title="Violet" style="--s:#7a1f86"></button>
+            <button type="button" data-c="#142b53" title="Navy" style="--s:#142b53"></button>
+            <button type="button" data-c="#1d4ed8" title="Blue" style="--s:#1d4ed8"></button>
+            <button type="button" data-c="#0f766e" title="Teal" style="--s:#0f766e"></button>
+            <button type="button" data-c="#047857" title="Emerald" style="--s:#047857"></button>
+            <button type="button" data-c="#be185d" title="Rose" style="--s:#be185d"></button>
+            <button type="button" data-c="#b45309" title="Amber" style="--s:#b45309"></button>
+            <button type="button" data-c="#334155" title="Slate" style="--s:#334155"></button>
+          </div>
+          <label class="bp-custom"><span>Custom color</span><input type="color" id="brandColor" value="#7a1f86"></label>
+        </div>
+        <div class="bp-sec">
+          <div class="bp-lab">Company logo</div>
+          <div class="bp-logo">
+            <div class="bp-logo-prev" id="brandLogoPrev">Default</div>
+            <div class="bp-logo-act">
+              <button type="button" class="btn" id="brandLogoBtn"><span class="lbl">Upload logo…</span></button>
+              <button type="button" class="lnk" id="brandLogoReset">Remove</button>
+            </div>
+          </div>
+          <div class="bp-hint">PNG, SVG, JPG or WebP. Shown in the sidebar in place of the default mark.</div>
+          <input type="file" id="brandLogoFile" accept="image/png,image/jpeg,image/svg+xml,image/webp" hidden>
+        </div>
+      </div>
+      <div class="form-actions"><button class="btn btn-ghost" id="brandReset">Reset to default</button><button class="btn btn-p"><span class="lbl">Save Changes</span></button></div>
+    </div>
+    <div class="sec-card">
+      <h3>Primary Contact</h3><div class="sub">Main administrator for this account.</div>
+      <div class="form-grid">
+        <div class="field"><label>Full Name</label><input class="inp" value="Marcus Owens"></div>
+        <div class="field"><label>Email</label><input class="inp" value="mowens@sangoma.com"></div>
+        <div class="field"><label>Job Title</label><input class="inp" value="IT Administrator"></div>
+        <div class="field"><label>Mobile</label><input class="inp" value="+1 (256) 555-0142"></div>
+      </div>
+      <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Save Changes</span></button></div>
+    </div>
+  </section>
+
+  <!-- ============================ INVENTORY & USAGE ============================ -->
+  <section class="vpage" id="v-inventory" data-active="inventory">
+    <div class="phead"><div class="ttl-row"><h1 class="ttl">Inventory &amp; Usage</h1></div><span class="upd">Current Month • <b>May 2024</b></span></div>
+    <div class="lstat">
+      <div class="glass"><div class="k">Total Licenses</div><div class="v mono">2000</div></div>
+      <div class="glass"><div class="k">Assigned</div><div class="v mono">760<small> /2000</small></div></div>
+      <div class="glass"><div class="k">DID Numbers</div><div class="v mono">1,240</div></div>
+      <div class="glass"><div class="k">Devices</div><div class="v mono">7,302</div></div>
+    </div>
+    <div class="tw"><div class="tscroll"><table>
+      <thead><tr><th>Product</th><th>Purchased</th><th>Assigned</th><th>Available</th><th>Utilization</th></tr></thead>
+      <tbody>
+        <tr><td>Chat — Advanced</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td></tr>
+        <tr><td>Chat — Premium</td><td class="mono">400</td><td class="mono">200</td><td class="mono">200</td><td><span class="tag warn">50%</span></td></tr>
+        <tr><td>Meet — Advanced</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td></tr>
+        <tr><td>SMS Licenses</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td></tr>
+        <tr><td>Voice Extensions</td><td class="mono">8000</td><td class="mono">7302</td><td class="mono">698</td><td><span class="tag bad">91%</span></td></tr>
+      </tbody>
+    </table></div></div>
+  </section>
+
+  <!-- ============================ USERS (app access) ============================ -->
+  <section class="vpage" id="v-users" data-active="users">
+    <div class="phead">
+      <div class="ttl-row"><h1 class="ttl">Users</h1><span class="ttl-sub">Manage app access per user</span></div>
+      <button class="btn btn-p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">Add User</span></button>
+    </div>
+    <div class="toolbar" style="display:flex;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap">
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input placeholder="Search users" data-search data-table="users-table"></div>
+      <div class="chip" data-opts="All Roles,Admin,Member" data-filter="role" data-table="users-table"><span class="lab">All Roles</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div id="users-table"></div>
+  </section>
+
+  <!-- ============================ PRODUCTIVITY APPS ============================ -->
+  <section class="vpage" id="v-prodapps" data-active="prodapps">
+    <div class="phead"><div class="ttl-row"><h1 class="ttl">Productivity Apps</h1></div></div>
+    <div id="prod-body"></div>
+  </section>
+
+  <!-- ============================ BILLING ============================ -->
+  <section class="vpage" id="v-billing" data-active="billing">
+    <div class="phead">
+      <div class="ttl-row"><h1 class="ttl">Billing</h1></div>
+      <button class="btn btn-p" id="pay-btn"><span class="lbl">Make a Payment</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5h5v5"/><path d="M19 5l-8 8"/><path d="M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></button>
+    </div>
+    <div class="bill-tools">
+      <div class="tot"><div class="tot-k">Total</div><div class="tot-v mono">1760</div></div>
+      <div class="bill-filters">
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input placeholder="Search Invoices" data-search data-table="inv-table"></div>
+        <div class="chip" data-opts="Any time,Last 7 days,Last 30 days,Last 90 days,This year" style="min-width:120px"><span class="lab">Any time</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      </div>
+    </div>
+    <div id="inv-table"></div>
+  </section>
+
+  <!-- Invoice Details drawer -->
+  <div class="drawer-scrim" id="inv-scrim" hidden></div>
+  <aside class="drawer" id="inv-drawer" aria-hidden="true" aria-label="Invoice Details">
+    <div class="drawer-head">
+      <h3>Invoice Details</h3>
+      <button class="drawer-x" id="inv-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="drawer-actions">
+      <button class="btn btn-ghost sm" id="inv-preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg><span>Preview</span></button>
+      <button class="btn btn-ghost sm" id="inv-download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg><span>Download</span></button>
+      <button class="btn btn-ghost sm" id="inv-print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg><span>Print</span></button>
+    </div>
+    <div class="invoice-doc" id="inv-doc"></div>
+  </aside>
+
+  <!-- Invoice full-view lightbox -->
+  <div class="lightbox" id="inv-lightbox" hidden>
+    <button class="lightbox-x" id="inv-lb-close" aria-label="Close preview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="lightbox-stage"><img id="inv-lb-img" src="assets/img/invoice-template.png" alt="Invoice — full view"></div>
+  </div>
+
+  <!-- ============================ SECURITY ============================ -->
+  <section class="vpage" id="v-security" data-active="security">
+    <div class="phead"><div class="ttl-row"><h1 class="ttl">Security</h1></div></div>
+    <div class="sec-card">
+      <h3>Authentication</h3><div class="sub">Protect your account with additional verification.</div>
+      <div class="mrow"><span class="lft">Two-factor authentication (2FA)</span><span class="sw on"></span></div>
+      <div class="mrow"><span class="lft">Single Sign-On (SSO)</span><span class="sw"></span></div>
+      <div class="mrow"><span class="lft">Require strong passwords</span><span class="sw on"></span></div>
+      <div class="mrow"><span class="lft">Session timeout after inactivity</span><span class="sw on"></span></div>
+    </div>
+    <div class="sec-card" id="pw-card">
+      <h3>Change Password</h3><div class="sub">Use a strong password you don't use elsewhere.</div>
+      <div class="steps">
+        <div class="step done"><span class="n">1</span>Verify</div><span class="step-line"></span>
+        <div class="step on"><span class="n">2</span>New Password</div><span class="step-line"></span>
+        <div class="step"><span class="n">3</span>Done</div>
+      </div>
+      <div class="form-grid">
+        <div class="field full"><label>Current Password</label><div class="inp-wrap"><input class="inp" type="password" value="currentpass"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
+        <div class="field"><label>New Password</label><div class="inp-wrap"><input class="inp" type="password" id="newPass" placeholder="Enter new password"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
+        <div class="field"><label>Confirm New Password</label><div class="inp-wrap"><input class="inp" type="password" placeholder="Re-enter new password"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
+        <div class="field full">
+          <ul class="reqs">
+            <li id="r-len"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>At least 8 characters</li>
+            <li id="r-up"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One uppercase letter</li>
+            <li id="r-num"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One number</li>
+            <li id="r-sym"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One special character</li>
+          </ul>
+        </div>
+      </div>
+      <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Update Password</span></button></div>
+    </div>
+    <div class="sec-card">
+      <h3>Active Sessions</h3><div class="sub">Devices currently signed in to this account.</div>
+      <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>MacBook Pro — Markham, ON</span><span class="tag ok">This device</span></div>
+      <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>iPhone 15 — Markham, ON</span><span class="lnk">Revoke</span></div>
+    </div>
+  </section>
+
+  <!-- ============================ ANALYTICS ============================ -->
+  <section class="vpage" id="v-reports" data-active="reports">
+    <div class="phead"><div class="ttl-row"><h1 class="ttl">Analytics</h1></div><span class="upd">Last 30 days</span></div>
+    <div class="lstat">
+      <div class="glass"><div class="k">Total Calls</div><div class="v mono">42,180</div></div>
+      <div class="glass"><div class="k">Avg. Handle Time</div><div class="v mono">3:42</div></div>
+      <div class="glass"><div class="k">Messages Sent</div><div class="v mono">128,540</div></div>
+      <div class="glass"><div class="k">Active Users</div><div class="v mono">2,657</div></div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div><div class="t">Usage Trend</div><div class="s">Calls · Messages · Meetings</div></div></div>
+      <div class="card-b">
+        <svg class="lchart" viewBox="0 0 500 200" preserveAspectRatio="none">
+          <line x1="0" y1="10" x2="500" y2="10" stroke="var(--hair)"/><line x1="0" y1="60" x2="500" y2="60" stroke="var(--hair)"/><line x1="0" y1="110" x2="500" y2="110" stroke="var(--hair)"/><line x1="0" y1="160" x2="500" y2="160" stroke="var(--hair)"/>
+          <polyline fill="none" stroke="var(--ch3)" stroke-width="2.5" points="0,150 80,120 160,130 240,80 320,95 400,60 500,50"/>
+          <polyline fill="none" stroke="var(--ch1)" stroke-width="2.5" points="0,170 80,150 160,110 240,120 320,70 400,90 500,70"/>
+          <polyline fill="none" stroke="var(--ch4)" stroke-width="2.5" points="0,120 80,100 160,90 240,60 320,80 400,40 500,45"/>
+        </svg>
+        <div class="legend-grid" style="justify-content:flex-start"><div><i style="background:var(--ch3)"></i>Calls</div><div><i style="background:var(--ch1)"></i>Messages</div><div><i style="background:var(--ch4)"></i>Meetings</div></div>
+      </div>
+    </div>
+  </section>
+
+  </div></div>
+</main>
+
+<script src="assets/core.js"></script>
+<script src="assets/pages.js"></script>
+</body>
+</html>
