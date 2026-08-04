@@ -277,6 +277,6 @@ tr.row-fail{background:rgba(253,234,239,.5)!important}
 
 /* custom logo swaps the built-in Sangoma mark */
 .brand-logo-img{display:none;height:30px;max-width:150px;width:auto;object-fit:contain}
-.brand.has-logo .brand-full,.brand.has-logo .brand-mini{display:none}
+.brand.has-logo .brand-full,.brand.has-logo .brand-mini,.brand.has-logo .brand-mini-dark{display:none}
 .brand.has-logo .brand-logo-img{display:block}
 body.rail-collapsed .brand.has-logo .brand-logo-img{height:28px;max-width:52px}
