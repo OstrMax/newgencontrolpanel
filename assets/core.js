@@ -19,12 +19,6 @@
   document.querySelectorAll('.rail .nav-item').forEach(function(it){
    it.addEventListener('mouseenter',show);it.addEventListener('mouseleave',hide);it.addEventListener('click',hide);});
  })();
- (function(){var sw=document.querySelector('.accsw');if(!sw)return;
-  function set(v){document.body.classList.toggle('acc-b',v==='b');
-   sw.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.accent===v);});
-   localStorage.setItem('accent',v);}
-  sw.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.accent);});});
-  set(localStorage.getItem('accent')||'a');})();
  function sn(){n.style.display=window.innerWidth<=820?'grid':'none';}
  window.addEventListener('resize',sn);sn();})();
 function donut(el,segs,size,sw){var C=2*Math.PI*((size-sw)/2),r=(size-sw)/2,c=size/2,o=0,a='';

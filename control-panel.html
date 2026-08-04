@@ -86,14 +86,6 @@ a{color:inherit;text-decoration:none}
 .brand-mini{height:26px;width:auto;display:none;color:var(--ink-1)}
 .brand-mini-dark{height:26px;width:auto;display:none;color:var(--ink-1)}
 [data-theme="dark"] .brand svg:not(.brand-mini-dark) path[fill^="url"]{fill:#fff}
-/* ---- A/B accent (B = navy #142B53) ---- */
-body.acc-b{--violet:#142b53;--violet-tint:#e6ecf5;--violet-soft:#f1f4f9;--grad-icon:#142b53;--grad:linear-gradient(180deg,#284d8a 0%,#142b53 100%);--g1:#284d8a;--g2:#1d3c6f;--g3:#142b53}
-[data-theme="dark"] body.acc-b{--violet:#9db4e6;--violet-tint:rgba(120,150,220,.18);--violet-soft:rgba(120,150,220,.12);--grad-icon:#aCc1ec;--grad:linear-gradient(180deg,#5178bd 0%,#2b4e8f 100%);--g1:#5178bd;--g2:#3b638e;--g3:#2b4e8f}
-.accsw{display:inline-flex;border:1px solid var(--hair);border-radius:8px;overflow:hidden;background:var(--surface)}
-.accsw button{width:30px;height:30px;border:none;background:transparent;cursor:pointer;font:600 12px Inter,system-ui,sans-serif;color:var(--ink-3)}
-.accsw button.on{background:var(--violet-soft);color:var(--grad-icon)}
-.accsw button+button{border-left:1px solid var(--hair)}
-@media(max-width:760px){.accsw{display:none}}
 /* ---- sidebar collapse: icon mini-rail (desktop) ---- */
 .rail{transition:width .2s ease,padding .2s ease}
 #railT{padding:0}
@@ -894,6 +886,21 @@ body.has-logo .brand-logo-full{display:block}
 .tip.t-bottom::after{left:50%;top:-4px;margin-left:-4px}
 .tip.t-right::after{top:50%;left:-4px;margin-top:-4px}
 .tip.t-left::after{top:50%;right:-4px;margin-top:-4px}
+.tip.tip-rich{max-width:250px;padding:9px 12px;line-height:1.5;text-align:left;font-weight:450;letter-spacing:.005em}
+
+/* contextual info dot — quiet until hovered/focused */
+.info-dot{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;
+  border:1px solid var(--ink-4);color:var(--ink-4);font-size:10px;font-weight:700;font-style:normal;
+  line-height:1;cursor:help;vertical-align:middle;margin-left:6px;opacity:.5;flex-shrink:0;
+  transition:opacity .14s ease,color .14s ease,border-color .14s ease,background .14s ease;
+  font-family:Georgia,'Times New Roman',serif}
+.info-dot::before{content:"i"}
+.info-dot:hover,.info-dot:focus-visible{opacity:1;color:var(--violet);border-color:var(--violet);
+  background:var(--violet-soft);outline:none}
+/* reveal fully when the containing card/row is hovered, so dots stay discoverable but calm */
+.card:hover .info-dot,.glass:hover .info-dot,.mrow:hover .info-dot,
+tr:hover .info-dot,.field:hover .info-dot,th:hover .info-dot{opacity:.8}
+th .info-dot{margin-left:5px}
 
 /* ===================== Onboarding coach-marks (non-blocking) ===================== */
 .tour-ring{position:fixed;z-index:9990;border-radius:12px;pointer-events:none;
@@ -1001,7 +1008,6 @@ body.has-logo .brand-logo-full{display:block}
     <div class="tb-ic" id="navT" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
     <div class="crumb">Control Panel <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg> <b id="crumbPage">Home</b></div>
     <div class="sp"></div>
-    <div class="accsw" role="group" aria-label="Accent color" data-tip="Switch the portal accent colour"><button type="button" data-accent="a" class="on" title="Accent A · Violet">A</button><button type="button" data-accent="b" title="Accent B · Navy">B</button></div>
     <button class="tsw" id="tsw" role="switch" aria-checked="false" data-tip="Toggle light / dark theme"><span class="l">Light</span>
       <span class="tr"><span class="kn"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 4l1.5 1.5M18.5 18.5 20 20M2 12h2M20 12h2M4 20l1.5-1.5M18.5 5.5 20 4"/></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></span></button>
     <button class="tb-ic" id="helpBtn" aria-label="Help and product tour" data-tip="Help &amp; product tour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.2a2.8 2.8 0 0 1 5.5.8c0 1.9-2.7 2.4-2.7 2.4"/><path d="M12 16.8h.01"/></svg></button>
@@ -1050,7 +1056,7 @@ body.has-logo .brand-logo-full{display:block}
       <div class="glass ov-card">
         <div class="ov-k">Total Users</div>
         <div class="ov-v mono">5000</div>
-        <div class="pbar-lab"><span>Seats Assigned</span><b class="mono">2657</b></div>
+        <div class="pbar-lab"><span>Seats Assigned<span class="info-dot" data-tip="Users who currently hold a paid seat, out of your 5,000 total licenses."></span></span><b class="mono">2657</b></div>
         <div class="pbar"><span style="width:53%"></span></div>
       </div>
       <div class="glass ov-card">
@@ -1063,7 +1069,7 @@ body.has-logo .brand-logo-full{display:block}
           <div class="ring"><div id="d-sms" class="donut-c"></div><div class="rv mono">75%</div></div>
           <div>
             <div class="ov-v mono">$340/$45</div>
-            <div class="ov-sub">SMS / Voice Minute • <span class="pmonth">May 2024</span></div>
+            <div class="ov-sub">SMS / Voice Minute<span class="info-dot" data-tip="Average cost per SMS message and per voice minute this period. The ring shows usage against your plan allowance."></span> • <span class="pmonth">May 2024</span></div>
           </div>
         </div>
       </div>
@@ -1073,7 +1079,7 @@ body.has-logo .brand-logo-full{display:block}
     <div class="sec-t first">Sangoma Talk</div>
     <div class="dgrid" style="grid-template-columns:repeat(3,1fr)">
       <div class="card">
-        <div class="card-h"><div><div class="t">Extensions and DIDs</div><div class="s">Last updated <span class="pmonth">May 2024</span></div></div></div>
+        <div class="card-h"><div><div class="t">Extensions and DIDs<span class="info-dot" data-tip="A DID (Direct Inward Dialing) number routes external calls straight to a specific extension or user."></span></div><div class="s">Last updated <span class="pmonth">May 2024</span></div></div></div>
         <div class="card-b">
           <div class="donut-wrap"><div class="donut-c"><div id="d-ext"></div><div class="dc-v mono">7302</div></div></div>
           <div class="legend-grid"><div><i style="background:var(--ch-ok)"></i>Extensions</div><div><i style="background:var(--ch5)"></i>DIDs</div></div>
@@ -1103,19 +1109,19 @@ body.has-logo .brand-logo-full{display:block}
         <div class="card-h"><div><div class="t">My Agents</div><div class="s">Last updated <span class="pmonth">May 2024</span></div></div></div>
         <div class="card-b" style="text-align:center">
           <div class="donut-wrap"><div class="ring" style="width:160px;height:160px"><div id="d-agents" class="donut-c"></div><div class="rv mono" style="font-size:32px">75%</div></div></div>
-          <div style="font-weight:600;margin-top:12px">Occupation</div>
+          <div style="font-weight:600;margin-top:12px">Occupation<span class="info-dot" data-tip="The share of your agents' logged-in time spent actively handling calls."></span></div>
           <div class="s" style="color:var(--ink-3)">Total 753 &nbsp;|&nbsp; Online 78 &nbsp;|&nbsp; Offline 175</div>
         </div>
       </div>
       <div class="card">
-        <div class="card-h"><div><div class="t">Calls</div><div class="s">Current Month • <span class="pmonth">May 2024</span></div></div></div>
+        <div class="card-h"><div><div class="t">Calls<span class="info-dot" data-tip="Answered vs Abandoned (caller hung up before pickup), Missed, Overflow (re-routed when all agents were busy) and Other."></span></div><div class="s">Current Month • <span class="pmonth">May 2024</span></div></div></div>
         <div class="card-b">
           <div class="donut-wrap"><div class="donut-c"><div id="d-cxcall"></div><div class="dc-v mono">195</div></div></div>
           <div class="legend-grid"><div><i style="background:var(--ch-ok)"></i>Answered</div><div><i style="background:var(--ch5)"></i>Abandoned</div><div><i style="background:var(--ch6)"></i>Missed</div><div><i style="background:var(--ch4)"></i>Overflow</div><div><i style="background:var(--ch-mut)"></i>Other</div></div>
         </div>
       </div>
       <div class="card">
-        <div class="card-h"><div><div class="t">SLA Durations</div><div class="s"><span class="ov-v" style="font-size:22px">10,234</span></div></div></div>
+        <div class="card-h"><div><div class="t">SLA Durations<span class="info-dot" data-tip="Speed of answer for inbound calls. Bars show the share of calls answered within each time window."></span></div><div class="s"><span class="ov-v" style="font-size:22px">10,234</span></div></div></div>
         <div class="card-b">
           <div class="bars" style="padding:6px 0">
             <div class="bar"><span class="l">0-30s</span><span class="t"><span style="width:82%;background:var(--ch-ok)"></span></span></div>
@@ -1305,7 +1311,7 @@ body.has-logo .brand-logo-full{display:block}
       <h3>Company Information</h3><div class="sub">Basic details about your organization.</div>
       <div class="form-grid">
         <div class="field"><label>Company Name</label><input class="inp" value="Sangoma Technologies"></div>
-        <div class="field"><label>Account Number</label><input class="inp" value="SNG-100482" readonly></div>
+        <div class="field"><label>Account Number<span class="info-dot" data-tip="Your unique Sangoma account ID. It can't be edited here — contact support to change it."></span></label><input class="inp" value="SNG-100482" readonly></div>
         <div class="field"><label>Industry</label><input class="inp" value="Telecommunications"></div>
         <div class="field"><label>Company Size</label><input class="inp" value="1000-5000 employees"></div>
         <div class="field"><label>Phone</label><input class="inp" value="+1 (256) 428-6000"></div>
@@ -1382,11 +1388,11 @@ body.has-logo .brand-logo-full{display:block}
     <div class="lstat">
       <div class="glass"><div class="k">Total Licenses</div><div class="v mono">2000</div></div>
       <div class="glass"><div class="k">Assigned</div><div class="v mono">760<small> /2000</small></div></div>
-      <div class="glass"><div class="k">DID Numbers</div><div class="v mono">1,240</div></div>
+      <div class="glass"><div class="k">DID Numbers<span class="info-dot" data-tip="Direct Inward Dialing numbers — external phone numbers assigned to your account."></span></div><div class="v mono">1,240</div></div>
       <div class="glass"><div class="k">Devices</div><div class="v mono">7,302</div></div>
     </div>
     <div class="tw"><div class="tscroll"><table>
-      <thead><tr><th>Product</th><th>Purchased</th><th>Assigned</th><th>Available</th><th>Utilization</th></tr></thead>
+      <thead><tr><th>Product</th><th>Purchased</th><th>Assigned</th><th>Available</th><th>Utilization<span class="info-dot" data-tip="Assigned ÷ Purchased. Green below 70%, amber 70–90%, red above 90%."></span></th></tr></thead>
       <tbody>
         <tr><td>Chat — Advanced</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td></tr>
         <tr><td>Chat — Premium</td><td class="mono">400</td><td class="mono">200</td><td class="mono">200</td><td><span class="tag warn">50%</span></td></tr>
@@ -1459,7 +1465,7 @@ body.has-logo .brand-logo-full{display:block}
     <div class="sec-card">
       <h3>Authentication</h3><div class="sub">Protect your account with additional verification.</div>
       <div class="mrow"><span class="lft">Two-factor authentication (2FA)</span><span class="sw on"></span></div>
-      <div class="mrow"><span class="lft">Single Sign-On (SSO)</span><span class="sw"></span></div>
+      <div class="mrow"><span class="lft">Single Sign-On (SSO)<span class="info-dot" data-tip="Let users sign in with your company identity provider (Okta, Microsoft Entra, Google Workspace)."></span></span><span class="sw"></span></div>
       <div class="mrow"><span class="lft">Require strong passwords</span><span class="sw on"></span></div>
       <div class="mrow"><span class="lft">Session timeout after inactivity</span><span class="sw on"></span></div>
     </div>
@@ -1540,12 +1546,6 @@ body.has-logo .brand-logo-full{display:block}
   document.querySelectorAll('.rail .nav-item').forEach(function(it){
    it.addEventListener('mouseenter',show);it.addEventListener('mouseleave',hide);it.addEventListener('click',hide);});
  })();
- (function(){var sw=document.querySelector('.accsw');if(!sw)return;
-  function set(v){document.body.classList.toggle('acc-b',v==='b');
-   sw.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.accent===v);});
-   localStorage.setItem('accent',v);}
-  sw.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.accent);});});
-  set(localStorage.getItem('accent')||'a');})();
  function sn(){n.style.display=window.innerWidth<=820?'grid':'none';}
  window.addEventListener('resize',sn);sn();})();
 function donut(el,segs,size,sw){var C=2*Math.PI*((size-sw)/2),r=(size-sw)/2,c=size/2,o=0,a='';
@@ -1888,7 +1888,7 @@ function renderSMS(){
 function renderUsers(){
   var mount=document.getElementById('users-table');if(!mount)return;
   var apps=['Chat','Meet','SMS','Voice'];
-  var head='<th style="width:44px"><input type="checkbox" class="ck" data-head></th><th>User Name</th><th>Email</th><th>Role</th>'+apps.map(function(a){return '<th style="text-align:center">'+a+'</th>';}).join('');
+  var head='<th style="width:44px"><input type="checkbox" class="ck" data-head></th><th>User Name</th><th>Email</th><th>Role<span class="info-dot" data-tip="Admins manage company settings, billing and users. Members only use the apps enabled for them."></span></th>'+apps.map(function(a){return '<th style="text-align:center">'+a+'</th>';}).join('');
   var rows='';
   UC_USERS.forEach(function(u,i){
     var on=[u.lic!=='Unlicensed',u.lic!=='Unlicensed',!!u.did,true];
@@ -2012,8 +2012,6 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
   function applyBrand(hex,save){
     styleEl().textContent=brandCSS(hex);
     document.documentElement.classList.add('brandc');
-    document.body.classList.remove('acc-b');
-    document.querySelectorAll('.accsw button').forEach(function(b){b.classList.remove('on');});
     var ci=document.getElementById('brandColor');if(ci)ci.value=hex;
     markSwatch(hex);
     if(save!==false)localStorage.setItem('brandColor',hex);
@@ -2022,9 +2020,6 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
     document.documentElement.classList.remove('brandc');
     var s=document.getElementById('brandStyle');if(s)s.textContent='';
     localStorage.removeItem('brandColor');markSwatch('');
-    var a=localStorage.getItem('accent')||'a';
-    document.body.classList.toggle('acc-b',a==='b');
-    document.querySelectorAll('.accsw button').forEach(function(b){b.classList.toggle('on',b.dataset.accent===a);});
     var ci=document.getElementById('brandColor');if(ci)ci.value=DEFAULT;
   }
 
@@ -2034,12 +2029,6 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
   var ci=document.getElementById('brandColor');
   if(ci)ci.addEventListener('input',function(){applyBrand(ci.value,true);});
   var br=document.getElementById('brandReset');if(br)br.addEventListener('click',resetBrand);
-
-  /* accent A/B overrides custom brand */
-  document.querySelectorAll('.accsw button').forEach(function(b){b.addEventListener('click',function(){
-    document.documentElement.classList.remove('brandc');
-    var s=document.getElementById('brandStyle');if(s)s.textContent='';
-    localStorage.removeItem('brandColor');markSwatch('');});});
 
   /* ---- white-label logo ---- */
   function applyLogo(kind,url,save){
@@ -2112,6 +2101,7 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
     y=Math.max(8,Math.min(y,innerHeight-tr.height-8));
     tip.style.left=x+'px'; tip.style.top=y+'px';
     tip.classList.add('t-'+pos);
+    if(el.classList.contains('info-dot'))tip.classList.add('tip-rich');
     void tip.offsetWidth; tip.classList.add('show');
   }
   function hide(){ if(timer){clearTimeout(timer);timer=null;} if(tip){tip.remove();tip=null;} cur=null; }
@@ -2123,8 +2113,23 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
   document.addEventListener('mouseout',function(e){
     var el=e.target.closest('[data-tip],.nav-item'); if(el&&el===cur)hide();
   });
+  /* keyboard access: show instantly on focus, hide on blur */
+  document.addEventListener('focusin',function(e){
+    var el=e.target.closest('[data-tip]'); if(!el)return;
+    var txt=label(el); if(!txt)return; hide(); cur=el; place(el,txt);
+  });
+  document.addEventListener('focusout',function(e){
+    var el=e.target.closest('[data-tip]'); if(el&&el===cur)hide();
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape')hide(); });
   document.addEventListener('mousedown',hide);
   window.addEventListener('scroll',hide,true);
+  /* make info dots focusable + screen-reader friendly */
+  document.querySelectorAll('.info-dot[data-tip]').forEach(function(d){
+    if(!d.hasAttribute('tabindex'))d.setAttribute('tabindex','0');
+    if(!d.hasAttribute('role'))d.setAttribute('role','note');
+    if(!d.hasAttribute('aria-label'))d.setAttribute('aria-label',d.dataset.tip);
+  });
 })();
 
 /* ===================== Onboarding tour ===================== */
@@ -2139,7 +2144,7 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
     {sel:'.svc-pick',pos:'bottom',step:'Service filter',t:'Focus on one service',
      d:'Narrow the dashboard to a single service — Chat, Meet, SMS, Voice or CPaaS.'},
     {sel:'#tsw',pos:'bottom',step:'Appearance',t:'Light or dark, your call',
-     d:'Toggle the theme here, and use A / B to switch the portal accent colour.'},
+     d:'Toggle between light and dark theme here to match your preference.'},
     {sel:'#helpBtn',pos:'bottom',step:'Need a refresher?',t:'Help is always here',
      d:'Re-open this tour whenever you like from the help button. That\u2019s it — you\u2019re ready to go!'}
   ];

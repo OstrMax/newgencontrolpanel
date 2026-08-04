@@ -74,14 +74,6 @@ a{color:inherit;text-decoration:none}
 .brand-mini{height:26px;width:auto;display:none;color:var(--ink-1)}
 .brand-mini-dark{height:26px;width:auto;display:none;color:var(--ink-1)}
 [data-theme="dark"] .brand svg:not(.brand-mini-dark) path[fill^="url"]{fill:#fff}
-/* ---- A/B accent (B = navy #142B53) ---- */
-body.acc-b{--violet:#142b53;--violet-tint:#e6ecf5;--violet-soft:#f1f4f9;--grad-icon:#142b53;--grad:linear-gradient(180deg,#284d8a 0%,#142b53 100%);--g1:#284d8a;--g2:#1d3c6f;--g3:#142b53}
-[data-theme="dark"] body.acc-b{--violet:#9db4e6;--violet-tint:rgba(120,150,220,.18);--violet-soft:rgba(120,150,220,.12);--grad-icon:#aCc1ec;--grad:linear-gradient(180deg,#5178bd 0%,#2b4e8f 100%);--g1:#5178bd;--g2:#3b638e;--g3:#2b4e8f}
-.accsw{display:inline-flex;border:1px solid var(--hair);border-radius:8px;overflow:hidden;background:var(--surface)}
-.accsw button{width:30px;height:30px;border:none;background:transparent;cursor:pointer;font:600 12px Inter,system-ui,sans-serif;color:var(--ink-3)}
-.accsw button.on{background:var(--violet-soft);color:var(--grad-icon)}
-.accsw button+button{border-left:1px solid var(--hair)}
-@media(max-width:760px){.accsw{display:none}}
 /* ---- sidebar collapse: icon mini-rail (desktop) ---- */
 .rail{transition:width .2s ease,padding .2s ease}
 #railT{padding:0}

@@ -344,6 +344,21 @@ body.has-logo .brand-logo-full{display:block}
 .tip.t-bottom::after{left:50%;top:-4px;margin-left:-4px}
 .tip.t-right::after{top:50%;left:-4px;margin-top:-4px}
 .tip.t-left::after{top:50%;right:-4px;margin-top:-4px}
+.tip.tip-rich{max-width:250px;padding:9px 12px;line-height:1.5;text-align:left;font-weight:450;letter-spacing:.005em}
+
+/* contextual info dot — quiet until hovered/focused */
+.info-dot{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;
+  border:1px solid var(--ink-4);color:var(--ink-4);font-size:10px;font-weight:700;font-style:normal;
+  line-height:1;cursor:help;vertical-align:middle;margin-left:6px;opacity:.5;flex-shrink:0;
+  transition:opacity .14s ease,color .14s ease,border-color .14s ease,background .14s ease;
+  font-family:Georgia,'Times New Roman',serif}
+.info-dot::before{content:"i"}
+.info-dot:hover,.info-dot:focus-visible{opacity:1;color:var(--violet);border-color:var(--violet);
+  background:var(--violet-soft);outline:none}
+/* reveal fully when the containing card/row is hovered, so dots stay discoverable but calm */
+.card:hover .info-dot,.glass:hover .info-dot,.mrow:hover .info-dot,
+tr:hover .info-dot,.field:hover .info-dot,th:hover .info-dot{opacity:.8}
+th .info-dot{margin-left:5px}
 
 /* ===================== Onboarding coach-marks (non-blocking) ===================== */
 .tour-ring{position:fixed;z-index:9990;border-radius:12px;pointer-events:none;

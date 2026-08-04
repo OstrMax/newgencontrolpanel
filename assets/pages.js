@@ -326,7 +326,7 @@ function renderSMS(){
 function renderUsers(){
   var mount=document.getElementById('users-table');if(!mount)return;
   var apps=['Chat','Meet','SMS','Voice'];
-  var head='<th style="width:44px"><input type="checkbox" class="ck" data-head></th><th>User Name</th><th>Email</th><th>Role</th>'+apps.map(function(a){return '<th style="text-align:center">'+a+'</th>';}).join('');
+  var head='<th style="width:44px"><input type="checkbox" class="ck" data-head></th><th>User Name</th><th>Email</th><th>Role<span class="info-dot" data-tip="Admins manage company settings, billing and users. Members only use the apps enabled for them."></span></th>'+apps.map(function(a){return '<th style="text-align:center">'+a+'</th>';}).join('');
   var rows='';
   UC_USERS.forEach(function(u,i){
     var on=[u.lic!=='Unlicensed',u.lic!=='Unlicensed',!!u.did,true];
@@ -450,8 +450,6 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
   function applyBrand(hex,save){
     styleEl().textContent=brandCSS(hex);
     document.documentElement.classList.add('brandc');
-    document.body.classList.remove('acc-b');
-    document.querySelectorAll('.accsw button').forEach(function(b){b.classList.remove('on');});
     var ci=document.getElementById('brandColor');if(ci)ci.value=hex;
     markSwatch(hex);
     if(save!==false)localStorage.setItem('brandColor',hex);
@@ -460,9 +458,6 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
     document.documentElement.classList.remove('brandc');
     var s=document.getElementById('brandStyle');if(s)s.textContent='';
     localStorage.removeItem('brandColor');markSwatch('');
-    var a=localStorage.getItem('accent')||'a';
-    document.body.classList.toggle('acc-b',a==='b');
-    document.querySelectorAll('.accsw button').forEach(function(b){b.classList.toggle('on',b.dataset.accent===a);});
     var ci=document.getElementById('brandColor');if(ci)ci.value=DEFAULT;
   }
 
@@ -472,12 +467,6 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
   var ci=document.getElementById('brandColor');
   if(ci)ci.addEventListener('input',function(){applyBrand(ci.value,true);});
   var br=document.getElementById('brandReset');if(br)br.addEventListener('click',resetBrand);
-
-  /* accent A/B overrides custom brand */
-  document.querySelectorAll('.accsw button').forEach(function(b){b.addEventListener('click',function(){
-    document.documentElement.classList.remove('brandc');
-    var s=document.getElementById('brandStyle');if(s)s.textContent='';
-    localStorage.removeItem('brandColor');markSwatch('');});});
 
   /* ---- white-label logo ---- */
   function applyLogo(kind,url,save){
@@ -550,6 +539,7 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
     y=Math.max(8,Math.min(y,innerHeight-tr.height-8));
     tip.style.left=x+'px'; tip.style.top=y+'px';
     tip.classList.add('t-'+pos);
+    if(el.classList.contains('info-dot'))tip.classList.add('tip-rich');
     void tip.offsetWidth; tip.classList.add('show');
   }
   function hide(){ if(timer){clearTimeout(timer);timer=null;} if(tip){tip.remove();tip=null;} cur=null; }
@@ -561,8 +551,23 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
   document.addEventListener('mouseout',function(e){
     var el=e.target.closest('[data-tip],.nav-item'); if(el&&el===cur)hide();
   });
+  /* keyboard access: show instantly on focus, hide on blur */
+  document.addEventListener('focusin',function(e){
+    var el=e.target.closest('[data-tip]'); if(!el)return;
+    var txt=label(el); if(!txt)return; hide(); cur=el; place(el,txt);
+  });
+  document.addEventListener('focusout',function(e){
+    var el=e.target.closest('[data-tip]'); if(el&&el===cur)hide();
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape')hide(); });
   document.addEventListener('mousedown',hide);
   window.addEventListener('scroll',hide,true);
+  /* make info dots focusable + screen-reader friendly */
+  document.querySelectorAll('.info-dot[data-tip]').forEach(function(d){
+    if(!d.hasAttribute('tabindex'))d.setAttribute('tabindex','0');
+    if(!d.hasAttribute('role'))d.setAttribute('role','note');
+    if(!d.hasAttribute('aria-label'))d.setAttribute('aria-label',d.dataset.tip);
+  });
 })();
 
 /* ===================== Onboarding tour ===================== */
@@ -577,7 +582,7 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
     {sel:'.svc-pick',pos:'bottom',step:'Service filter',t:'Focus on one service',
      d:'Narrow the dashboard to a single service — Chat, Meet, SMS, Voice or CPaaS.'},
     {sel:'#tsw',pos:'bottom',step:'Appearance',t:'Light or dark, your call',
-     d:'Toggle the theme here, and use A / B to switch the portal accent colour.'},
+     d:'Toggle between light and dark theme here to match your preference.'},
     {sel:'#helpBtn',pos:'bottom',step:'Need a refresher?',t:'Help is always here',
      d:'Re-open this tour whenever you like from the help button. That\u2019s it — you\u2019re ready to go!'}
   ];
