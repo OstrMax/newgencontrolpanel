@@ -74,15 +74,15 @@ document.querySelectorAll('.inp-wrap .eye').forEach(function(eye){
 })();
 
 /* ---------- charts ---------- */
-function ring(id,pct,color,size){donut(id,[{v:pct,c:color||'var(--g2)'},{v:100-pct,c:'transparent'}],size||104,10);}
+function ring(id,pct,color,size){donut(id,[{v:pct,c:color||'var(--g2)'},{v:100-pct,c:'transparent'}],size||104,8);}
 if(document.getElementById('d-sms')){
   ring('d-sms',75,'var(--ch1)',104);
-  donut('d-ext',[{v:62,c:'var(--ch1)'},{v:38,c:'var(--ch3)'}],150,16);
-  donut('d-call',[{v:55,c:'var(--ch3)'},{v:32,c:'var(--ch1)'},{v:13,c:'var(--ch6)'}],150,16);
+  donut('d-ext',[{v:62,c:'var(--ch1)'},{v:38,c:'var(--ch3)'}],150,12);
+  donut('d-call',[{v:55,c:'var(--ch3)'},{v:32,c:'var(--ch1)'},{v:13,c:'var(--ch6)'}],150,12);
   ring('d-agents',75,'var(--ch1)',160);
-  donut('d-cxcall',[{v:42,c:'var(--ch3)'},{v:22,c:'var(--ch1)'},{v:16,c:'var(--ch6)'},{v:12,c:'var(--ch5)'},{v:8,c:'var(--ch4)'}],150,16);
-  donut('d-dev',[{v:74,c:'var(--ch-ok)'},{v:12,c:'var(--ch5)'},{v:9,c:'var(--ch6)'},{v:5,c:'var(--ch-mut)'}],150,16);
-  donut('d-links',[{v:80,c:'var(--ch-ok)'},{v:14,c:'var(--ch5)'},{v:6,c:'var(--ch6)'}],150,16);
+  donut('d-cxcall',[{v:42,c:'var(--ch3)'},{v:22,c:'var(--ch1)'},{v:16,c:'var(--ch6)'},{v:12,c:'var(--ch5)'},{v:8,c:'var(--ch4)'}],150,12);
+  donut('d-dev',[{v:74,c:'var(--ch-ok)'},{v:12,c:'var(--ch5)'},{v:9,c:'var(--ch6)'},{v:5,c:'var(--ch-mut)'}],150,12);
+  donut('d-links',[{v:80,c:'var(--ch-ok)'},{v:14,c:'var(--ch5)'},{v:6,c:'var(--ch6)'}],150,12);
   var t1=[1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
   function trk(id,downs){var el=document.getElementById(id);if(!el)return;var h='';
     for(var i=0;i<30;i++){h+='<i class="'+(downs.indexOf(i)>=0?'bad':'')+'"></i>';}el.innerHTML=h;}
@@ -203,8 +203,9 @@ function renderLic(cfg){
   mount.innerHTML='<div class="tw"><div class="tscroll"><table><thead><tr>'+cols+'</tr></thead><tbody>'+rows+'</tbody></table></div>'+pager()+'</div>';
   wireSelection(cfg);
 }
-function pager(){return '<div class="pag"><div class="rows">Rows per page <span class="sel" data-opts="10,25,50,100" style="min-width:64px"><span class="lab">50</span>'+CEV+'</span></div>'+
-  '<div class="right"><span>1–10 of 50</span><div class="arrows"><button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button><button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button></div></div></div>';}
+function pager(n){n=n||UC_USERS.length;
+  return '<div class="pag"><div class="rows">Rows per page <span class="sel" data-opts="10,25,50,100" style="min-width:64px"><span class="lab">10</span>'+CEV+'</span></div>'+
+  '<div class="right"><span>1–'+n+' of '+n+'</span><div class="arrows"><button disabled aria-label="Previous page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button><button disabled aria-label="Next page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button></div></div></div>';}
 
 /* selection + bulk apply flow */
 function wireSelection(cfg){

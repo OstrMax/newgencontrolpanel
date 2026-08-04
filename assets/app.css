@@ -3,20 +3,20 @@
    Reuses all base tokens, spacing, radii, typography from styles.css
    ============================================================ */
 
-/* ---- unified calm chart palette (harmonised with brand violet) ---- */
+/* ---- refined chart palette (jewel-toned, harmonised with brand violet) ---- */
 :root{
-  --ch1:#6b2a8f;   /* brand violet (primary) */
-  --ch2:#a884cf;   /* soft violet */
-  --ch3:#5fb3ac;   /* calm teal */
-  --ch4:#8ea2ff;   /* soft periwinkle */
-  --ch5:#e0b268;   /* muted amber */
-  --ch6:#d68aa4;   /* soft rose */
-  --ch-ok:#57ac83; /* calm green (healthy/online) */
-  --ch-mut:#c2c8d0;/* muted neutral */
+  --ch1:#6c4cd1;   /* indigo-violet (primary) */
+  --ch2:#9d8bec;   /* lavender */
+  --ch3:#2fb4a6;   /* jewel teal */
+  --ch4:#5b9bf3;   /* sky blue */
+  --ch5:#eaa64f;   /* warm amber */
+  --ch6:#e77fa6;   /* rose */
+  --ch-ok:#3fae82; /* calm green (healthy/online) */
+  --ch-mut:#cdd4de;/* muted neutral */
 }
 [data-theme="dark"]{
-  --ch1:#c79bf2; --ch2:#a99ae0; --ch3:#6fd0c8; --ch4:#9fb0ff;
-  --ch5:#e6c07f; --ch6:#e6a5bd; --ch-ok:#6fc79b; --ch-mut:#7a8496;
+  --ch1:#a794f2; --ch2:#b8abf0; --ch3:#4fd0c2; --ch4:#7fb2ff;
+  --ch5:#f0bd78; --ch6:#f0a0be; --ch-ok:#5fc79a; --ch-mut:#79838f;
 }
 
 /* nav sub-items (Sangoma UC children) */

@@ -29,6 +29,10 @@
  window.addEventListener('resize',sn);sn();})();
 function donut(el,segs,size,sw){var C=2*Math.PI*((size-sw)/2),r=(size-sw)/2,c=size/2,o=0,a='';
  var tot=segs.reduce(function(x,y){return x+y.v},0);
+ var real=segs.filter(function(s){return s.c!=='transparent';}).length;
+ var g=real>1?3:0; /* gap between visible slices; none for single-value rings */
  segs.forEach(function(s){var len=s.v/tot*C;
-  a+='<circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="'+s.c+'" stroke-width="'+sw+'" stroke-dasharray="'+(len-1)+' '+(C-len+1)+'" stroke-dashoffset="'+(-o)+'"/>';o+=len;});
+  if(s.c!=='transparent'){var dash=Math.max(len-g,0.01);
+   a+='<circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="'+s.c+'" stroke-width="'+sw+'" stroke-linecap="round" stroke-dasharray="'+dash+' '+(C-dash)+'" stroke-dashoffset="'+(-(o+g/2))+'"/>';}
+  o+=len;});
  var t=document.getElementById(el); if(t)t.innerHTML='<svg width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'" style="transform:rotate(-90deg)"><circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="var(--track)" stroke-width="'+sw+'"/>'+a+'</svg>';}

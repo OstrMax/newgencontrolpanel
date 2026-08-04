@@ -291,6 +291,7 @@ tbody tr:hover{background:var(--card-2)}
 .pag .arrows button{width:30px;height:30px;border:none;background:transparent;border-radius:7px;cursor:pointer;
   color:var(--ink-2);display:grid;place-items:center}
 .pag .arrows button:hover{background:var(--card-2);color:var(--ink-1)}
+.pag .arrows button:disabled{opacity:.38;cursor:default;background:transparent}
 .pag .arrows svg{width:18px;height:18px}
 
 /* banners */
