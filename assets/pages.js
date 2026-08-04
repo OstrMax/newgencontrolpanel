@@ -325,3 +325,83 @@ renderUsers();
 document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.dataset.table;if(!t)return;
   FILTERS[t]=FILTERS[t]||{};
   inp.addEventListener('input',function(){FILTERS[t].q=inp.value;applyFilters(t);});});
+
+/* ===================== White-label branding ===================== */
+(function(){
+  var DEFAULT='#7a1f86';
+  /* color helpers */
+  function hx(n){n=Math.max(0,Math.min(255,Math.round(n)));return ('0'+n.toString(16)).slice(-2);}
+  function toRgb(h){h=(h||'').replace('#','');if(h.length===3)h=h.split('').map(function(c){return c+c;}).join('');
+    return {r:parseInt(h.slice(0,2),16),g:parseInt(h.slice(2,4),16),b:parseInt(h.slice(4,6),16)};}
+  function mix(h,t,a){var x=toRgb(h),y=toRgb(t);return '#'+hx(x.r+(y.r-x.r)*a)+hx(x.g+(y.g-x.g)*a)+hx(x.b+(y.b-x.b)*a);}
+  function lighten(h,a){return mix(h,'#ffffff',a);}
+  function darken(h,a){return mix(h,'#000000',a);}
+  function rgba(h,a){var c=toRgb(h);return 'rgba('+c.r+','+c.g+','+c.b+','+a+')';}
+  function brandCSS(hex){
+    var lg=lighten(hex,.06),dk=darken(hex,.28);
+    var light='--violet:'+hex+';--grad-icon:'+hex+';--violet-tint:'+rgba(hex,.12)+';--violet-soft:'+rgba(hex,.07)+
+      ';--g1:'+lg+';--g2:'+hex+';--g3:'+dk+';--grad:linear-gradient(180deg,'+lg+' 0%,'+hex+' 55%,'+dk+' 130%)';
+    var dv=lighten(hex,.45),di=lighten(hex,.52),d1=lighten(hex,.4),d2=lighten(hex,.28),d3=lighten(hex,.16);
+    var dark='--violet:'+dv+';--grad-icon:'+di+';--violet-tint:'+rgba(dv,.16)+';--violet-soft:'+rgba(dv,.12)+
+      ';--g1:'+d1+';--g2:'+d2+';--g3:'+d3+';--grad:linear-gradient(180deg,'+d1+' 0%,'+d2+' 55%,'+d3+' 110%)';
+    return '.brandc,.brandc body{'+light+'}\n.brandc[data-theme="dark"],.brandc[data-theme="dark"] body{'+dark+'}';
+  }
+  function styleEl(){var s=document.getElementById('brandStyle');
+    if(!s){s=document.createElement('style');s.id='brandStyle';document.head.appendChild(s);}return s;}
+  function markSwatch(hex){document.querySelectorAll('#brandSwatches button').forEach(function(b){
+    b.classList.toggle('on',(b.dataset.c||'').toLowerCase()===(hex||'').toLowerCase());});}
+
+  function applyBrand(hex,save){
+    styleEl().textContent=brandCSS(hex);
+    document.documentElement.classList.add('brandc');
+    document.body.classList.remove('acc-b');
+    document.querySelectorAll('.accsw button').forEach(function(b){b.classList.remove('on');});
+    var ci=document.getElementById('brandColor');if(ci)ci.value=hex;
+    markSwatch(hex);
+    if(save!==false)localStorage.setItem('brandColor',hex);
+  }
+  function resetBrand(){
+    document.documentElement.classList.remove('brandc');
+    var s=document.getElementById('brandStyle');if(s)s.textContent='';
+    localStorage.removeItem('brandColor');markSwatch('');
+    var a=localStorage.getItem('accent')||'a';
+    document.body.classList.toggle('acc-b',a==='b');
+    document.querySelectorAll('.accsw button').forEach(function(b){b.classList.toggle('on',b.dataset.accent===a);});
+    var ci=document.getElementById('brandColor');if(ci)ci.value=DEFAULT;
+  }
+  /* logo */
+  function applyLogo(url,save){
+    var brand=document.querySelector('.brand'),img=brand&&brand.querySelector('.brand-logo-img');
+    if(!brand||!img)return;img.src=url;brand.classList.add('has-logo');
+    var prev=document.getElementById('brandLogoPrev');if(prev)prev.innerHTML='<img src="'+url+'" alt="logo preview">';
+    if(save!==false)localStorage.setItem('brandLogo',url);
+  }
+  function resetLogo(){
+    var brand=document.querySelector('.brand'),img=brand&&brand.querySelector('.brand-logo-img');
+    if(brand)brand.classList.remove('has-logo');if(img)img.removeAttribute('src');
+    var prev=document.getElementById('brandLogoPrev');if(prev)prev.textContent='Default';
+    localStorage.removeItem('brandLogo');
+  }
+
+  /* wire controls (company-level settings in Company Profile) */
+  var sw=document.getElementById('brandSwatches');
+  if(sw)sw.addEventListener('click',function(e){var b=e.target.closest('button[data-c]');if(b)applyBrand(b.dataset.c,true);});
+  var ci=document.getElementById('brandColor');
+  if(ci)ci.addEventListener('input',function(){applyBrand(ci.value,true);});
+  var lb=document.getElementById('brandLogoBtn'),lf=document.getElementById('brandLogoFile');
+  if(lb&&lf)lb.addEventListener('click',function(){lf.click();});
+  if(lf)lf.addEventListener('change',function(){var f=lf.files&&lf.files[0];if(!f)return;
+    var r=new FileReader();r.onload=function(){applyLogo(r.result,true);};r.readAsDataURL(f);lf.value='';});
+  var lr=document.getElementById('brandLogoReset');if(lr)lr.addEventListener('click',resetLogo);
+  var br=document.getElementById('brandReset');if(br)br.addEventListener('click',resetBrand);
+
+  /* accent A/B overrides custom brand */
+  document.querySelectorAll('.accsw button').forEach(function(b){b.addEventListener('click',function(){
+    document.documentElement.classList.remove('brandc');
+    var s=document.getElementById('brandStyle');if(s)s.textContent='';
+    localStorage.removeItem('brandColor');markSwatch('');});});
+
+  /* restore saved brand on load */
+  var savedC=localStorage.getItem('brandColor');if(savedC)applyBrand(savedC,false);
+  var savedL=localStorage.getItem('brandLogo');if(savedL)applyLogo(savedL,false);
+})();

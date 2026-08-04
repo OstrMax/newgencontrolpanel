@@ -44,7 +44,7 @@
 <stop stop-color="white" stop-opacity="0"/>
 <stop offset="1" stop-color="#158FD0"/>
 </linearGradient>
-</defs></svg></a>
+</defs></svg><img class="brand-logo-img" alt="Brand logo"></a>
   <div class="acct" tabindex="0" role="button"><span>Sangoma Technologies</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
 
   <div class="nav-item" data-key="home" data-go="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg><span class="lbl">Home</span></div>
@@ -366,6 +366,38 @@
         <div class="field full"><label>Address</label><input class="inp" value="100 Renfrew Drive, Suite 100, Markham, ON L3R 9R6, Canada"></div>
       </div>
       <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Save Changes</span></button></div>
+    </div>
+    <div class="sec-card">
+      <h3>Brand &amp; White-labeling</h3><div class="sub">Applied across the entire portal for everyone in this company.</div>
+      <div class="brand-cfg">
+        <div class="bp-sec">
+          <div class="bp-lab">Brand color</div>
+          <div class="bp-sw" id="brandSwatches">
+            <button type="button" data-c="#7a1f86" title="Violet" style="--s:#7a1f86"></button>
+            <button type="button" data-c="#142b53" title="Navy" style="--s:#142b53"></button>
+            <button type="button" data-c="#1d4ed8" title="Blue" style="--s:#1d4ed8"></button>
+            <button type="button" data-c="#0f766e" title="Teal" style="--s:#0f766e"></button>
+            <button type="button" data-c="#047857" title="Emerald" style="--s:#047857"></button>
+            <button type="button" data-c="#be185d" title="Rose" style="--s:#be185d"></button>
+            <button type="button" data-c="#b45309" title="Amber" style="--s:#b45309"></button>
+            <button type="button" data-c="#334155" title="Slate" style="--s:#334155"></button>
+          </div>
+          <label class="bp-custom"><span>Custom color</span><input type="color" id="brandColor" value="#7a1f86"></label>
+        </div>
+        <div class="bp-sec">
+          <div class="bp-lab">Company logo</div>
+          <div class="bp-logo">
+            <div class="bp-logo-prev" id="brandLogoPrev">Default</div>
+            <div class="bp-logo-act">
+              <button type="button" class="btn" id="brandLogoBtn"><span class="lbl">Upload logo…</span></button>
+              <button type="button" class="lnk" id="brandLogoReset">Remove</button>
+            </div>
+          </div>
+          <div class="bp-hint">PNG, SVG, JPG or WebP. Shown in the sidebar in place of the default mark.</div>
+          <input type="file" id="brandLogoFile" accept="image/png,image/jpeg,image/svg+xml,image/webp" hidden>
+        </div>
+      </div>
+      <div class="form-actions"><button class="btn btn-ghost" id="brandReset">Reset to default</button><button class="btn btn-p"><span class="lbl">Save Changes</span></button></div>
     </div>
     <div class="sec-card">
       <h3>Primary Contact</h3><div class="sub">Main administrator for this account.</div>
