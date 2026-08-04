@@ -78,7 +78,7 @@ body.rail-collapsed .nav-sub{display:none}
 .pbar span{display:block;height:100%;border-radius:6px;background:var(--grad)}
 .pbar-lab{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2);margin-top:14px}
 .ring{position:relative;width:104px;height:104px;flex-shrink:0}
-.ring .rv{position:absolute;inset:0;display:grid;place-items:center;font-size:24px;font-weight:600}
+.ring .rv{position:absolute;inset:0;display:grid;place-items:center;font-size:24px;font-weight:500}
 .row-flex{display:flex;align-items:center;gap:20px}
 
 /* card scaffolding used across app */
@@ -90,7 +90,7 @@ body.rail-collapsed .nav-sub{display:none}
 .card-b{padding:18px 24px 22px}
 .donut-wrap{display:grid;place-items:center;padding:6px 0}
 .donut-c{position:relative;display:grid;place-items:center}
-.donut-c .dc-v{position:absolute;font-size:28px;font-weight:600;letter-spacing:-.02em}
+.donut-c .dc-v{position:absolute;font-size:28px;font-weight:500;letter-spacing:-.02em}
 .mrow{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid var(--hair);font-size:14px}
 .mrow:first-child{border-top:none}
 .mrow .lft{display:flex;align-items:center;gap:10px;color:var(--ink-1)}
