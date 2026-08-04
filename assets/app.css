@@ -3,20 +3,60 @@
    Reuses all base tokens, spacing, radii, typography from styles.css
    ============================================================ */
 
-/* ---- chart palette — matches NetOps dashboard (blue / green / amber / red / slate) ---- */
+/* ---- unified chart palette — brand-aligned, one coherent scheme ----
+   Categorical data uses violet → cyan → slate (harmonises with the
+   magenta/violet brand). Amber & rose are reserved for negative
+   categories (missed / overflow / bounced) and status health charts. */
 :root{
-  --ch1:var(--info);   /* blue (primary)  */
-  --ch2:#1e88e5;       /* secondary blue  */
-  --ch3:var(--ok);     /* green (healthy) */
-  --ch4:var(--deg);    /* slate           */
-  --ch5:var(--warn);   /* amber           */
-  --ch6:var(--bad);    /* red             */
-  --ch-ok:var(--ok);   /* healthy / online */
-  --ch-mut:var(--deg); /* muted neutral   */
+  --ch1:#7c3aed;       /* violet  — primary series      */
+  --ch2:#a855f7;       /* purple  — tertiary series      */
+  --ch3:#06b6d4;       /* cyan    — secondary series      */
+  --ch4:#94a3b8;       /* slate   — muted / “other”       */
+  --ch5:#f59e0b;       /* amber   — overflow / warning    */
+  --ch6:#f43f5e;       /* rose    — missed / negative     */
+  --ch-ok:var(--ok);   /* green   — healthy / online      */
+  --ch-mut:#cbd5e1;    /* neutral — muted track           */
 }
 [data-theme="dark"]{
-  --ch2:#8ea2ff;       /* secondary blue (dark) */
+  --ch1:#a78bfa;       /* violet  (dark) */
+  --ch2:#c4b5fd;       /* purple  (dark) */
+  --ch3:#22d3ee;       /* cyan    (dark) */
+  --ch4:#94a3b8;       /* slate   (dark) */
+  --ch5:#fbbf24;       /* amber   (dark) */
+  --ch6:#fb7185;       /* rose    (dark) */
+  --ch-mut:#475569;    /* neutral (dark) */
 }
+
+/* ---- dashboard date-period picker ---- */
+.period{position:relative}
+.period-btn{display:flex;align-items:center;gap:10px;height:44px;padding:0 12px 0 13px;background:var(--surface);
+  border:1px solid var(--hair);border-radius:var(--r-sm);cursor:pointer;font-family:inherit;text-align:left;transition:border-color .15s,box-shadow .15s}
+[data-theme="dark"] .period-btn{background:rgba(255,255,255,.05)}
+.period-btn:hover{border-color:var(--ink-4)}
+.period.open .period-btn{border-color:var(--violet);box-shadow:0 0 0 3px var(--violet-soft)}
+.period-btn .cal-ic{width:18px;height:18px;color:var(--violet);flex-shrink:0}
+.period-txt{display:flex;flex-direction:column;line-height:1.15;min-width:96px}
+.period-txt .lab{font-size:13.5px;font-weight:600;color:var(--ink-1)}
+.period-txt .sub{font-size:11.5px;color:var(--ink-3)}
+.period-btn .chev{width:16px;height:16px;color:var(--ink-4);transition:transform .2s}
+.period.open .period-btn .chev{transform:rotate(180deg)}
+.period-pop{position:absolute;top:calc(100% + 8px);right:0;width:300px;background:var(--surface);border:1px solid var(--hair);
+  border-radius:var(--r-md);box-shadow:var(--shadow-pop);padding:8px;z-index:60;animation:vin .16s ease}
+.pp-presets{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pp-opt{display:block;width:100%;text-align:left;padding:9px 11px;border-radius:9px;border:1px solid transparent;
+  background:var(--card-2);cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;color:var(--ink-1);transition:.12s}
+.pp-opt:hover{background:var(--violet-soft)}
+.pp-opt.active{background:var(--violet-soft);border-color:var(--violet-tint);color:var(--violet);font-weight:600}
+.pp-range{border-top:1px solid var(--hair);margin-top:9px;padding-top:11px}
+.pp-range-t{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);font-weight:700;margin-bottom:9px}
+.pp-range-row{display:flex;gap:9px;margin-bottom:11px}
+.pp-range-row label{flex:1;display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--ink-3);font-weight:600}
+.pp-range-row input[type=date]{height:36px;padding:0 9px;border:1px solid var(--hair);border-radius:9px;background:var(--surface);
+  font-family:inherit;font-size:12.5px;color:var(--ink-1);color-scheme:light}
+[data-theme="dark"] .pp-range-row input[type=date]{background:rgba(255,255,255,.05);color-scheme:dark}
+.pp-range-row input[type=date]:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px var(--violet-soft)}
+.pp-apply{width:100%;height:38px}
+@media(max-width:640px){.period-pop{width:calc(100vw - 32px);right:auto;left:0}}
 
 /* nav sub-items (Sangoma UC children) */
 .nav-sub{display:none;margin:1px 0 3px}
@@ -253,7 +293,7 @@ tr.row-fail{background:rgba(253,234,239,.5)!important}
 @media(max-width:1240px){.appcards{grid-template-columns:repeat(2,1fr)}}
 
 /* ===================== White-label branding (Company Profile) ===================== */
-.brand-cfg{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin:6px 0 4px}
+.brand-cfg{display:grid;grid-template-columns:1fr;gap:26px;margin:6px 0 4px}
 .bp-lab{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-3);font-weight:700;margin-bottom:11px}
 .bp-sw{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
 .bp-sw button{width:30px;height:30px;border-radius:50%;background:var(--s);border:2px solid transparent;
@@ -265,17 +305,48 @@ tr.row-fail{background:rgba(253,234,239,.5)!important}
 .bp-custom input[type=color]{width:38px;height:28px;border:none;background:none;padding:0;border-radius:6px;cursor:pointer}
 .bp-custom input[type=color]::-webkit-color-swatch-wrapper{padding:0}
 .bp-custom input[type=color]::-webkit-color-swatch{border:1px solid var(--hair);border-radius:6px}
-.bp-logo{display:flex;align-items:center;gap:14px}
-.bp-logo-prev{flex:1;min-width:0;height:56px;border:1px dashed var(--hair);border-radius:10px;display:grid;place-items:center;
-  font-size:12.5px;color:var(--ink-3);background:var(--card-2);overflow:hidden;padding:6px}
-.bp-logo-prev img{max-height:42px;max-width:100%;object-fit:contain}
-.bp-logo-act{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
-.bp-logo-act .btn{height:34px;padding:0 14px}
-.bp-hint{font-size:12px;color:var(--ink-4);margin-top:9px}
-@media(max-width:1024px){.brand-cfg{grid-template-columns:1fr;gap:18px}}
+.bp-hint{font-size:12px;color:var(--ink-4);margin-top:11px}
 
-/* custom logo swaps the built-in Sangoma mark */
-.brand-logo-img{display:none;height:30px;max-width:150px;width:auto;object-fit:contain}
-.brand.has-logo .brand-full,.brand.has-logo .brand-mini,.brand.has-logo .brand-mini-dark{display:none}
-.brand.has-logo .brand-logo-img{display:block}
-body.rail-collapsed .brand.has-logo .brand-logo-img{height:28px;max-width:52px}
+/* ===================== Tooltips ===================== */
+.tip{position:fixed;z-index:9999;background:var(--ink-1);color:var(--surface);font-size:12px;font-weight:500;
+  padding:6px 10px;border-radius:8px;box-shadow:var(--shadow-pop);pointer-events:none;max-width:220px;line-height:1.4;
+  opacity:0;transform:translateY(2px);transition:opacity .13s ease,transform .13s ease}
+.tip.show{opacity:1;transform:none}
+.tip::after{content:"";position:absolute;width:8px;height:8px;background:inherit;transform:rotate(45deg)}
+.tip.t-top::after{left:50%;bottom:-4px;margin-left:-4px}
+.tip.t-bottom::after{left:50%;top:-4px;margin-left:-4px}
+.tip.t-right::after{top:50%;left:-4px;margin-top:-4px}
+.tip.t-left::after{top:50%;right:-4px;margin-top:-4px}
+
+/* ===================== Onboarding coach-marks (non-blocking) ===================== */
+.tour-ring{position:fixed;z-index:9990;border-radius:12px;pointer-events:none;
+  box-shadow:0 0 0 3px var(--violet),0 0 0 7px var(--violet-soft);
+  transition:all .3s cubic-bezier(.4,0,.2,1);animation:tourPulse 1.9s ease-in-out infinite}
+@keyframes tourPulse{0%,100%{box-shadow:0 0 0 3px var(--violet),0 0 0 6px var(--violet-soft)}
+  50%{box-shadow:0 0 0 3px var(--violet),0 0 0 10px var(--violet-soft)}}
+.tour-card{position:fixed;z-index:9992;width:320px;max-width:calc(100vw - 32px);background:var(--surface);
+  border:1px solid var(--hair);border-radius:16px;box-shadow:var(--shadow-pop);padding:20px 20px 18px;animation:vin .2s ease}
+.tour-card::before{content:"";position:absolute;width:12px;height:12px;background:var(--surface);
+  border:1px solid var(--hair);transform:rotate(45deg)}
+.tour-card.a-bottom::before{left:26px;top:-7px;border-right:none;border-bottom:none}
+.tour-card.a-top::before{left:26px;bottom:-7px;border-top:none;border-left:none}
+.tour-card.a-right::before{top:22px;left:-7px;border-top:none;border-right:none}
+.tour-card.a-left::before{top:22px;right:-7px;border-bottom:none;border-left:none}
+.tour-card.a-none::before{display:none}
+.tour-card.center{left:50%;transform:translateX(-50%);top:78px}
+.tour-step{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--violet)}
+.tour-t{font-size:17px;font-weight:600;letter-spacing:-.01em;margin:7px 0 8px}
+.tour-d{font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.tour-foot{display:flex;align-items:center;gap:8px;margin-top:20px}
+.tour-dots{display:flex;gap:5px;margin-right:auto}
+.tour-dots i{width:7px;height:7px;border-radius:50%;background:var(--hair);transition:all .2s}
+.tour-dots i.on{background:var(--violet);width:20px;border-radius:4px}
+.tour-skip{background:none;border:none;color:var(--ink-3);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;padding:8px 6px}
+.tour-skip:hover{color:var(--ink-1)}
+.tour-back{background:var(--surface);border:1px solid var(--hair);color:var(--ink-1);height:36px;padding:0 14px;
+  border-radius:10px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.tour-back:hover{border-color:var(--ink-4)}
+.tour-next{background:var(--grad);color:#fff;border:none;height:36px;padding:0 18px;border-radius:10px;
+  font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:.03em;cursor:pointer;transition:filter .15s}
+.tour-next:hover{filter:brightness(1.05)}
+.tour-next:active{transform:scale(.97)}

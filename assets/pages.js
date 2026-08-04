@@ -77,11 +77,11 @@ document.querySelectorAll('.inp-wrap .eye').forEach(function(eye){
 /* ---------- charts ---------- */
 function ring(id,pct,color,size){donut(id,[{v:pct,c:color||'var(--g2)'},{v:100-pct,c:'transparent'}],size||104,8);}
 if(document.getElementById('d-sms')){
-  ring('d-sms',75,'var(--ch1)',104);
-  donut('d-ext',[{v:62,c:'var(--ch1)'},{v:38,c:'var(--ch3)'}],150,12);
-  donut('d-call',[{v:55,c:'var(--ch3)'},{v:32,c:'var(--ch1)'},{v:13,c:'var(--ch6)'}],150,12);
-  ring('d-agents',75,'var(--ch1)',160);
-  donut('d-cxcall',[{v:42,c:'var(--ch3)'},{v:22,c:'var(--ch1)'},{v:16,c:'var(--ch6)'},{v:12,c:'var(--ch5)'},{v:8,c:'var(--ch4)'}],150,12);
+  ring('d-sms',75,'var(--ch-ok)',104);
+  donut('d-ext',[{v:62,c:'var(--ch-ok)'},{v:38,c:'var(--ch5)'}],150,12);
+  donut('d-call',[{v:55,c:'var(--ch-ok)'},{v:32,c:'var(--ch5)'},{v:13,c:'var(--ch6)'}],150,12);
+  ring('d-agents',75,'var(--ch-ok)',160);
+  donut('d-cxcall',[{v:42,c:'var(--ch-ok)'},{v:22,c:'var(--ch5)'},{v:16,c:'var(--ch6)'},{v:12,c:'var(--ch4)'},{v:8,c:'var(--ch-mut)'}],150,12);
   donut('d-dev',[{v:74,c:'var(--ch-ok)'},{v:12,c:'var(--ch5)'},{v:9,c:'var(--ch6)'},{v:5,c:'var(--ch-mut)'}],150,12);
   donut('d-links',[{v:80,c:'var(--ch-ok)'},{v:14,c:'var(--ch5)'},{v:6,c:'var(--ch6)'}],150,12);
   var t1=[1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
@@ -89,6 +89,35 @@ if(document.getElementById('d-sms')){
     for(var i=0;i<30;i++){h+='<i class="'+(downs.indexOf(i)>=0?'bad':'')+'"></i>';}el.innerHTML=h;}
   trk('trk1',[7,18]); trk('trk2',[12,23,24]);
 }
+
+/* ---------- dashboard date-period picker ---------- */
+(function(){
+  var pick=document.getElementById('periodPick'); if(!pick)return;
+  var btn=document.getElementById('periodBtn'), pop=document.getElementById('periodPop');
+  var lab=btn.querySelector('.lab'), sub=btn.querySelector('.sub');
+  function setPeriod(l,s){ if(lab)lab.textContent=l; if(sub)sub.textContent=s;
+    document.querySelectorAll('.pmonth').forEach(function(m){m.textContent=s;}); }
+  function open(){ pick.classList.add('open'); pop.hidden=false; btn.setAttribute('aria-expanded','true'); }
+  function close(){ pick.classList.remove('open'); pop.hidden=true; btn.setAttribute('aria-expanded','false'); }
+  btn.addEventListener('click',function(e){ e.stopPropagation(); pick.classList.contains('open')?close():open(); });
+  pop.addEventListener('click',function(e){ e.stopPropagation(); });
+  document.getElementById('ppPresets').addEventListener('click',function(e){
+    var o=e.target.closest('.pp-opt'); if(!o)return;
+    this.querySelectorAll('.pp-opt').forEach(function(x){x.classList.remove('active');});
+    o.classList.add('active'); setPeriod(o.dataset.lab, o.dataset.sub); close();
+  });
+  var fromEl=document.getElementById('ppFrom'), toEl=document.getElementById('ppTo');
+  document.getElementById('ppApply').addEventListener('click',function(){
+    if(!fromEl.value||!toEl.value)return;
+    var f=new Date(fromEl.value+'T00:00'), t=new Date(toEl.value+'T00:00');
+    var mo={month:'short',day:'numeric'}, yr={month:'short',day:'numeric',year:'numeric'};
+    var s=f.toLocaleDateString('en-US',mo)+' – '+t.toLocaleDateString('en-US',yr);
+    document.querySelectorAll('.pp-opt').forEach(function(x){x.classList.remove('active');});
+    setPeriod('Custom Range', s); close();
+  });
+  document.addEventListener('click',function(){ if(pick.classList.contains('open'))close(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&pick.classList.contains('open'))close(); });
+})();
 
 /* ===================== Sangoma UC — shared helpers ===================== */
 var CEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
@@ -436,30 +465,12 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
     document.querySelectorAll('.accsw button').forEach(function(b){b.classList.toggle('on',b.dataset.accent===a);});
     var ci=document.getElementById('brandColor');if(ci)ci.value=DEFAULT;
   }
-  /* logo */
-  function applyLogo(url,save){
-    var brand=document.querySelector('.brand'),img=brand&&brand.querySelector('.brand-logo-img');
-    if(!brand||!img)return;img.src=url;brand.classList.add('has-logo');
-    var prev=document.getElementById('brandLogoPrev');if(prev)prev.innerHTML='<img src="'+url+'" alt="logo preview">';
-    if(save!==false)localStorage.setItem('brandLogo',url);
-  }
-  function resetLogo(){
-    var brand=document.querySelector('.brand'),img=brand&&brand.querySelector('.brand-logo-img');
-    if(brand)brand.classList.remove('has-logo');if(img)img.removeAttribute('src');
-    var prev=document.getElementById('brandLogoPrev');if(prev)prev.textContent='Default';
-    localStorage.removeItem('brandLogo');
-  }
 
   /* wire controls (company-level settings in Company Profile) */
   var sw=document.getElementById('brandSwatches');
   if(sw)sw.addEventListener('click',function(e){var b=e.target.closest('button[data-c]');if(b)applyBrand(b.dataset.c,true);});
   var ci=document.getElementById('brandColor');
   if(ci)ci.addEventListener('input',function(){applyBrand(ci.value,true);});
-  var lb=document.getElementById('brandLogoBtn'),lf=document.getElementById('brandLogoFile');
-  if(lb&&lf)lb.addEventListener('click',function(){lf.click();});
-  if(lf)lf.addEventListener('change',function(){var f=lf.files&&lf.files[0];if(!f)return;
-    var r=new FileReader();r.onload=function(){applyLogo(r.result,true);};r.readAsDataURL(f);lf.value='';});
-  var lr=document.getElementById('brandLogoReset');if(lr)lr.addEventListener('click',resetLogo);
   var br=document.getElementById('brandReset');if(br)br.addEventListener('click',resetBrand);
 
   /* accent A/B overrides custom brand */
@@ -470,5 +481,115 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
 
   /* restore saved brand on load */
   var savedC=localStorage.getItem('brandColor');if(savedC)applyBrand(savedC,false);
-  var savedL=localStorage.getItem('brandLogo');if(savedL)applyLogo(savedL,false);
+})();
+
+/* ===================== Tooltips ===================== */
+(function(){
+  var tip=null, cur=null, timer=null;
+  function label(el){
+    if(el.dataset.tip)return el.dataset.tip;
+    if(el.classList.contains('nav-item')&&document.body.classList.contains('rail-collapsed')){
+      var l=el.querySelector('.lbl'); return l?l.textContent.trim():'';
+    }
+    return '';
+  }
+  function place(el,txt){
+    if(tip)tip.remove();
+    tip=document.createElement('div'); tip.className='tip';
+    tip.textContent=txt; document.body.appendChild(tip);
+    var r=el.getBoundingClientRect(), tr=tip.getBoundingClientRect(), gap=9;
+    var pos=el.dataset.tipPos||(el.classList.contains('nav-item')?'right':'bottom');
+    var x,y;
+    if(pos==='right'){x=r.right+gap;y=r.top+r.height/2-tr.height/2;}
+    else if(pos==='left'){x=r.left-tr.width-gap;y=r.top+r.height/2-tr.height/2;}
+    else if(pos==='top'){x=r.left+r.width/2-tr.width/2;y=r.top-tr.height-gap;}
+    else{x=r.left+r.width/2-tr.width/2;y=r.bottom+gap;}
+    x=Math.max(8,Math.min(x,innerWidth-tr.width-8));
+    y=Math.max(8,Math.min(y,innerHeight-tr.height-8));
+    tip.style.left=x+'px'; tip.style.top=y+'px';
+    tip.classList.add('t-'+pos);
+    void tip.offsetWidth; tip.classList.add('show');
+  }
+  function hide(){ if(timer){clearTimeout(timer);timer=null;} if(tip){tip.remove();tip=null;} cur=null; }
+  document.addEventListener('mouseover',function(e){
+    var el=e.target.closest('[data-tip],.nav-item'); if(!el||el===cur)return;
+    var txt=label(el); if(!txt){hide();return;}
+    hide(); cur=el; timer=setTimeout(function(){place(el,txt);},380);
+  });
+  document.addEventListener('mouseout',function(e){
+    var el=e.target.closest('[data-tip],.nav-item'); if(el&&el===cur)hide();
+  });
+  document.addEventListener('mousedown',hide);
+  window.addEventListener('scroll',hide,true);
+})();
+
+/* ===================== Onboarding tour ===================== */
+(function(){
+  var STEPS=[
+    {sel:null,step:'Getting started',t:'Welcome to your Control Panel',
+     d:'A 60-second tour of the essentials. You can skip anytime, and replay it later from the help (?) button in the top bar.'},
+    {sel:'.rail',pos:'right',step:'Navigation',t:'Everything in one place',
+     d:'Jump between Billing, Company Profile, Inventory & Usage, Users, Security and your Sangoma UC apps from this sidebar.'},
+    {sel:'#periodPick',pos:'bottom',step:'Reporting period',t:'Pick your date range',
+     d:'Choose a preset like Last 3 Months or set a custom range. Every metric on the dashboard updates to match.'},
+    {sel:'.svc-pick',pos:'bottom',step:'Service filter',t:'Focus on one service',
+     d:'Narrow the dashboard to a single service — Chat, Meet, SMS, Voice or CPaaS.'},
+    {sel:'#tsw',pos:'bottom',step:'Appearance',t:'Light or dark, your call',
+     d:'Toggle the theme here, and use A / B to switch the portal accent colour.'},
+    {sel:'#helpBtn',pos:'bottom',step:'Need a refresher?',t:'Help is always here',
+     d:'Re-open this tour whenever you like from the help button. That\u2019s it — you\u2019re ready to go!'}
+  ];
+  var i=0, ring=null, card=null;
+  function el(step){return step.sel?document.querySelector(step.sel):null;}
+  function build(){
+    ring=document.createElement('div'); ring.className='tour-ring'; ring.style.display='none';
+    card=document.createElement('div'); card.className='tour-card';
+    document.body.appendChild(ring); document.body.appendChild(card);
+  }
+  function render(){
+    var s=STEPS[i], t=el(s), pad=6;
+    var dots=STEPS.map(function(_,n){return '<i class="'+(n===i?'on':'')+'"></i>';}).join('');
+    var last=i===STEPS.length-1;
+    card.innerHTML='<div class="tour-step">'+s.step+'</div><div class="tour-t">'+s.t+'</div>'+
+      '<div class="tour-d">'+s.d+'</div><div class="tour-foot"><div class="tour-dots">'+dots+'</div>'+
+      (i>0?'<button class="tour-back" id="tBack">Back</button>':'<button class="tour-skip" id="tSkip">Skip tour</button>')+
+      '<button class="tour-next" id="tNext">'+(last?'Finish':(i===0?'Start tour':'Next'))+'</button></div>';
+    if(t){
+      t.scrollIntoView({block:'nearest',behavior:'smooth'});
+      setTimeout(function(){
+        var r=t.getBoundingClientRect();
+        ring.style.display='block';
+        ring.style.left=(r.left-pad)+'px'; ring.style.top=(r.top-pad)+'px';
+        ring.style.width=(r.width+pad*2)+'px'; ring.style.height=(r.height+pad*2)+'px';
+        var pos=s.pos||'bottom', gap=14, cw=card.offsetWidth||320, ch=card.offsetHeight||190, x,y, arrow;
+        if(pos==='right'){x=r.right+gap;y=r.top;arrow='a-left';}
+        else if(pos==='left'){x=r.left-cw-gap;y=r.top;arrow='a-right';}
+        else if(pos==='top'){x=r.left;y=r.top-ch-gap;arrow='a-bottom';}
+        else{x=r.left;y=r.bottom+gap;arrow='a-top';}
+        x=Math.max(12,Math.min(x,innerWidth-cw-12));
+        y=Math.max(12,Math.min(y,innerHeight-ch-12));
+        card.className='tour-card '+arrow; card.style.left=x+'px'; card.style.top=y+'px';
+        card.style.transform='none';
+      },160);
+    }else{
+      ring.style.display='none';
+      card.className='tour-card center a-none'; card.style.left=''; card.style.top=''; card.style.transform='';
+    }
+    var nx=document.getElementById('tNext'); if(nx)nx.onclick=next;
+    var sk=document.getElementById('tSkip'); if(sk)sk.onclick=end;
+    var bk=document.getElementById('tBack'); if(bk)bk.onclick=function(){i=Math.max(0,i-1);render();};
+  }
+  function next(){ if(i>=STEPS.length-1){end();return;} i++; render(); }
+  function end(){
+    if(ring)ring.remove(); if(card)card.remove(); ring=card=null;
+    document.removeEventListener('keydown',onKey);
+    try{localStorage.setItem('cpTourDone','1');}catch(e){}
+  }
+  function onKey(e){ if(e.key==='Escape')end();
+    else if(e.key==='ArrowRight'||e.key==='Enter')next();
+    else if(e.key==='ArrowLeft'&&i>0){i--;render();} }
+  function start(){ i=0; if(!ring)build(); document.addEventListener('keydown',onKey); render(); }
+  var hb=document.getElementById('helpBtn'); if(hb)hb.addEventListener('click',start);
+  window.addEventListener('resize',function(){ if(ring)render(); });
+  try{ if(!localStorage.getItem('cpTourDone'))setTimeout(start,650); }catch(e){}
 })();
