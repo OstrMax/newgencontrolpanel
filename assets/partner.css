@@ -1,0 +1,110 @@
+/* ============================================================
+   Partner portal — login + partner-tier hierarchy
+   Additive only. Reuses every token from styles.css / app.css.
+   ============================================================ */
+
+/* view switch: login screen vs application shell */
+body[data-view="login"] .rail,
+body[data-view="login"] .main{display:none}
+body[data-view="app"] .auth{display:none}
+
+/* ---------- Login ----------
+   Single-column, centred and neutral. The brand reads through the wordmark
+   and the primary action, not through a full-bleed colour slab. */
+/* body is a flex row (rail + main), so the login view has to claim the row */
+.auth{flex:1;min-width:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  background:var(--canvas);padding:0 24px}
+.auth-top{width:100%;max-width:1080px;display:flex;align-items:center;gap:11px;padding:26px 0}
+.auth-top svg{height:24px;width:auto;color:var(--ink-1)}
+.auth-tag{font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);padding:3px 8px;border-radius:5px;background:var(--track)}
+.auth-body{flex:1;width:100%;display:flex;align-items:center;justify-content:center;
+  padding:24px 0 96px}
+
+.auth-card{width:100%;max-width:404px;background:var(--surface);border:1px solid var(--hair);
+  border-radius:var(--r-lg);box-shadow:var(--shadow);padding:34px 34px 30px}
+.auth-h{font-size:21px;font-weight:600;letter-spacing:-.018em;color:var(--ink-1)}
+.auth-sub{margin-top:7px;font-size:13.5px;color:var(--ink-3);line-height:1.55}
+.auth-form{margin-top:24px;display:grid;gap:15px}
+.auth-form .field{display:grid;gap:6px}
+.auth-form label{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.auth-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.auth-check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);cursor:pointer}
+.auth-sub-link{font-size:13px;color:var(--violet);font-weight:600}
+.auth-btn{width:100%;justify-content:center;height:42px;font-size:14px;margin-top:3px}
+.auth-or{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--ink-4);font-size:11px;
+  font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.auth-or::before,.auth-or::after{content:"";flex:1;height:1px;background:var(--hair)}
+.auth-sso{width:100%;justify-content:center;height:42px;gap:9px;font-size:14px;
+  background:var(--surface);border:1px solid var(--stroke);color:var(--ink-1)}
+.auth-sso svg{width:16px;height:16px;color:var(--ink-3)}
+.auth-legal{margin-top:22px;padding-top:18px;border-top:1px solid var(--hair);
+  font-size:12px;color:var(--ink-4);line-height:1.6;text-align:center}
+.auth-legal a{color:var(--violet);font-weight:600}
+.auth-foot{padding-bottom:26px;font-size:12px;color:var(--ink-4);text-align:center}
+
+.auth-err{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border-radius:var(--r-sm);
+  background:var(--bad-tint);border:1px solid var(--bad);color:var(--bad-ink);font-size:12.5px;line-height:1.5}
+.auth-err svg{width:15px;height:15px;flex:none;margin-top:1px}
+.auth-err[hidden]{display:none}
+.inp.bad{border-color:var(--bad)}
+
+/* MFA */
+.mfa-code{display:flex;gap:8px;justify-content:space-between}
+.mfa-code .inp{text-align:center;font-size:19px;font-weight:600;letter-spacing:0;padding:0;
+  height:52px;width:100%;font-variant-numeric:tabular-nums}
+.mfa-note{font-size:12.5px;color:var(--ink-4);text-align:center;margin-top:2px}
+
+@media(max-width:560px){.auth-card{padding:26px 22px 24px}}
+
+/* ---------- Partner context ----------
+   .ctx lives in app.css so the customer control panel can use it too. */
+
+/* scope pill in the rail, under the account switcher */
+.scope{margin:0 12px 10px;padding:10px 12px;border-radius:var(--r-sm);
+  background:var(--violet-soft);border:1px solid var(--violet-tint)}
+.scope-k{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--violet)}
+.scope-v{margin-top:3px;font-size:13px;font-weight:600;color:var(--ink-1);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.rail-collapsed .scope{display:none}
+
+/* ---------- Drill-in rows ---------- */
+tr.drill{cursor:pointer}
+tr.drill:hover{background:var(--card-2)}
+.drill-x{color:var(--ink-4);display:flex;align-items:center;justify-content:flex-end}
+.drill-x svg{width:17px;height:17px}
+
+/* account cell */
+.acc-cell{display:flex;align-items:center;gap:11px;min-width:0}
+.acc-logo{width:32px;height:32px;border-radius:9px;flex:none;display:grid;place-items:center;
+  font-size:11.5px;font-weight:700;color:#fff;background:var(--grad);letter-spacing:.02em}
+.acc-nm{min-width:0}
+.acc-nm b{display:block;font-weight:600;color:var(--ink-1);overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.acc-nm span{display:block;font-size:12px;color:var(--ink-4);font-variant-numeric:tabular-nums}
+
+/* ---------- Hierarchy strip ---------- */
+.tier{display:flex;align-items:stretch;gap:0;margin-bottom:20px;border-radius:var(--r-md);
+  overflow:hidden;border:1px solid var(--stroke);background:var(--surface)}
+.tier-s{flex:1;padding:13px 16px;display:flex;align-items:center;gap:11px;position:relative;min-width:0}
+.tier-s + .tier-s{border-left:1px solid var(--hair)}
+.tier-s.on{background:var(--violet-soft)}
+.tier-n{width:22px;height:22px;border-radius:999px;flex:none;display:grid;place-items:center;
+  font-size:11px;font-weight:700;background:var(--track);color:var(--ink-4)}
+.tier-s.on .tier-n{background:var(--grad);color:#fff}
+.tier-s.done .tier-n{background:var(--ok-tint);color:var(--ok-ink)}
+.tier-t{min-width:0;display:block}
+.tier-k{display:block;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-4)}
+.tier-v{display:block;margin-top:2px;font-size:13px;font-weight:600;color:var(--ink-1);overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.tier-s.on .tier-k{color:var(--violet)}
+
+/* ---------- Misc ---------- */
+.loc-ic{width:30px;height:30px;border-radius:8px;flex:none;display:grid;place-items:center;
+  background:var(--violet-soft);color:var(--violet)}
+.loc-ic svg{width:16px;height:16px}
+.gone{display:none !important}
+.neg{color:var(--bad-ink)}
+/* inline utilisation bar inside a table cell */
+td .bar{display:inline-flex;align-items:center;gap:10px;margin:0}
+td .bar .t{flex:none;width:120px;height:6px;border-radius:999px}

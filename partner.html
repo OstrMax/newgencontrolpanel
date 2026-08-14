@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Sangoma Partner Portal</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236d28d9'/%3E%3Ctext x='16' y='22' font-family='Inter,Arial' font-size='18' font-weight='700' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="assets/styles.css?v=11">
+<link rel="stylesheet" href="assets/app.css?v=12">
+<link rel="stylesheet" href="assets/partner.css?v=5">
+</head>
+<body data-view="login">
+<svg aria-hidden="true" width="0" height="0" style="position:absolute" focusable="false"><defs><linearGradient id="pgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--g1)"/><stop offset="0.8" stop-color="var(--g2)"/><stop offset="1" stop-color="var(--g3)"/></linearGradient></defs></svg>
+
+<!-- ==================================================================
+     LOGIN  —  partner credential entry point
+     ================================================================== -->
+<div class="auth" id="authView">
+  <header class="auth-top">
+    <svg viewBox="26 110 248 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Sangoma"><path d="M95.2052 142.088C90.9704 142.088 87.8265 143.255 85.8374 144.163L85.5166 144.293L87.3132 148.573L87.634 148.444C87.7623 148.379 90.9063 146.887 94.8844 146.887C98.7983 146.887 101.172 148.703 101.172 151.751V154.41C99.2474 152.983 96.6167 152.14 93.7936 152.14C89.238 152.14 82.501 154.54 82.501 161.219C82.501 165.888 85.5808 171.336 94.3711 171.336C101.044 171.336 104.701 169.001 106.305 167.639L106.434 167.575V152.918C106.369 145.331 103.033 142.088 95.2052 142.088ZM101.172 159.468V164.851C99.5041 165.953 97.2584 166.537 94.6919 166.537C90.1363 166.537 88.0831 164.008 88.0831 161.543C88.0831 159.209 90.0722 156.874 94.4352 156.874C97.8358 156.874 100.21 158.625 101.172 159.468Z" fill="currentColor"/><path d="M125.298 142.088C121.384 142.088 118.496 143.904 116.892 145.266V142.801H111.503V170.493H116.892V150.389C117.983 149.157 120.678 147.211 123.694 147.211C127.992 147.211 129.597 149.287 129.597 154.864V170.558H134.986V152.399C134.986 145.59 131.714 142.088 125.298 142.088Z" fill="currentColor"/><path d="M70.246 151.167C67.2303 149.676 64.6638 148.378 64.6638 145.979C64.6638 144.228 66.0112 142.477 69.0269 142.477C71.9784 142.477 74.7373 144.747 75.4431 145.525L75.8923 145.979L78.5871 141.115L78.3304 140.856C76.5981 139.105 73.005 137.03 68.3852 137.03C62.4823 137.03 57.9909 141.05 57.9909 146.238C57.9909 151.232 62.4823 153.631 66.3962 155.707C69.5402 157.393 72.235 158.82 72.235 161.219C72.235 165.629 68.2569 165.953 67.0378 165.953H56.836H55.8735V171.336H67.2945C74.224 171.336 78.9079 167.185 78.9079 161.154C78.8437 155.447 74.2882 153.177 70.246 151.167Z" fill="currentColor"/><path d="M154.427 142.088C150.449 142.088 146.792 143.385 144.097 145.785C141.146 148.444 139.542 152.205 139.542 156.615C139.542 162.062 141.723 165.435 143.584 167.315C145.958 169.715 149.23 171.206 152.438 171.206C155.261 171.206 158.341 169.909 160.394 167.899V172.179C160.394 177.691 157.892 180.48 152.951 180.48C149.166 180.48 145.701 178.988 143.905 177.756L143.648 177.562L141.21 181.777L141.466 181.972C143.263 183.204 147.177 185.214 152.951 185.214C155.39 185.214 158.854 184.695 161.613 182.361C164.372 180.026 165.72 176.394 165.72 171.66V145.396L165.592 145.331C162.255 143.191 158.662 142.088 154.427 142.088ZM160.394 148.379V162.451C158.983 164.786 156.16 166.472 153.465 166.472C147.434 166.472 145.188 160.636 145.188 156.744C145.188 149.481 150.192 146.952 154.491 146.952C157.379 146.887 159.496 147.925 160.394 148.379Z" fill="currentColor"/><path d="M184.84 142.088C176.627 142.088 170.211 148.508 170.211 156.68C170.211 164.851 176.627 171.271 184.776 171.271C192.925 171.271 199.277 164.851 199.277 156.68C199.277 148.508 192.925 142.088 184.84 142.088ZM193.631 156.744C193.631 162.646 190.037 166.602 184.648 166.602C179.771 166.602 175.793 162.192 175.793 156.874C175.793 150.973 179.451 146.887 184.776 146.887C189.717 146.887 193.631 151.232 193.631 156.744Z" fill="currentColor"/><path d="M233.54 142.088C229.498 142.088 225.969 144.423 224.044 146.044C222.504 143.45 220.13 142.088 216.986 142.088C213.136 142.088 210.185 144.034 208.709 145.266V142.737H203.319V170.428H208.709V150.324C209.736 149.222 212.366 147.211 215.125 147.211C218.59 147.211 220.13 148.897 220.13 152.724V170.558H225.52V150.324C226.931 148.897 229.434 147.276 232.128 147.276C235.465 147.276 237.005 148.962 237.005 152.918V170.623H242.394V152.205C242.266 145.59 239.25 142.088 233.54 142.088Z" fill="currentColor"/><path d="M258.82 142.088C254.585 142.088 251.441 143.255 249.452 144.163L249.131 144.293L250.928 148.573L251.249 148.444C251.377 148.379 254.521 146.887 258.499 146.887C262.413 146.887 264.787 148.703 264.787 151.751V154.41C262.862 152.983 260.231 152.14 257.408 152.14C252.853 152.14 246.116 154.54 246.116 161.219C246.116 165.888 249.196 171.336 257.986 171.336C264.659 171.336 268.316 169.001 269.92 167.639L270.048 167.575V152.918C270.048 145.331 266.648 142.088 258.82 142.088ZM264.787 159.468V164.851C263.119 165.953 260.873 166.537 258.307 166.537C253.751 166.537 251.698 164.008 251.698 161.543C251.698 159.209 253.687 156.874 258.05 156.874C261.451 156.874 263.825 158.625 264.787 159.468Z" fill="currentColor"/><path d="M85.3242 135.862C85.8375 135.733 86.415 135.603 86.9283 135.603L87.8266 135.538C87.8907 135.538 87.9549 135.538 87.9549 135.538C90.3931 135.538 92.5746 136.316 94.3712 137.678C97.1301 137.03 99.3758 136.965 101.237 137.354C98.6059 133.333 94.2428 130.61 89.2381 130.22C86.03 121.012 77.4322 114.786 67.8078 114.786C56.3227 114.786 46.4417 123.865 45.1584 135.473C36.4323 136.706 29.9519 144.358 29.9519 153.372C29.9519 163.294 37.9081 171.401 47.6608 171.401H50.7406V166.018H47.6608C40.7954 166.018 35.2132 160.311 35.2132 153.307C35.2132 147.341 39.2555 142.283 44.8376 140.921C45.8001 140.661 46.8267 140.532 47.9174 140.532C48.8157 140.532 49.714 140.661 50.5481 140.791C50.4198 139.818 50.2914 138.846 50.2914 137.873C50.2914 128.08 58.1193 120.039 67.8078 120.039C69.2194 120.039 70.5668 120.233 71.9142 120.558C79.0363 122.244 84.4259 128.34 85.3242 135.862Z" fill="currentColor" opacity=".55"/></svg>
+    <span class="auth-tag">Partner Portal</span>
+  </header>
+
+  <main class="auth-body">
+    <!-- step 1: credentials -->
+    <div class="auth-card" id="stepCred">
+      <h1 class="auth-h">Partner sign in</h1>
+      <p class="auth-sub">Use the credentials issued to your partner organisation. Customer administrators should use the standard control panel sign-in.</p>
+
+      <div class="auth-err" id="authErr" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16.2h.01"/></svg>
+        <span>That email and password combination is not recognised. You have <b>4 attempts</b> remaining before the account is locked.</span>
+      </div>
+
+      <form class="auth-form" id="loginForm" novalidate>
+        <div class="field">
+          <label for="pEmail">Partner email</label>
+          <input class="inp" id="pEmail" type="email" autocomplete="username" placeholder="you@partner.com" value="m.okafor@northwind-comms.com">
+        </div>
+        <div class="field">
+          <label for="pPass">Password</label>
+          <div class="inp-wrap">
+            <input class="inp" id="pPass" type="password" autocomplete="current-password" placeholder="••••••••••••" value="PartnerDemo2024">
+            <span class="eye" role="button" tabindex="0" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          </div>
+        </div>
+        <div class="auth-row">
+          <label class="auth-check"><input type="checkbox" class="ck" id="pRemember" checked> Keep me signed in</label>
+          <a class="auth-sub-link" href="#">Forgot password?</a>
+        </div>
+        <button class="btn btn-p auth-btn" type="submit" id="signIn"><span class="lbl">Sign in</span></button>
+      </form>
+
+      <div class="auth-or">or</div>
+      <button class="btn auth-sso" id="ssoBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7.5a5 5 0 0 1 10 0V11"/></svg>
+        Sign in with partner SSO
+      </button>
+
+      <p class="auth-legal">Protected by multi-factor authentication.<br>Trouble signing in? <a href="#">Contact partner support</a>.</p>
+    </div>
+
+    <!-- step 2: MFA -->
+    <div class="auth-card gone" id="stepMfa">
+      <h1 class="auth-h">Two-factor authentication</h1>
+      <p class="auth-sub">Enter the 6-digit code from your authenticator app for <b>m.okafor@northwind-comms.com</b>.</p>
+      <div class="auth-form">
+        <div class="mfa-code">
+          <input class="inp" maxlength="1" inputmode="numeric" aria-label="Digit 1" value="4">
+          <input class="inp" maxlength="1" inputmode="numeric" aria-label="Digit 2" value="8">
+          <input class="inp" maxlength="1" inputmode="numeric" aria-label="Digit 3" value="1">
+          <input class="inp" maxlength="1" inputmode="numeric" aria-label="Digit 4" value="9">
+          <input class="inp" maxlength="1" inputmode="numeric" aria-label="Digit 5" value="0">
+          <input class="inp" maxlength="1" inputmode="numeric" aria-label="Digit 6" value="3">
+        </div>
+        <p class="mfa-note">Code refreshes in 00:24 · <a class="auth-sub-link" href="#">Use a recovery code</a></p>
+        <button class="btn btn-p auth-btn" id="mfaVerify"><span class="lbl">Verify and continue</span></button>
+        <button class="btn auth-sso" id="mfaBack">Back to sign in</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="auth-foot">© 2024 Sangoma Technologies · Partner access is governed by your reseller agreement.</div>
+</div>
+
+<!-- ==================================================================
+     PARTNER APPLICATION SHELL
+     ================================================================== -->
+<aside class="rail" id="pRail">
+  <a class="brand" href="#pdash" aria-label="Sangoma Partner Portal"><svg class="brand-full" viewBox="26 110 248 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M95.2052 142.088C90.9704 142.088 87.8265 143.255 85.8374 144.163L85.5166 144.293L87.3132 148.573L87.634 148.444C87.7623 148.379 90.9063 146.887 94.8844 146.887C98.7983 146.887 101.172 148.703 101.172 151.751V154.41C99.2474 152.983 96.6167 152.14 93.7936 152.14C89.238 152.14 82.501 154.54 82.501 161.219C82.501 165.888 85.5808 171.336 94.3711 171.336C101.044 171.336 104.701 169.001 106.305 167.639L106.434 167.575V152.918C106.369 145.331 103.033 142.088 95.2052 142.088ZM101.172 159.468V164.851C99.5041 165.953 97.2584 166.537 94.6919 166.537C90.1363 166.537 88.0831 164.008 88.0831 161.543C88.0831 159.209 90.0722 156.874 94.4352 156.874C97.8358 156.874 100.21 158.625 101.172 159.468Z" fill="currentColor"/><path d="M125.298 142.088C121.384 142.088 118.496 143.904 116.892 145.266V142.801H111.503V170.493H116.892V150.389C117.983 149.157 120.678 147.211 123.694 147.211C127.992 147.211 129.597 149.287 129.597 154.864V170.558H134.986V152.399C134.986 145.59 131.714 142.088 125.298 142.088Z" fill="currentColor"/><path d="M70.246 151.167C67.2303 149.676 64.6638 148.378 64.6638 145.979C64.6638 144.228 66.0112 142.477 69.0269 142.477C71.9784 142.477 74.7373 144.747 75.4431 145.525L75.8923 145.979L78.5871 141.115L78.3304 140.856C76.5981 139.105 73.005 137.03 68.3852 137.03C62.4823 137.03 57.9909 141.05 57.9909 146.238C57.9909 151.232 62.4823 153.631 66.3962 155.707C69.5402 157.393 72.235 158.82 72.235 161.219C72.235 165.629 68.2569 165.953 67.0378 165.953H56.836H55.8735V171.336H67.2945C74.224 171.336 78.9079 167.185 78.9079 161.154C78.8437 155.447 74.2882 153.177 70.246 151.167Z" fill="currentColor"/><path d="M154.427 142.088C150.449 142.088 146.792 143.385 144.097 145.785C141.146 148.444 139.542 152.205 139.542 156.615C139.542 162.062 141.723 165.435 143.584 167.315C145.958 169.715 149.23 171.206 152.438 171.206C155.261 171.206 158.341 169.909 160.394 167.899V172.179C160.394 177.691 157.892 180.48 152.951 180.48C149.166 180.48 145.701 178.988 143.905 177.756L143.648 177.562L141.21 181.777L141.466 181.972C143.263 183.204 147.177 185.214 152.951 185.214C155.39 185.214 158.854 184.695 161.613 182.361C164.372 180.026 165.72 176.394 165.72 171.66V145.396L165.592 145.331C162.255 143.191 158.662 142.088 154.427 142.088ZM160.394 148.379V162.451C158.983 164.786 156.16 166.472 153.465 166.472C147.434 166.472 145.188 160.636 145.188 156.744C145.188 149.481 150.192 146.952 154.491 146.952C157.379 146.887 159.496 147.925 160.394 148.379Z" fill="currentColor"/><path d="M184.84 142.088C176.627 142.088 170.211 148.508 170.211 156.68C170.211 164.851 176.627 171.271 184.776 171.271C192.925 171.271 199.277 164.851 199.277 156.68C199.277 148.508 192.925 142.088 184.84 142.088ZM193.631 156.744C193.631 162.646 190.037 166.602 184.648 166.602C179.771 166.602 175.793 162.192 175.793 156.874C175.793 150.973 179.451 146.887 184.776 146.887C189.717 146.887 193.631 151.232 193.631 156.744Z" fill="currentColor"/><path d="M233.54 142.088C229.498 142.088 225.969 144.423 224.044 146.044C222.504 143.45 220.13 142.088 216.986 142.088C213.136 142.088 210.185 144.034 208.709 145.266V142.737H203.319V170.428H208.709V150.324C209.736 149.222 212.366 147.211 215.125 147.211C218.59 147.211 220.13 148.897 220.13 152.724V170.558H225.52V150.324C226.931 148.897 229.434 147.276 232.128 147.276C235.465 147.276 237.005 148.962 237.005 152.918V170.623H242.394V152.205C242.266 145.59 239.25 142.088 233.54 142.088Z" fill="currentColor"/><path d="M258.82 142.088C254.585 142.088 251.441 143.255 249.452 144.163L249.131 144.293L250.928 148.573L251.249 148.444C251.377 148.379 254.521 146.887 258.499 146.887C262.413 146.887 264.787 148.703 264.787 151.751V154.41C262.862 152.983 260.231 152.14 257.408 152.14C252.853 152.14 246.116 154.54 246.116 161.219C246.116 165.888 249.196 171.336 257.986 171.336C264.659 171.336 268.316 169.001 269.92 167.639L270.048 167.575V152.918C270.048 145.331 266.648 142.088 258.82 142.088ZM264.787 159.468V164.851C263.119 165.953 260.873 166.537 258.307 166.537C253.751 166.537 251.698 164.008 251.698 161.543C251.698 159.209 253.687 156.874 258.05 156.874C261.451 156.874 263.825 158.625 264.787 159.468Z" fill="currentColor"/><path d="M85.3242 135.862C85.8375 135.733 86.415 135.603 86.9283 135.603L87.8266 135.538C87.8907 135.538 87.9549 135.538 87.9549 135.538C90.3931 135.538 92.5746 136.316 94.3712 137.678C97.1301 137.03 99.3758 136.965 101.237 137.354C98.6059 133.333 94.2428 130.61 89.2381 130.22C86.03 121.012 77.4322 114.786 67.8078 114.786C56.3227 114.786 46.4417 123.865 45.1584 135.473C36.4323 136.706 29.9519 144.358 29.9519 153.372C29.9519 163.294 37.9081 171.401 47.6608 171.401H50.7406V166.018H47.6608C40.7954 166.018 35.2132 160.311 35.2132 153.307C35.2132 147.341 39.2555 142.283 44.8376 140.921C45.8001 140.661 46.8267 140.532 47.9174 140.532C48.8157 140.532 49.714 140.661 50.5481 140.791C50.4198 139.818 50.2914 138.846 50.2914 137.873C50.2914 128.08 58.1193 120.039 67.8078 120.039C69.2194 120.039 70.5668 120.233 71.9142 120.558C79.0363 122.244 84.4259 128.34 85.3242 135.862Z" fill="url(#paint0_p)"/><defs><linearGradient id="paint0_p" x1="65.5853" y1="114.771" x2="65.5853" y2="171.425" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#158FCF"/><stop offset="1" stop-color="#158FCF" stop-opacity="0"/></linearGradient></defs></svg></a>
+
+  <div class="acct" tabindex="0" role="button"><span id="partnerName">Northwind Communications</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></div>
+  <div class="scope"><div class="scope-k" id="scopeK">Partner tier</div><div class="scope-v" id="scopeV">Retail / FSW</div></div>
+
+  <div class="nav-item" data-key="pdash" data-go="pdash"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.4 9 3.2l6 5.2"/><path d="M4.4 7.6V15h9.2V7.6"/><path d="M7.4 15v-3.6h3.2V15"/></svg><span class="lbl">Dashboard</span></div>
+
+  <div class="nav-cap">Manage</div>
+  <div class="nav-item" data-key="customers" data-go="customers"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 15.4h12.8"/><path d="M4.4 15.4V4.6L9 2.6l4.6 2v10.8"/><path d="M7 7.2h.01M7 9.8h.01M7 12.4h.01M11 7.2h.01M11 9.8h.01M11 12.4h.01"/></svg><span class="lbl">Customer Accounts</span></div>
+  <div class="nav-item" data-key="orders" data-go="orders"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 4.2h11.6l-1 8.2a1.6 1.6 0 0 1-1.6 1.4H5.8a1.6 1.6 0 0 1-1.6-1.4Z"/><path d="M6.6 6.8V4.4a2.4 2.4 0 0 1 4.8 0v2.4"/></svg><span class="lbl">Orders</span></div>
+  <div class="nav-item" data-key="team" data-go="team"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.4" cy="6" r="2.3"/><path d="M2.6 15.2c0-2.6 1.7-4 3.8-4s3.8 1.4 3.8 4"/><circle cx="12.4" cy="6.7" r="1.8"/><path d="M12.1 11.3c2 0 3.4 1.4 3.4 3.9"/></svg><span class="lbl">Partner Team</span></div>
+
+  <div class="nav-cap">Reports</div>
+  <div class="nav-item" data-key="preports" data-go="preports"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15V8.2M7.6 15V4M12.2 15V9.6M15.2 15H2.8"/></svg><span class="lbl">Analytics</span></div>
+</aside>
+
+<main class="main" id="pMain">
+  <header class="topbar">
+    <button class="tb-ic" id="railT" title="Collapse sidebar" aria-label="Collapse sidebar" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/><path d="m14.5 9.5-2.5 2.5 2.5 2.5"/></svg></button>
+    <div class="tb-ic" id="navT" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
+    <div class="crumb" id="pCrumb">Partner Portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg> <b id="crumbPage">Dashboard</b></div>
+    <div class="sp"></div>
+    <button class="tsw" id="tsw" role="switch" aria-checked="false" data-tip="Toggle light / dark theme"><span class="l">Light</span>
+      <span class="tr"><span class="kn"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 4l1.5 1.5M18.5 18.5 20 20M2 12h2M20 12h2M4 20l1.5-1.5M18.5 5.5 20 4"/></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></span></button>
+    <button class="tb-ic" id="helpBtn" aria-label="Help" data-tip="Help &amp; support"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.2a2.8 2.8 0 0 1 5.5.8c0 1.9-2.7 2.4-2.7 2.4"/><path d="M12 16.8h.01"/></svg></button>
+    <div class="tb-ic" data-tip="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+    <div class="av" data-tip="Michael Okafor — Partner admin">MO</div>
+  </header>
+
+  <div class="scroll"><div class="page">
+
+    <!-- ==================== PARTNER DASHBOARD ==================== -->
+    <section class="vpage" id="v-pdash">
+      <div class="phead"><div class="ttl-row"><h1 class="ttl">Partner Dashboard</h1></div></div>
+
+      <div class="kpis">
+        <div class="kpi"><div class="k">Customer Accounts <span class="info-dot" data-tip="Accounts your partner organisation is authorised to administer."></span></div><div class="v">48</div><div class="upd">3 added this month</div></div>
+        <div class="kpi"><div class="k">Active Locations</div><div class="v">213</div><div class="upd">Across 11 states</div></div>
+        <div class="kpi"><div class="k">Licensed Seats</div><div class="v">12,480</div><div class="upd">86% of purchased</div></div>
+        <div class="kpi"><div class="k">Open Orders</div><div class="v">7</div><div class="upd">2 awaiting porting</div></div>
+      </div>
+
+      <h2 class="sec-t">Portfolio</h2>
+      <div class="dgrid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="card">
+          <div class="card-h"><div><div class="t">Seats by Service</div><div class="s">Current month • May 2024</div></div></div>
+          <div class="card-b">
+            <div class="donut-wrap"><div class="donut-c"><div id="pd1"></div><div class="dc-v mono">12,480</div></div></div>
+            <div class="legend-grid">
+              <div><i style="background:var(--ch-ok)"></i>Voice</div>
+              <div><i style="background:var(--ch5)"></i>Chat</div>
+              <div><i style="background:var(--ch1)"></i>Video</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><div class="t">Seat Growth</div><div class="s">Trailing 12 months</div></div></div>
+          <div class="card-b">
+            <div class="lchart">
+              <svg viewBox="0 0 320 96" preserveAspectRatio="none" aria-label="Seat growth trend">
+                <polyline fill="none" stroke="url(#pgrad)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+                  points="4,80 30,74 56,72 82,64 108,60 134,54 160,48 186,44 212,34 238,30 264,22 292,14"/>
+              </svg>
+            </div>
+            <div class="dsplit" style="margin-top:16px"><div><div class="ov-k">Net new</div><div class="ov-v mono">+2,140</div></div><div><div class="ov-k">Churn</div><div class="ov-v mono">1.9%</div></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><div class="t">Attention Needed</div><div class="s">Across your portfolio</div></div></div>
+          <div class="card-b">
+            <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10"/><path d="m8 9 4 4 4-4"/><path d="M4 17h16"/></svg>Porting stalled</span><b class="mono">3</b></div>
+            <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M17 8.5v5M19.5 11h-5"/></svg>Unassigned licenses</span><b class="mono">128</b></div>
+            <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="9.5" rx="2"/><path d="M7.5 10.5V7a4.5 4.5 0 0 1 9 0v3.5"/></svg>MFA not enforced</span><b class="mono">6</b></div>
+            <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg>Trials ending &lt; 14d</span><b class="mono">4</b></div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="sec-t">Recently Active Accounts</h2>
+      <div class="tw"><div class="tscroll"><table id="pdRecent"></table></div></div>
+    </section>
+
+    <!-- ==================== CUSTOMER ACCOUNTS ==================== -->
+    <section class="vpage" id="v-customers">
+      <div class="phead">
+        <div class="ttl-row"><h1 class="ttl">Customer Accounts</h1></div>
+        <div style="display:flex;gap:10px"><button class="btn btn-p"><span class="lbl">Add Account</span></button></div>
+      </div>
+      <div class="ttl-sub">Select an account to administer its locations, services and users.</div>
+
+      <div class="toolbar">
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input placeholder="Search accounts"></div>
+        <div class="chip"><span class="lab">All Statuses</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        <div class="chip"><span class="lab">All Services</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      </div>
+
+      <div class="tw"><div class="tscroll"><table id="custTable"></table></div></div>
+    </section>
+
+    <!-- ==================== CUSTOMER DETAIL ==================== -->
+    <section class="vpage" id="v-customer">
+      <div class="ctx">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 16l9 5 9-5M3 12l9 5 9-5"/></svg>
+        <span>Administering as <b id="ctxPartner">Northwind Communications</b> — actions are recorded against your partner account.</span>
+        <span class="sp"></span>
+        <span class="lnk" data-go="customers">Switch account</span>
+      </div>
+
+      <div class="tier">
+        <div class="tier-s done"><span class="tier-n">1</span><span class="tier-t"><span class="tier-k">Partner</span><span class="tier-v">Northwind Communications</span></span></div>
+        <div class="tier-s on"><span class="tier-n">2</span><span class="tier-t"><span class="tier-k">Customer account</span><span class="tier-v" id="tierCust">Acme Manufacturing</span></span></div>
+        <div class="tier-s"><span class="tier-n">3</span><span class="tier-t"><span class="tier-k">Location</span><span class="tier-v">Select a location</span></span></div>
+      </div>
+
+      <div class="phead">
+        <div class="ttl-row"><h1 class="ttl" id="custTtl">Acme Manufacturing</h1><span class="pill ok">Active</span></div>
+        <div style="display:flex;gap:10px">
+          <button class="btn"><span class="lbl">Account Settings</span></button>
+          <button class="btn btn-p" id="openCp"><span class="lbl">Open Control Panel</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></button>
+        </div>
+      </div>
+      <div class="ttl-sub" id="custSub">Account ID SNG-40218 · Onboarded Mar 2022 · Primary contact Dana Whitfield</div>
+
+      <div class="kpis">
+        <div class="kpi"><div class="k">Locations</div><div class="v" id="cLoc">6</div><div class="upd">2 states</div></div>
+        <div class="kpi"><div class="k">Licensed Seats</div><div class="v" id="cSeat">840</div><div class="upd">92% assigned</div></div>
+        <div class="kpi"><div class="k">DIDs</div><div class="v" id="cDid">312</div><div class="upd">14 unassigned</div></div>
+        <div class="kpi"><div class="k">Open Tickets</div><div class="v">2</div><div class="upd">Both low priority</div></div>
+      </div>
+
+      <h2 class="sec-t">Locations</h2>
+      <div class="ttl-sub" style="margin-bottom:12px">Drill into a location to manage its extensions, numbers and users.</div>
+      <div class="tw"><div class="tscroll"><table id="locTable"></table></div></div>
+
+      <h2 class="sec-t">Enabled Services</h2>
+      <div class="appcards">
+        <div class="appcard"><div class="app-hero"><div class="app-logo" style="background:var(--ok-tint);color:var(--ok-ink)">V</div></div><div class="card-b"><b>Sangoma UC Voice</b><div class="muted">640 seats · Advanced</div></div></div>
+        <div class="appcard"><div class="app-hero"><div class="app-logo" style="background:var(--warn-tint);color:var(--warn-ink)">C</div></div><div class="card-b"><b>Sangoma UC Chat</b><div class="muted">840 seats · Premium</div></div></div>
+        <div class="appcard"><div class="app-hero"><div class="app-logo" style="background:var(--info-tint);color:var(--info-ink)">M</div></div><div class="card-b"><b>Sangoma Meet</b><div class="muted">420 seats · Standard</div></div></div>
+        <div class="appcard"><div class="app-hero"><div class="app-logo" style="background:var(--violet-tint);color:var(--violet)">X</div></div><div class="card-b"><b>Sangoma CX</b><div class="muted">Not enabled</div></div></div>
+      </div>
+    </section>
+
+    <!-- ==================== LOCATION DETAIL ==================== -->
+    <section class="vpage" id="v-location">
+      <div class="ctx">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 16l9 5 9-5M3 12l9 5 9-5"/></svg>
+        <span>Administering as <b>Northwind Communications</b> — actions are recorded against your partner account.</span>
+        <span class="sp"></span>
+        <span class="lnk" data-go="customer">Back to account</span>
+      </div>
+
+      <div class="tier">
+        <div class="tier-s done"><span class="tier-n">1</span><span class="tier-t"><span class="tier-k">Partner</span><span class="tier-v">Northwind Communications</span></span></div>
+        <div class="tier-s done"><span class="tier-n">2</span><span class="tier-t"><span class="tier-k">Customer account</span><span class="tier-v" id="tierCust2">Acme Manufacturing</span></span></div>
+        <div class="tier-s on"><span class="tier-n">3</span><span class="tier-t"><span class="tier-k">Location</span><span class="tier-v" id="tierLoc">Austin HQ</span></span></div>
+      </div>
+
+      <div class="phead">
+        <div class="ttl-row"><h1 class="ttl" id="locTtl">Austin HQ</h1><span class="pill ok">Live</span></div>
+        <div style="display:flex;gap:10px">
+          <button class="btn"><span class="lbl">Edit Location</span></button>
+          <button class="btn btn-p"><span class="lbl">Assign Seats</span></button>
+        </div>
+      </div>
+      <div class="ttl-sub" id="locSub">1400 Congress Ave, Austin, TX 78701 · Site code ATX-01 · Time zone America/Chicago</div>
+
+      <div class="kpis">
+        <div class="kpi"><div class="k">Extensions</div><div class="v">248</div><div class="upd">12 unassigned</div></div>
+        <div class="kpi"><div class="k">DIDs</div><div class="v">96</div><div class="upd">4 porting</div></div>
+        <div class="kpi"><div class="k">Users</div><div class="v">236</div><div class="upd">All licensed</div></div>
+        <div class="kpi"><div class="k">Devices</div><div class="v">204</div><div class="upd">3 offline</div></div>
+      </div>
+
+      <div class="dgrid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="card">
+          <div class="card-h"><div><div class="t">Extensions and DIDs</div><div class="s">Last updated May 2024</div></div></div>
+          <div class="card-b">
+            <div class="donut-wrap"><div class="donut-c"><div id="ld1"></div><div class="dc-v mono">344</div></div></div>
+            <div class="legend-grid"><div><i style="background:var(--ch-ok)"></i>Extensions</div><div><i style="background:var(--ch5)"></i>DIDs</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><div class="t">Call Volume</div><div class="s">Current month • May 2024</div></div></div>
+          <div class="card-b">
+            <div class="lchart">
+              <svg viewBox="0 0 320 96" preserveAspectRatio="none" aria-label="Call volume trend">
+                <polyline fill="none" stroke="url(#pgrad)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+                  points="4,70 30,58 56,66 82,44 108,52 134,36 160,42 186,28 212,34 238,22 264,30 292,18"/>
+              </svg>
+            </div>
+            <div class="dsplit" style="margin-top:16px"><div><div class="ov-k">Inbound</div><div class="ov-v mono">18,402</div></div><div><div class="ov-k">Outbound</div><div class="ov-v mono">12,915</div></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><div class="t">Site Health</div><div class="s">Live</div></div></div>
+          <div class="card-b">
+            <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 16 0"/><path d="M7.5 12a4.5 4.5 0 0 1 9 0"/><circle cx="12" cy="17" r="1.6"/></svg>SIP trunk</span><span class="pill ok">Registered</span></div>
+            <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 4.5 6.8v5.1c0 4.3 3.1 7.6 7.5 8.6 4.4-1 7.5-4.3 7.5-8.6V6.8Z"/><path d="m9.3 12 1.9 1.9 3.5-3.8"/></svg>E911 records</span><span class="pill ok">Verified</span></div>
+            <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="11" rx="2"/><path d="M8 20h8"/></svg>Devices offline</span><span class="pill warn">3</span></div>
+            <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9.5 3v3M14.5 3v3M9.5 18v3M14.5 18v3M3 9.5h3M3 14.5h3M18 9.5h3M18 14.5h3"/></svg>Firmware</span><span class="pill">Up to date</span></div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="sec-t">Users at this Location</h2>
+      <div class="tw"><div class="tscroll"><table id="locUsers"></table></div></div>
+    </section>
+
+    <!-- ==================== ORDERS ==================== -->
+    <section class="vpage" id="v-orders">
+      <div class="phead"><div class="ttl-row"><h1 class="ttl">Orders</h1></div>
+        <div style="display:flex;gap:10px"><button class="btn btn-p"><span class="lbl">New Order</span></button></div></div>
+      <div class="ttl-sub">Provisioning and porting requests raised on behalf of your customers.</div>
+      <div class="toolbar">
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input placeholder="Search orders"></div>
+        <div class="chip"><span class="lab">All Statuses</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      </div>
+      <div class="tw"><div class="tscroll"><table id="ordTable"></table></div></div>
+    </section>
+
+    <!-- ==================== PARTNER TEAM ==================== -->
+    <section class="vpage" id="v-team">
+      <div class="phead"><div class="ttl-row"><h1 class="ttl">Partner Team</h1></div>
+        <div style="display:flex;gap:10px"><button class="btn btn-p"><span class="lbl">Invite Member</span></button></div></div>
+      <div class="ttl-sub">Staff in your organisation and the customer accounts they may administer.</div>
+      <div class="tw"><div class="tscroll"><table id="teamTable"></table></div></div>
+    </section>
+
+    <!-- ==================== ANALYTICS ==================== -->
+    <section class="vpage" id="v-preports">
+      <div class="phead"><div class="ttl-row"><h1 class="ttl">Analytics</h1></div></div>
+      <div class="ttl-sub">Portfolio performance across every account you administer.</div>
+      <div class="kpis">
+        <div class="kpi"><div class="k">Seat Utilisation</div><div class="v">86%</div><div class="upd">+4 pts vs Apr</div></div>
+        <div class="kpi"><div class="k">Avg Seats / Account</div><div class="v">260</div><div class="upd">+12 vs Apr</div></div>
+        <div class="kpi"><div class="k">Accounts at Risk</div><div class="v">3</div><div class="upd">Low engagement</div></div>
+        <div class="kpi"><div class="k">Net Seat Growth</div><div class="v">+2,140</div><div class="upd">Trailing 12 months</div></div>
+      </div>
+      <div class="dgrid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="card">
+          <div class="card-h"><div><div class="t">Adoption by Service</div><div class="s">Share of licensed seats</div></div></div>
+          <div class="card-b">
+            <div class="donut-wrap"><div class="donut-c"><div id="pr1"></div><div class="dc-v mono">86%</div></div></div>
+            <div class="legend-grid"><div><i style="background:var(--ch-ok)"></i>Voice</div><div><i style="background:var(--ch5)"></i>Chat</div><div><i style="background:var(--ch1)"></i>Video</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><div class="t">Top Accounts by Seats</div><div class="s">Current month</div></div></div>
+          <div class="card-b">
+            <div class="mrow"><span class="lft">Belmont Health</span><b class="mono">1,240</b></div>
+            <div class="mrow"><span class="lft">Acme Manufacturing</span><b class="mono">840</b></div>
+            <div class="mrow"><span class="lft">Cascade Logistics</span><b class="mono">610</b></div>
+            <div class="mrow"><span class="lft">Harbor Point Legal</span><b class="mono">180</b></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><div class="t">Seat Growth</div><div class="s">Trailing 12 months</div></div></div>
+          <div class="card-b">
+            <div class="lchart">
+              <svg viewBox="0 0 320 96" preserveAspectRatio="none" aria-label="Seat growth trend">
+                <polyline fill="none" stroke="url(#pgrad)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+                  points="4,84 30,78 56,70 82,68 108,58 134,56 160,46 186,42 212,36 238,28 264,24 292,12"/>
+              </svg>
+            </div>
+            <div class="dsplit" style="margin-top:16px"><div><div class="ov-k">Best month</div><div class="ov-v mono">+412</div></div><div><div class="ov-k">Avg / month</div><div class="ov-v mono">+178</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="sec-t">Account Performance</h2>
+      <div class="tw"><div class="tscroll"><table id="prTable"></table></div></div>
+    </section>
+
+  </div></div>
+</main>
+
+<script src="assets/core.js?v=10"></script>
+<script src="assets/partner.js?v=3"></script>
+</body>
+</html>
