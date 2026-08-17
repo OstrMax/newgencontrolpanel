@@ -135,6 +135,9 @@ body.rail-collapsed #railT svg{transform:rotate(180deg)}
 .ttl{font-size:29px;font-weight:600;letter-spacing:-.03em;line-height:1.16}
 .ttl-row{display:flex;align-items:center;gap:14px}
 .ttl-sub{font-size:14px;color:var(--ink-3);padding-left:14px;border-left:1px solid var(--divider)}
+/* standalone descriptor row under a page head needs the same 20px the head itself
+   carries, otherwise it butts straight into the toolbar or table below */
+.phead+.ttl-sub{margin-bottom:20px}
 .ttl-cap{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
 .upd{font-size:12px;color:var(--ink-4)}
 .svc-pick{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-2)}
@@ -184,6 +187,11 @@ body.rail-collapsed #railT svg{transform:rotate(180deg)}
 
 /* donut cards */
 .dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+/* Column-count modifiers. These must be classes, not inline styles: an inline
+   grid-template-columns outranks the responsive .dgrid rules further down and
+   leaves three cards crammed side by side on a tablet. */
+.dgrid-2{grid-template-columns:repeat(2,1fr)}
+.dgrid-3{grid-template-columns:repeat(3,1fr)}
 .dcard{padding:0;display:flex;flex-direction:column}
 .dcard .dh{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--hair)}
 .dcard .dh .t{font-size:14.5px;font-weight:600}
@@ -259,6 +267,10 @@ tbody tr:hover{background:var(--card-2)}
 [data-theme="dark"] .tw.tint tbody tr{background:rgba(251,113,133,.06)}
 .tw.tint tbody tr:hover{background:rgba(253,234,239,.6)}
 .muted{color:var(--ink-3)} .mono{font-variant-numeric:tabular-nums}
+/* mono table cells are identifiers, counts and percentages — never break them */
+td.mono{white-space:nowrap}
+/* atomic short values (a person, a site) read badly split across two lines */
+.nw{white-space:nowrap}
 .trunc{max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:bottom}
 .cell-ic{display:inline-flex;align-items:center;gap:8px}
 .cell-ic svg{width:15px;height:15px;color:var(--ink-4);flex-shrink:0}
@@ -443,7 +455,7 @@ thead th{position:sticky;top:0;z-index:2;background:var(--surface)}
 @media(prefers-reduced-motion:reduce){.vpage.on{animation:none}}
 
 /* ===================== Billing (Figma: SCP Billing) ===================== */
-.bill-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.bill-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
 .tot{display:flex;flex-direction:column;gap:2px;padding:0 4px}
 .tot-k{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
 .tot-v{font-size:15px;font-weight:600;color:var(--ink-1)}

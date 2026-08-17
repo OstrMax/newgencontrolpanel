@@ -2,7 +2,9 @@
  * CSS vars / currentColor in SVG, no dash-arc charts left, no duplicate ids. */
 const fs = require('fs');
 const path = require('path');
-const DIR = path.join(__dirname, 'figma-pages');
+/* usage: node verify-figma-pages.cjs [dir] [census-file] */
+const DIR = path.join(__dirname, process.argv[2] || 'figma-pages');
+const CENSUS = process.argv[3] || '01-dashboard-light.html';
 
 let bad = 0;
 const files = fs.readdirSync(DIR).filter(f => f.endsWith('.html') && f !== 'index.html');
@@ -39,9 +41,9 @@ for (const f of files) {
 
 console.log('\n' + files.length + ' files checked, ' + bad + ' with problems.');
 
-// chart census on the dashboard
-const d = fs.readFileSync(path.join(DIR, '01-dashboard-light.html'), 'utf8');
-console.log('dashboard: ' + (d.match(/fill-rule="evenodd"/g) || []).length + ' track rings, ' +
+// chart census on a representative page
+const d = fs.readFileSync(path.join(DIR, CENSUS), 'utf8');
+console.log(CENSUS + ': ' + (d.match(/fill-rule="evenodd"/g) || []).length + ' track rings, ' +
   (d.match(/<path d="M[\d.]/g) || []).length + ' vector paths, ' +
   (d.match(/<polyline/g) || []).length + ' polylines');
 process.exit(bad ? 1 : 0);

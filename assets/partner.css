@@ -83,26 +83,7 @@ tr.drill:hover{background:var(--card-2)}
   text-overflow:ellipsis;white-space:nowrap}
 .acc-nm span{display:block;font-size:12px;color:var(--ink-4);font-variant-numeric:tabular-nums}
 
-/* ---------- Hierarchy strip ---------- */
-.tier{display:flex;align-items:stretch;gap:0;margin-bottom:20px;border-radius:var(--r-md);
-  overflow:hidden;border:1px solid var(--stroke);background:var(--surface)}
-.tier-s{flex:1;padding:13px 16px;display:flex;align-items:center;gap:11px;position:relative;min-width:0}
-.tier-s + .tier-s{border-left:1px solid var(--hair)}
-.tier-s.on{background:var(--violet-soft)}
-.tier-n{width:22px;height:22px;border-radius:999px;flex:none;display:grid;place-items:center;
-  font-size:11px;font-weight:700;background:var(--track);color:var(--ink-4)}
-.tier-s.on .tier-n{background:var(--grad);color:#fff}
-.tier-s.done .tier-n{background:var(--ok-tint);color:var(--ok-ink)}
-.tier-t{min-width:0;display:block}
-.tier-k{display:block;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-4)}
-.tier-v{display:block;margin-top:2px;font-size:13px;font-weight:600;color:var(--ink-1);overflow:hidden;
-  text-overflow:ellipsis;white-space:nowrap}
-.tier-s.on .tier-k{color:var(--violet)}
-
 /* ---------- Misc ---------- */
-.loc-ic{width:30px;height:30px;border-radius:8px;flex:none;display:grid;place-items:center;
-  background:var(--violet-soft);color:var(--violet)}
-.loc-ic svg{width:16px;height:16px}
 .gone{display:none !important}
 .neg{color:var(--bad-ink)}
 /* inline utilisation bar inside a table cell */

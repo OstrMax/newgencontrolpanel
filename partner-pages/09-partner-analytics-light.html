@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sangoma Partner Portal — Customer Account — Locations (dark)</title>
+<title>Sangoma Partner Portal — Partner Analytics (light)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -145,6 +145,9 @@ body.rail-collapsed #railT svg{transform:rotate(180deg)}
 .ttl{font-size:29px;font-weight:600;letter-spacing:-.03em;line-height:1.16}
 .ttl-row{display:flex;align-items:center;gap:14px}
 .ttl-sub{font-size:14px;color:var(--ink-3);padding-left:14px;border-left:1px solid var(--divider)}
+/* standalone descriptor row under a page head needs the same 20px the head itself
+   carries, otherwise it butts straight into the toolbar or table below */
+.phead+.ttl-sub{margin-bottom:20px}
 .ttl-cap{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
 .upd{font-size:12px;color:var(--ink-4)}
 .svc-pick{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-2)}
@@ -194,6 +197,11 @@ body.rail-collapsed #railT svg{transform:rotate(180deg)}
 
 /* donut cards */
 .dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+/* Column-count modifiers. These must be classes, not inline styles: an inline
+   grid-template-columns outranks the responsive .dgrid rules further down and
+   leaves three cards crammed side by side on a tablet. */
+.dgrid-2{grid-template-columns:repeat(2,1fr)}
+.dgrid-3{grid-template-columns:repeat(3,1fr)}
 .dcard{padding:0;display:flex;flex-direction:column}
 .dcard .dh{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--hair)}
 .dcard .dh .t{font-size:14.5px;font-weight:600}
@@ -269,6 +277,10 @@ tbody tr:hover{background:var(--card-2)}
 [data-theme="dark"] .tw.tint tbody tr{background:rgba(251,113,133,.06)}
 .tw.tint tbody tr:hover{background:rgba(253,234,239,.6)}
 .muted{color:var(--ink-3)} .mono{font-variant-numeric:tabular-nums}
+/* mono table cells are identifiers, counts and percentages — never break them */
+td.mono{white-space:nowrap}
+/* atomic short values (a person, a site) read badly split across two lines */
+.nw{white-space:nowrap}
 .trunc{max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:bottom}
 .cell-ic{display:inline-flex;align-items:center;gap:8px}
 .cell-ic svg{width:15px;height:15px;color:var(--ink-4);flex-shrink:0}
@@ -453,7 +465,7 @@ thead th{position:sticky;top:0;z-index:2;background:var(--surface)}
 @media(prefers-reduced-motion:reduce){.vpage.on{animation:none}}
 
 /* ===================== Billing (Figma: SCP Billing) ===================== */
-.bill-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.bill-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
 .tot{display:flex;flex-direction:column;gap:2px;padding:0 4px}
 .tot-k{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
 .tot-v{font-size:15px;font-weight:600;color:var(--ink-1)}
@@ -941,6 +953,53 @@ th .info-dot{margin-left:5px}
 .ctx .sp{flex:1}
 .ctx .lnk{color:var(--violet);font-weight:600;cursor:pointer}
 
+/* ---------- Clickable breadcrumb hierarchy ----------
+   Every segment before the current page navigates, so a partner can jump back
+   up the partner -> account -> location trail from anywhere. */
+.cr-l{color:var(--ink-3);cursor:pointer;text-decoration:none;border-radius:6px;padding:1px 4px;margin:0 -4px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:background .15s,color .15s}
+.cr-l:hover{color:var(--violet);background:var(--violet-soft)}
+.cr-l:focus-visible{outline:2px solid var(--violet);outline-offset:1px}
+
+/* location picker sitting in the trail, control panel side */
+.cr-sel{position:relative;flex:none}
+.cr-sel > .cr-btn{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;
+  border:1px solid var(--stroke);border-radius:7px;background:var(--surface);cursor:pointer;
+  font:inherit;font-weight:600;color:var(--ink-1);transition:border-color .15s,background .15s}
+.cr-sel > .cr-btn:hover{border-color:var(--violet-tint)}
+.cr-sel > .cr-btn svg{width:14px;height:14px;color:var(--ink-4);flex:none}
+.cr-sel.open > .cr-btn{border-color:var(--violet);background:var(--violet-soft)}
+.cr-menu{position:absolute;top:calc(100% + 6px);left:0;z-index:40;min-width:288px;padding:6px;
+  border:1px solid var(--stroke);border-radius:var(--r-md);background:var(--surface);
+  box-shadow:var(--shadow-pop);display:none}
+.cr-sel.open .cr-menu{display:block}
+.cr-o{display:flex;align-items:center;gap:10px;padding:7px 9px;border-radius:8px;cursor:pointer;
+  font-size:13px;color:var(--ink-2)}
+.cr-o:hover{background:var(--track)}
+.cr-o.on{background:var(--violet-soft);color:var(--violet)}
+.cr-o b{font-weight:600;color:var(--ink-1)}
+.cr-o.on b{color:var(--violet)}
+.cr-o .code{margin-left:auto;font-size:11.5px;color:var(--ink-4);font-variant-numeric:tabular-nums}
+
+/* A partner user belongs to exactly one partner account, so the rail switcher
+   is inert unless a Sangoma admin is troubleshooting. */
+.acct.static{cursor:default}
+.acct.static:hover{background:var(--surface);border-color:var(--stroke)}
+
+/* Long trails must be able to ellipsize rather than clip. */
+.crumb .cr-l{min-width:0}
+
+/* The base stylesheet drops the whole breadcrumb on phones, which is fine for a
+   plain trail but would strand the location picker in a partner session. Keep
+   the picker, drop the ancestor links. */
+@media(max-width:520px){
+  [data-scope="partner"] .crumb{display:flex}
+  [data-scope="partner"] .crumb > .cr-l,
+  [data-scope="partner"] .crumb > svg,
+  [data-scope="partner"] .crumb > #crumbPage{display:none}
+  [data-scope="partner"] .cr-menu{min-width:240px}
+}
+
 /* ============================================================
    Partner portal — login + partner-tier hierarchy
    Additive only. Reuses every token from styles.css / app.css.
@@ -1026,26 +1085,7 @@ tr.drill:hover{background:var(--card-2)}
   text-overflow:ellipsis;white-space:nowrap}
 .acc-nm span{display:block;font-size:12px;color:var(--ink-4);font-variant-numeric:tabular-nums}
 
-/* ---------- Hierarchy strip ---------- */
-.tier{display:flex;align-items:stretch;gap:0;margin-bottom:20px;border-radius:var(--r-md);
-  overflow:hidden;border:1px solid var(--stroke);background:var(--surface)}
-.tier-s{flex:1;padding:13px 16px;display:flex;align-items:center;gap:11px;position:relative;min-width:0}
-.tier-s + .tier-s{border-left:1px solid var(--hair)}
-.tier-s.on{background:var(--violet-soft)}
-.tier-n{width:22px;height:22px;border-radius:999px;flex:none;display:grid;place-items:center;
-  font-size:11px;font-weight:700;background:var(--track);color:var(--ink-4)}
-.tier-s.on .tier-n{background:var(--grad);color:#fff}
-.tier-s.done .tier-n{background:var(--ok-tint);color:var(--ok-ink)}
-.tier-t{min-width:0;display:block}
-.tier-k{display:block;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-4)}
-.tier-v{display:block;margin-top:2px;font-size:13px;font-weight:600;color:var(--ink-1);overflow:hidden;
-  text-overflow:ellipsis;white-space:nowrap}
-.tier-s.on .tier-k{color:var(--violet)}
-
 /* ---------- Misc ---------- */
-.loc-ic{width:30px;height:30px;border-radius:8px;flex:none;display:grid;place-items:center;
-  background:var(--violet-soft);color:var(--violet)}
-.loc-ic svg{width:16px;height:16px}
 .gone{display:none !important}
 .neg{color:var(--bad-ink)}
 /* inline utilisation bar inside a table cell */
@@ -1058,32 +1098,33 @@ body{margin:0;min-width:1280px;background:var(--canvas)}
 .ck[data-indeterminate]::after{content:"";position:absolute;left:3px;top:7px;width:10px;height:2px;background:#fff;border-radius:2px}
 </style>
 </head>
-<body data-theme="dark" data-view="app">
-<svg aria-hidden="true" width="0" height="0" style="position:absolute" focusable="false"><defs><linearGradient id="pgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f48ad6"></stop><stop offset="0.8" stop-color="#c79bf2"></stop><stop offset="1" stop-color="#b0a6ff"></stop></linearGradient></defs></svg><aside class="rail" id="pRail">
-  <a class="brand" href="#pdash" aria-label="Sangoma Partner Portal"><svg class="brand-full" viewBox="26 110 248 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M95.2052 142.088C90.9704 142.088 87.8265 143.255 85.8374 144.163L85.5166 144.293L87.3132 148.573L87.634 148.444C87.7623 148.379 90.9063 146.887 94.8844 146.887C98.7983 146.887 101.172 148.703 101.172 151.751V154.41C99.2474 152.983 96.6167 152.14 93.7936 152.14C89.238 152.14 82.501 154.54 82.501 161.219C82.501 165.888 85.5808 171.336 94.3711 171.336C101.044 171.336 104.701 169.001 106.305 167.639L106.434 167.575V152.918C106.369 145.331 103.033 142.088 95.2052 142.088ZM101.172 159.468V164.851C99.5041 165.953 97.2584 166.537 94.6919 166.537C90.1363 166.537 88.0831 164.008 88.0831 161.543C88.0831 159.209 90.0722 156.874 94.4352 156.874C97.8358 156.874 100.21 158.625 101.172 159.468Z" fill="rgb(244, 247, 253)"></path><path d="M125.298 142.088C121.384 142.088 118.496 143.904 116.892 145.266V142.801H111.503V170.493H116.892V150.389C117.983 149.157 120.678 147.211 123.694 147.211C127.992 147.211 129.597 149.287 129.597 154.864V170.558H134.986V152.399C134.986 145.59 131.714 142.088 125.298 142.088Z" fill="rgb(244, 247, 253)"></path><path d="M70.246 151.167C67.2303 149.676 64.6638 148.378 64.6638 145.979C64.6638 144.228 66.0112 142.477 69.0269 142.477C71.9784 142.477 74.7373 144.747 75.4431 145.525L75.8923 145.979L78.5871 141.115L78.3304 140.856C76.5981 139.105 73.005 137.03 68.3852 137.03C62.4823 137.03 57.9909 141.05 57.9909 146.238C57.9909 151.232 62.4823 153.631 66.3962 155.707C69.5402 157.393 72.235 158.82 72.235 161.219C72.235 165.629 68.2569 165.953 67.0378 165.953H56.836H55.8735V171.336H67.2945C74.224 171.336 78.9079 167.185 78.9079 161.154C78.8437 155.447 74.2882 153.177 70.246 151.167Z" fill="rgb(244, 247, 253)"></path><path d="M154.427 142.088C150.449 142.088 146.792 143.385 144.097 145.785C141.146 148.444 139.542 152.205 139.542 156.615C139.542 162.062 141.723 165.435 143.584 167.315C145.958 169.715 149.23 171.206 152.438 171.206C155.261 171.206 158.341 169.909 160.394 167.899V172.179C160.394 177.691 157.892 180.48 152.951 180.48C149.166 180.48 145.701 178.988 143.905 177.756L143.648 177.562L141.21 181.777L141.466 181.972C143.263 183.204 147.177 185.214 152.951 185.214C155.39 185.214 158.854 184.695 161.613 182.361C164.372 180.026 165.72 176.394 165.72 171.66V145.396L165.592 145.331C162.255 143.191 158.662 142.088 154.427 142.088ZM160.394 148.379V162.451C158.983 164.786 156.16 166.472 153.465 166.472C147.434 166.472 145.188 160.636 145.188 156.744C145.188 149.481 150.192 146.952 154.491 146.952C157.379 146.887 159.496 147.925 160.394 148.379Z" fill="rgb(244, 247, 253)"></path><path d="M184.84 142.088C176.627 142.088 170.211 148.508 170.211 156.68C170.211 164.851 176.627 171.271 184.776 171.271C192.925 171.271 199.277 164.851 199.277 156.68C199.277 148.508 192.925 142.088 184.84 142.088ZM193.631 156.744C193.631 162.646 190.037 166.602 184.648 166.602C179.771 166.602 175.793 162.192 175.793 156.874C175.793 150.973 179.451 146.887 184.776 146.887C189.717 146.887 193.631 151.232 193.631 156.744Z" fill="rgb(244, 247, 253)"></path><path d="M233.54 142.088C229.498 142.088 225.969 144.423 224.044 146.044C222.504 143.45 220.13 142.088 216.986 142.088C213.136 142.088 210.185 144.034 208.709 145.266V142.737H203.319V170.428H208.709V150.324C209.736 149.222 212.366 147.211 215.125 147.211C218.59 147.211 220.13 148.897 220.13 152.724V170.558H225.52V150.324C226.931 148.897 229.434 147.276 232.128 147.276C235.465 147.276 237.005 148.962 237.005 152.918V170.623H242.394V152.205C242.266 145.59 239.25 142.088 233.54 142.088Z" fill="rgb(244, 247, 253)"></path><path d="M258.82 142.088C254.585 142.088 251.441 143.255 249.452 144.163L249.131 144.293L250.928 148.573L251.249 148.444C251.377 148.379 254.521 146.887 258.499 146.887C262.413 146.887 264.787 148.703 264.787 151.751V154.41C262.862 152.983 260.231 152.14 257.408 152.14C252.853 152.14 246.116 154.54 246.116 161.219C246.116 165.888 249.196 171.336 257.986 171.336C264.659 171.336 268.316 169.001 269.92 167.639L270.048 167.575V152.918C270.048 145.331 266.648 142.088 258.82 142.088ZM264.787 159.468V164.851C263.119 165.953 260.873 166.537 258.307 166.537C253.751 166.537 251.698 164.008 251.698 161.543C251.698 159.209 253.687 156.874 258.05 156.874C261.451 156.874 263.825 158.625 264.787 159.468Z" fill="rgb(244, 247, 253)"></path><path d="M85.3242 135.862C85.8375 135.733 86.415 135.603 86.9283 135.603L87.8266 135.538C87.8907 135.538 87.9549 135.538 87.9549 135.538C90.3931 135.538 92.5746 136.316 94.3712 137.678C97.1301 137.03 99.3758 136.965 101.237 137.354C98.6059 133.333 94.2428 130.61 89.2381 130.22C86.03 121.012 77.4322 114.786 67.8078 114.786C56.3227 114.786 46.4417 123.865 45.1584 135.473C36.4323 136.706 29.9519 144.358 29.9519 153.372C29.9519 163.294 37.9081 171.401 47.6608 171.401H50.7406V166.018H47.6608C40.7954 166.018 35.2132 160.311 35.2132 153.307C35.2132 147.341 39.2555 142.283 44.8376 140.921C45.8001 140.661 46.8267 140.532 47.9174 140.532C48.8157 140.532 49.714 140.661 50.5481 140.791C50.4198 139.818 50.2914 138.846 50.2914 137.873C50.2914 128.08 58.1193 120.039 67.8078 120.039C69.2194 120.039 70.5668 120.233 71.9142 120.558C79.0363 122.244 84.4259 128.34 85.3242 135.862Z" fill="url(#paint0_p)"></path><defs><linearGradient id="paint0_p" x1="65.5853" y1="114.771" x2="65.5853" y2="171.425" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#158FCF"></stop><stop offset="1" stop-color="#158FCF" stop-opacity="0"></stop></linearGradient></defs></svg></a>
+<body data-theme="light" data-view="app">
+<svg aria-hidden="true" width="0" height="0" style="position:absolute" focusable="false"><defs><linearGradient id="pgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ae0d8a"></stop><stop offset="0.8" stop-color="#64168e"></stop><stop offset="1" stop-color="#2f1155"></stop></linearGradient></defs></svg><aside class="rail" id="pRail">
+  <a class="brand" href="#pdash" aria-label="Sangoma Partner Portal"><svg class="brand-full" viewBox="26 110 248 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M95.2052 142.088C90.9704 142.088 87.8265 143.255 85.8374 144.163L85.5166 144.293L87.3132 148.573L87.634 148.444C87.7623 148.379 90.9063 146.887 94.8844 146.887C98.7983 146.887 101.172 148.703 101.172 151.751V154.41C99.2474 152.983 96.6167 152.14 93.7936 152.14C89.238 152.14 82.501 154.54 82.501 161.219C82.501 165.888 85.5808 171.336 94.3711 171.336C101.044 171.336 104.701 169.001 106.305 167.639L106.434 167.575V152.918C106.369 145.331 103.033 142.088 95.2052 142.088ZM101.172 159.468V164.851C99.5041 165.953 97.2584 166.537 94.6919 166.537C90.1363 166.537 88.0831 164.008 88.0831 161.543C88.0831 159.209 90.0722 156.874 94.4352 156.874C97.8358 156.874 100.21 158.625 101.172 159.468Z" fill="rgb(0, 18, 33)"></path><path d="M125.298 142.088C121.384 142.088 118.496 143.904 116.892 145.266V142.801H111.503V170.493H116.892V150.389C117.983 149.157 120.678 147.211 123.694 147.211C127.992 147.211 129.597 149.287 129.597 154.864V170.558H134.986V152.399C134.986 145.59 131.714 142.088 125.298 142.088Z" fill="rgb(0, 18, 33)"></path><path d="M70.246 151.167C67.2303 149.676 64.6638 148.378 64.6638 145.979C64.6638 144.228 66.0112 142.477 69.0269 142.477C71.9784 142.477 74.7373 144.747 75.4431 145.525L75.8923 145.979L78.5871 141.115L78.3304 140.856C76.5981 139.105 73.005 137.03 68.3852 137.03C62.4823 137.03 57.9909 141.05 57.9909 146.238C57.9909 151.232 62.4823 153.631 66.3962 155.707C69.5402 157.393 72.235 158.82 72.235 161.219C72.235 165.629 68.2569 165.953 67.0378 165.953H56.836H55.8735V171.336H67.2945C74.224 171.336 78.9079 167.185 78.9079 161.154C78.8437 155.447 74.2882 153.177 70.246 151.167Z" fill="rgb(0, 18, 33)"></path><path d="M154.427 142.088C150.449 142.088 146.792 143.385 144.097 145.785C141.146 148.444 139.542 152.205 139.542 156.615C139.542 162.062 141.723 165.435 143.584 167.315C145.958 169.715 149.23 171.206 152.438 171.206C155.261 171.206 158.341 169.909 160.394 167.899V172.179C160.394 177.691 157.892 180.48 152.951 180.48C149.166 180.48 145.701 178.988 143.905 177.756L143.648 177.562L141.21 181.777L141.466 181.972C143.263 183.204 147.177 185.214 152.951 185.214C155.39 185.214 158.854 184.695 161.613 182.361C164.372 180.026 165.72 176.394 165.72 171.66V145.396L165.592 145.331C162.255 143.191 158.662 142.088 154.427 142.088ZM160.394 148.379V162.451C158.983 164.786 156.16 166.472 153.465 166.472C147.434 166.472 145.188 160.636 145.188 156.744C145.188 149.481 150.192 146.952 154.491 146.952C157.379 146.887 159.496 147.925 160.394 148.379Z" fill="rgb(0, 18, 33)"></path><path d="M184.84 142.088C176.627 142.088 170.211 148.508 170.211 156.68C170.211 164.851 176.627 171.271 184.776 171.271C192.925 171.271 199.277 164.851 199.277 156.68C199.277 148.508 192.925 142.088 184.84 142.088ZM193.631 156.744C193.631 162.646 190.037 166.602 184.648 166.602C179.771 166.602 175.793 162.192 175.793 156.874C175.793 150.973 179.451 146.887 184.776 146.887C189.717 146.887 193.631 151.232 193.631 156.744Z" fill="rgb(0, 18, 33)"></path><path d="M233.54 142.088C229.498 142.088 225.969 144.423 224.044 146.044C222.504 143.45 220.13 142.088 216.986 142.088C213.136 142.088 210.185 144.034 208.709 145.266V142.737H203.319V170.428H208.709V150.324C209.736 149.222 212.366 147.211 215.125 147.211C218.59 147.211 220.13 148.897 220.13 152.724V170.558H225.52V150.324C226.931 148.897 229.434 147.276 232.128 147.276C235.465 147.276 237.005 148.962 237.005 152.918V170.623H242.394V152.205C242.266 145.59 239.25 142.088 233.54 142.088Z" fill="rgb(0, 18, 33)"></path><path d="M258.82 142.088C254.585 142.088 251.441 143.255 249.452 144.163L249.131 144.293L250.928 148.573L251.249 148.444C251.377 148.379 254.521 146.887 258.499 146.887C262.413 146.887 264.787 148.703 264.787 151.751V154.41C262.862 152.983 260.231 152.14 257.408 152.14C252.853 152.14 246.116 154.54 246.116 161.219C246.116 165.888 249.196 171.336 257.986 171.336C264.659 171.336 268.316 169.001 269.92 167.639L270.048 167.575V152.918C270.048 145.331 266.648 142.088 258.82 142.088ZM264.787 159.468V164.851C263.119 165.953 260.873 166.537 258.307 166.537C253.751 166.537 251.698 164.008 251.698 161.543C251.698 159.209 253.687 156.874 258.05 156.874C261.451 156.874 263.825 158.625 264.787 159.468Z" fill="rgb(0, 18, 33)"></path><path d="M85.3242 135.862C85.8375 135.733 86.415 135.603 86.9283 135.603L87.8266 135.538C87.8907 135.538 87.9549 135.538 87.9549 135.538C90.3931 135.538 92.5746 136.316 94.3712 137.678C97.1301 137.03 99.3758 136.965 101.237 137.354C98.6059 133.333 94.2428 130.61 89.2381 130.22C86.03 121.012 77.4322 114.786 67.8078 114.786C56.3227 114.786 46.4417 123.865 45.1584 135.473C36.4323 136.706 29.9519 144.358 29.9519 153.372C29.9519 163.294 37.9081 171.401 47.6608 171.401H50.7406V166.018H47.6608C40.7954 166.018 35.2132 160.311 35.2132 153.307C35.2132 147.341 39.2555 142.283 44.8376 140.921C45.8001 140.661 46.8267 140.532 47.9174 140.532C48.8157 140.532 49.714 140.661 50.5481 140.791C50.4198 139.818 50.2914 138.846 50.2914 137.873C50.2914 128.08 58.1193 120.039 67.8078 120.039C69.2194 120.039 70.5668 120.233 71.9142 120.558C79.0363 122.244 84.4259 128.34 85.3242 135.862Z" fill="url(#paint0_p)"></path><defs><linearGradient id="paint0_p" x1="65.5853" y1="114.771" x2="65.5853" y2="171.425" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#158FCF"></stop><stop offset="1" stop-color="#158FCF" stop-opacity="0"></stop></linearGradient></defs></svg></a>
 
-  <div class="acct" tabindex="0" role="button"><span id="partnerName">Northwind Communications</span><svg viewBox="0 0 24 24" fill="none" stroke="rgb(162, 173, 194)" stroke-width="2"><path d="m6 9 6 6 6-6"></path></svg></div>
+  <div class="acct static"><span id="partnerName">Northwind Communications</span></div>
   <div class="scope"><div class="scope-k" id="scopeK">Partner tier</div><div class="scope-v" id="scopeV">Retail / FSW</div></div>
 
-  <div class="nav-item" data-key="pdash" data-go="pdash"><svg viewBox="0 0 18 18" fill="none" stroke="rgb(204, 213, 230)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.4 9 3.2l6 5.2"></path><path d="M4.4 7.6V15h9.2V7.6"></path><path d="M7.4 15v-3.6h3.2V15"></path></svg><span class="lbl">Dashboard</span></div>
+  <div class="nav-item" data-key="pdash" data-go="pdash"><svg viewBox="0 0 18 18" fill="none" stroke="rgb(69, 79, 91)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.4 9 3.2l6 5.2"></path><path d="M4.4 7.6V15h9.2V7.6"></path><path d="M7.4 15v-3.6h3.2V15"></path></svg><span class="lbl">Dashboard</span></div>
 
   <div class="nav-cap">Manage</div>
-  <div class="nav-item on" data-key="customers" data-go="customers"><svg viewBox="0 0 18 18" fill="none" stroke="rgb(204, 213, 230)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 15.4h12.8"></path><path d="M4.4 15.4V4.6L9 2.6l4.6 2v10.8"></path><path d="M7 7.2h.01M7 9.8h.01M7 12.4h.01M11 7.2h.01M11 9.8h.01M11 12.4h.01"></path></svg><span class="lbl">Customer Accounts</span></div>
-  <div class="nav-item" data-key="orders" data-go="orders"><svg viewBox="0 0 18 18" fill="none" stroke="rgb(204, 213, 230)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 4.2h11.6l-1 8.2a1.6 1.6 0 0 1-1.6 1.4H5.8a1.6 1.6 0 0 1-1.6-1.4Z"></path><path d="M6.6 6.8V4.4a2.4 2.4 0 0 1 4.8 0v2.4"></path></svg><span class="lbl">Orders</span></div>
-  <div class="nav-item" data-key="team" data-go="team"><svg viewBox="0 0 18 18" fill="none" stroke="rgb(204, 213, 230)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.4" cy="6" r="2.3"></circle><path d="M2.6 15.2c0-2.6 1.7-4 3.8-4s3.8 1.4 3.8 4"></path><circle cx="12.4" cy="6.7" r="1.8"></circle><path d="M12.1 11.3c2 0 3.4 1.4 3.4 3.9"></path></svg><span class="lbl">Partner Team</span></div>
+  <div class="nav-item" data-key="customers" data-go="customers"><svg viewBox="0 0 18 18" fill="none" stroke="rgb(69, 79, 91)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 15.4h12.8"></path><path d="M4.4 15.4V4.6L9 2.6l4.6 2v10.8"></path><path d="M7 7.2h.01M7 9.8h.01M7 12.4h.01M11 7.2h.01M11 9.8h.01M11 12.4h.01"></path></svg><span class="lbl">Customer Accounts</span></div>
+  <div class="nav-item" data-key="tickets" data-go="tickets"><svg viewBox="0 0 18 18" fill="none" stroke="rgb(69, 79, 91)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.4 7.4V5.2a.9.9 0 0 1 .9-.9h11.4a.9.9 0 0 1 .9.9v2.2a1.6 1.6 0 0 0 0 3.2v2.2a.9.9 0 0 1-.9.9H3.3a.9.9 0 0 1-.9-.9v-2.2a1.6 1.6 0 0 0 0-3.2Z"></path><path d="M7.4 4.3v9.4"></path></svg><span class="lbl">Support Tickets</span></div>
+  <div class="nav-item" data-key="orders" data-go="orders"><svg viewBox="0 0 18 18" fill="none" stroke="rgb(69, 79, 91)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.2 4.2h11.6l-1 8.2a1.6 1.6 0 0 1-1.6 1.4H5.8a1.6 1.6 0 0 1-1.6-1.4Z"></path><path d="M6.6 6.8V4.4a2.4 2.4 0 0 1 4.8 0v2.4"></path></svg><span class="lbl">Orders</span></div>
+  <div class="nav-item" data-key="team" data-go="team"><svg viewBox="0 0 18 18" fill="none" stroke="rgb(69, 79, 91)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.4" cy="6" r="2.3"></circle><path d="M2.6 15.2c0-2.6 1.7-4 3.8-4s3.8 1.4 3.8 4"></path><circle cx="12.4" cy="6.7" r="1.8"></circle><path d="M12.1 11.3c2 0 3.4 1.4 3.4 3.9"></path></svg><span class="lbl">Partner Team</span></div>
 
   <div class="nav-cap">Reports</div>
-  <div class="nav-item" data-key="preports" data-go="preports"><svg viewBox="0 0 18 18" fill="none" stroke="rgb(204, 213, 230)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15V8.2M7.6 15V4M12.2 15V9.6M15.2 15H2.8"></path></svg><span class="lbl">Analytics</span></div>
+  <div class="nav-item on" data-key="preports" data-go="preports"><svg viewBox="0 0 18 18" fill="none" stroke="rgb(69, 79, 91)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15V8.2M7.6 15V4M12.2 15V9.6M15.2 15H2.8"></path></svg><span class="lbl">Analytics</span></div>
 </aside><main class="main" id="pMain">
   <header class="topbar">
-    <button class="tb-ic" id="railT" title="Collapse sidebar" aria-label="Collapse sidebar" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204, 213, 230)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M9 4v16"></path><path d="m14.5 9.5-2.5 2.5 2.5 2.5"></path></svg></button>
-    <div class="tb-ic" id="navT" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204, 213, 230)" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></div>
-    <div class="crumb" id="pCrumb">Partner Portal <svg viewBox="0 0 24 24" fill="none" stroke="rgb(141, 151, 172)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg> Customer Accounts <svg viewBox="0 0 24 24" fill="none" stroke="rgb(141, 151, 172)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg> <b id="crumbPage">Acme Manufacturing</b></div>
+    <button class="tb-ic" id="railT" title="Collapse sidebar" aria-label="Collapse sidebar" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(69, 79, 91)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M9 4v16"></path><path d="m14.5 9.5-2.5 2.5 2.5 2.5"></path></svg></button>
+    <div class="tb-ic" id="navT" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(69, 79, 91)" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></div>
+    <div class="crumb" id="pCrumb"><span class="cr-l" data-go="pdash" tabindex="0" role="link">Northwind Communications</span><svg viewBox="0 0 24 24" fill="none" stroke="rgb(107, 116, 125)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg><b id="crumbPage">Analytics</b></div>
     <div class="sp"></div>
-    <button class="tsw" id="tsw" role="switch" aria-checked="true" data-tip="Toggle light / dark theme"><span class="l">Dark</span>
+    <button class="tsw" id="tsw" role="switch" aria-checked="false" data-tip="Toggle light / dark theme"><span class="l">Light</span>
       <span class="tr"><span class="kn"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="rgb(255, 255, 255)" stroke-width="2.4"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2v2M12 20v2M4 4l1.5 1.5M18.5 18.5 20 20M2 12h2M20 12h2M4 20l1.5-1.5M18.5 5.5 20 4"></path></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="rgb(255, 255, 255)" stroke-width="2.4"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></span></span></button>
-    <button class="tb-ic" id="helpBtn" aria-label="Help" data-tip="Help &amp; support"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204, 213, 230)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9.2 9.2a2.8 2.8 0 0 1 5.5.8c0 1.9-2.7 2.4-2.7 2.4"></path><path d="M12 16.8h.01"></path></svg></button>
-    <div class="tb-ic" data-tip="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204, 213, 230)" stroke-width="1.9"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8M13.7 21a2 2 0 0 1-3.4 0"></path></svg></div>
+    <button class="tb-ic" id="helpBtn" aria-label="Help" data-tip="Help &amp; support"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(69, 79, 91)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9.2 9.2a2.8 2.8 0 0 1 5.5.8c0 1.9-2.7 2.4-2.7 2.4"></path><path d="M12 16.8h.01"></path></svg></button>
+    <div class="tb-ic" data-tip="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(69, 79, 91)" stroke-width="1.9"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8M13.7 21a2 2 0 0 1-3.4 0"></path></svg></div>
     <div class="av" data-tip="Michael Okafor — Partner admin">MO</div>
   </header>
 
@@ -1095,51 +1136,7 @@ body{margin:0;min-width:1280px;background:var(--canvas)}
     <!-- ==================== CUSTOMER ACCOUNTS ==================== -->
     
 
-    <!-- ==================== CUSTOMER DETAIL ==================== -->
-    <section class="vpage on" id="v-customer" style="display: block;">
-      <div class="ctx">
-        <svg viewBox="0 0 24 24" fill="none" stroke="rgb(204, 188, 255)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"></path><path d="M3 16l9 5 9-5M3 12l9 5 9-5"></path></svg>
-        <span>Administering as <b id="ctxPartner">Northwind Communications</b> — actions are recorded against your partner account.</span>
-        <span class="sp"></span>
-        <span class="lnk" data-go="customers">Switch account</span>
-      </div>
-
-      <div class="tier">
-        <div class="tier-s done"><span class="tier-n">1</span><span class="tier-t"><span class="tier-k">Partner</span><span class="tier-v">Northwind Communications</span></span></div>
-        <div class="tier-s on"><span class="tier-n">2</span><span class="tier-t"><span class="tier-k">Customer account</span><span class="tier-v" id="tierCust">Acme Manufacturing</span></span></div>
-        <div class="tier-s"><span class="tier-n">3</span><span class="tier-t"><span class="tier-k">Location</span><span class="tier-v">Select a location</span></span></div>
-      </div>
-
-      <div class="phead">
-        <div class="ttl-row"><h1 class="ttl" id="custTtl">Acme Manufacturing</h1><span class="pill ok">Active</span></div>
-        <div style="display:flex;gap:10px">
-          <button class="btn"><span class="lbl">Account Settings</span></button>
-          <button class="btn btn-p" id="openCp"><span class="lbl">Open Control Panel</span><svg viewBox="0 0 24 24" fill="none" stroke="rgb(203, 184, 255)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="pgrad-x2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f48ad6"></stop><stop offset="0.8" stop-color="#c79bf2"></stop><stop offset="1" stop-color="#b0a6ff"></stop></linearGradient></defs><path d="M7 17 17 7M9 7h8v8" stroke="url(#pgrad-x2)"></path></svg></button>
-        </div>
-      </div>
-      <div class="ttl-sub" id="custSub">Account ID SNG-40218 · Manufacturing · 6 locations</div>
-
-      <div class="kpis">
-        <div class="kpi"><div class="k">Locations</div><div class="v" id="cLoc">6</div><div class="upd">2 states</div></div>
-        <div class="kpi"><div class="k">Licensed Seats</div><div class="v" id="cSeat">840</div><div class="upd">92% assigned</div></div>
-        <div class="kpi"><div class="k">DIDs</div><div class="v" id="cDid">312</div><div class="upd">14 unassigned</div></div>
-        <div class="kpi"><div class="k">Open Tickets</div><div class="v">2</div><div class="upd">Both low priority</div></div>
-      </div>
-
-      <h2 class="sec-t">Locations</h2>
-      <div class="ttl-sub" style="margin-bottom:12px">Drill into a location to manage its extensions, numbers and users.</div>
-      <div class="tw"><div class="tscroll"><table id="locTable"><thead><tr><th>Location</th><th>Address</th><th>Extensions</th><th>DIDs</th><th>Users</th><th>Status</th><th style="width:44px"></th></tr></thead><tbody><tr class="drill" data-loc="0"><td><span class="acc-cell"><span class="loc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204, 188, 255)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></span><span class="acc-nm"><b>Austin HQ</b><span>ATX-01</span></span></span></td><td class="muted"><span class="trunc">1400 Congress Ave, Austin, TX 78701</span></td><td class="mono">248</td><td class="mono">96</td><td class="mono">236</td><td><span class="pill ok">Live</span></td><td><span class="drill-x"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(141, 151, 172)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></span></td></tr><tr class="drill" data-loc="1"><td><span class="acc-cell"><span class="loc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204, 188, 255)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></span><span class="acc-nm"><b>Round Rock Plant</b><span>ATX-02</span></span></span></td><td class="muted"><span class="trunc">2201 Chisholm Trail, Round Rock, TX</span></td><td class="mono">180</td><td class="mono">62</td><td class="mono">174</td><td><span class="pill ok">Live</span></td><td><span class="drill-x"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(141, 151, 172)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></span></td></tr><tr class="drill" data-loc="2"><td><span class="acc-cell"><span class="loc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204, 188, 255)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></span><span class="acc-nm"><b>Dallas Depot</b><span>DFW-01</span></span></span></td><td class="muted"><span class="trunc">740 Riverfront Blvd, Dallas, TX 75207</span></td><td class="mono">122</td><td class="mono">48</td><td class="mono">118</td><td><span class="pill ok">Live</span></td><td><span class="drill-x"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(141, 151, 172)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></span></td></tr><tr class="drill" data-loc="3"><td><span class="acc-cell"><span class="loc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204, 188, 255)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></span><span class="acc-nm"><b>Houston Yard</b><span>HOU-01</span></span></span></td><td class="muted"><span class="trunc">3300 Navigation Blvd, Houston, TX</span></td><td class="mono">96</td><td class="mono">40</td><td class="mono">92</td><td><span class="pill ok">Live</span></td><td><span class="drill-x"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(141, 151, 172)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></span></td></tr><tr class="drill" data-loc="4"><td><span class="acc-cell"><span class="loc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204, 188, 255)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></span><span class="acc-nm"><b>Phoenix Annex</b><span>PHX-01</span></span></span></td><td class="muted"><span class="trunc">55 N Central Ave, Phoenix, AZ 85004</span></td><td class="mono">118</td><td class="mono">44</td><td class="mono">108</td><td><span class="pill warn">Provisioning</span></td><td><span class="drill-x"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(141, 151, 172)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></span></td></tr><tr class="drill" data-loc="5"><td><span class="acc-cell"><span class="loc-ic"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(204, 188, 255)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></span><span class="acc-nm"><b>Remote Workers</b><span>REM-01</span></span></span></td><td class="muted"><span class="trunc">Distributed — no fixed site</span></td><td class="mono">76</td><td class="mono">22</td><td class="mono">112</td><td><span class="pill ok">Live</span></td><td><span class="drill-x"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(141, 151, 172)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></span></td></tr></tbody></table></div></div>
-
-      <h2 class="sec-t">Enabled Services</h2>
-      <div class="appcards">
-        <div class="appcard"><div class="app-hero"><div class="app-logo" style="background:var(--ok-tint);color:var(--ok-ink)">V</div></div><div class="card-b"><b>Sangoma UC Voice</b><div class="muted">640 seats · Advanced</div></div></div>
-        <div class="appcard"><div class="app-hero"><div class="app-logo" style="background:var(--warn-tint);color:var(--warn-ink)">C</div></div><div class="card-b"><b>Sangoma UC Chat</b><div class="muted">840 seats · Premium</div></div></div>
-        <div class="appcard"><div class="app-hero"><div class="app-logo" style="background:var(--info-tint);color:var(--info-ink)">M</div></div><div class="card-b"><b>Sangoma Meet</b><div class="muted">420 seats · Standard</div></div></div>
-        <div class="appcard"><div class="app-hero"><div class="app-logo" style="background:var(--violet-tint);color:var(--violet)">X</div></div><div class="card-b"><b>Sangoma CX</b><div class="muted">Not enabled</div></div></div>
-      </div>
-    </section>
-
-    <!-- ==================== LOCATION DETAIL ==================== -->
+    <!-- ==================== SUPPORT TICKETS ==================== -->
     
 
     <!-- ==================== ORDERS ==================== -->
@@ -1149,7 +1146,49 @@ body{margin:0;min-width:1280px;background:var(--canvas)}
     
 
     <!-- ==================== ANALYTICS ==================== -->
-    
+    <section class="vpage on" id="v-preports" style="display: block;">
+      <div class="phead"><div class="ttl-row"><h1 class="ttl">Analytics</h1></div></div>
+      <div class="ttl-sub">Portfolio performance across every account you administer.</div>
+      <div class="kpis">
+        <div class="kpi"><div class="k">Seat Utilisation</div><div class="v">86%</div><div class="upd">+4 pts vs Apr</div></div>
+        <div class="kpi"><div class="k">Avg Seats / Account</div><div class="v">260</div><div class="upd">+12 vs Apr</div></div>
+        <div class="kpi"><div class="k">Accounts at Risk</div><div class="v">3</div><div class="upd">Low engagement</div></div>
+        <div class="kpi"><div class="k">Net Seat Growth</div><div class="v">+2,140</div><div class="upd">Trailing 12 months</div></div>
+      </div>
+      <h2 class="sec-t">Adoption &amp; Mix</h2>
+      <div class="dgrid dgrid-3">
+        <div class="card">
+          <div class="card-h"><div><div class="t">Adoption by Service</div><div class="s">Share of licensed seats</div></div></div>
+          <div class="card-b">
+            <div class="donut-wrap"><div class="donut-c"><div id="pr1"><svg width="132" height="132" viewBox="0 0 132 132"><path d="M0,66 A66,66 0 1 0 132,66 A66,66 0 1 0 0,66 Z M13,66 A53,53 0 1 0 119,66 A53,53 0 1 0 13,66 Z" fill-rule="evenodd" fill="#f0f1f3"></path><path d="M67.336,13.0168 A6.5,6.5 0 0 1 67.6637,0.021 A66,66 0 1 1 59.3812,131.6673 A6.5,6.5 0 0 1 60.6849,118.7328 A53,53 0 1 0 67.336,13.0168 Z" fill="#12a150"></path><path d="M58.034,118.3979 A6.5,6.5 0 0 1 56.0801,131.2502 A66,66 0 0 1 7.3806,35.6723 A6.5,6.5 0 0 1 18.9269,41.6459 A53,53 0 0 0 58.034,118.3979 Z" fill="#f59e0b"></path><path d="M20.2141,39.3044 A6.5,6.5 0 0 1 8.9836,32.7565 A66,66 0 0 1 64.3363,0.021 A6.5,6.5 0 0 1 64.664,13.0168 A53,53 0 0 0 20.2141,39.3044 Z" fill="#7c3aed"></path></svg></div><div class="dc-v mono">86%</div></div></div>
+            <div class="legend-grid"><div><i style="background:var(--ch-ok)"></i>Voice</div><div><i style="background:var(--ch5)"></i>Chat</div><div><i style="background:var(--ch1)"></i>Video</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><div class="t">Top Accounts by Seats</div><div class="s">Current month</div></div></div>
+          <div class="card-b">
+            <div class="mrow"><span class="lft">Belmont Health</span><b class="mono">1,240</b></div>
+            <div class="mrow"><span class="lft">Acme Manufacturing</span><b class="mono">840</b></div>
+            <div class="mrow"><span class="lft">Cascade Logistics</span><b class="mono">610</b></div>
+            <div class="mrow"><span class="lft">Harbor Point Legal</span><b class="mono">180</b></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><div class="t">Seat Growth</div><div class="s">Trailing 12 months</div></div></div>
+          <div class="card-b">
+            <div class="lchart">
+              <svg viewBox="0 0 320 96" preserveAspectRatio="none" aria-label="Seat growth trend"><defs><linearGradient id="pgrad-x2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ae0d8a"></stop><stop offset="0.8" stop-color="#64168e"></stop><stop offset="1" stop-color="#2f1155"></stop></linearGradient></defs>
+                <polyline fill="none" stroke="url(#pgrad-x2)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" points="4,84 30,78 56,70 82,68 108,58 134,56 160,46 186,42 212,36 238,28 264,24 292,12"></polyline>
+              </svg>
+            </div>
+            <div class="dsplit" style="margin-top:16px"><div><div class="ov-k">Best month</div><div class="ov-v mono">+412</div></div><div><div class="ov-k">Avg / month</div><div class="ov-v mono">+178</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="sec-t">Account Performance</h2>
+      <div class="tw"><div class="tscroll"><table id="prTable"><thead><tr><th>Account</th><th>Locations</th><th>Seats</th><th>Utilisation</th><th>Trend</th><th>Status</th></tr></thead><tbody><tr><td><span class="acc-cell"><span class="acc-logo">AM</span><span class="acc-nm"><b>Acme Manufacturing</b><span>SNG-40218</span></span></span></td><td class="mono">6</td><td class="mono">840</td><td><span class="bar"><span class="t"><span style="width:92%;background:var(--ch1)"></span></span><b class="mono" style="font-weight:600;font-size:12.5px">92%</b></span></td><td class="mono">+4.2%</td><td><span class="pill ok">Active</span></td></tr><tr><td><span class="acc-cell"><span class="acc-logo">BH</span><span class="acc-nm"><b>Belmont Health</b><span>SNG-40219</span></span></span></td><td class="mono">14</td><td class="mono">1,240</td><td><span class="bar"><span class="t"><span style="width:86%;background:var(--ch1)"></span></span><b class="mono" style="font-weight:600;font-size:12.5px">86%</b></span></td><td class="mono">+2.8%</td><td><span class="pill ok">Active</span></td></tr><tr><td><span class="acc-cell"><span class="acc-logo">CL</span><span class="acc-nm"><b>Cascade Logistics</b><span>SNG-40224</span></span></span></td><td class="mono">9</td><td class="mono">610</td><td><span class="bar"><span class="t"><span style="width:78%;background:var(--ch1)"></span></span><b class="mono" style="font-weight:600;font-size:12.5px">78%</b></span></td><td class="mono">+1.4%</td><td><span class="pill ok">Active</span></td></tr><tr><td><span class="acc-cell"><span class="acc-logo">HP</span><span class="acc-nm"><b>Harbor Point Legal</b><span>SNG-40231</span></span></span></td><td class="mono">2</td><td class="mono">180</td><td><span class="bar"><span class="t"><span style="width:96%;background:var(--ch1)"></span></span><b class="mono" style="font-weight:600;font-size:12.5px">96%</b></span></td><td class="mono">+6.1%</td><td><span class="pill ok">Active</span></td></tr><tr><td><span class="acc-cell"><span class="acc-logo">NR</span><span class="acc-nm"><b>Northgate Retail</b><span>SNG-40240</span></span></span></td><td class="mono">22</td><td class="mono">980</td><td><span class="bar"><span class="t"><span style="width:61%;background:var(--ch1)"></span></span><b class="mono" style="font-weight:600;font-size:12.5px">61%</b></span></td><td class="mono">+0.3%</td><td><span class="pill warn">Trial</span></td></tr><tr><td><span class="acc-cell"><span class="acc-logo">PF</span><span class="acc-nm"><b>Pinnacle Financial</b><span>SNG-40255</span></span></span></td><td class="mono">4</td><td class="mono">520</td><td><span class="bar"><span class="t"><span style="width:88%;background:var(--ch1)"></span></span><b class="mono" style="font-weight:600;font-size:12.5px">88%</b></span></td><td class="mono">+3.5%</td><td><span class="pill ok">Active</span></td></tr><tr><td><span class="acc-cell"><span class="acc-logo">RS</span><span class="acc-nm"><b>Riverstone Schools</b><span>SNG-40261</span></span></span></td><td class="mono">11</td><td class="mono">760</td><td><span class="bar"><span class="t"><span style="width:74%;background:var(--ch1)"></span></span><b class="mono" style="font-weight:600;font-size:12.5px">74%</b></span></td><td class="mono neg">−1.1%</td><td><span class="pill ok">Active</span></td></tr><tr><td><span class="acc-cell"><span class="acc-logo">SH</span><span class="acc-nm"><b>Summit Hospitality</b><span>SNG-40272</span></span></span></td><td class="mono">7</td><td class="mono">340</td><td><span class="bar"><span class="t"><span style="width:55%;background:var(--ch1)"></span></span><b class="mono" style="font-weight:600;font-size:12.5px">55%</b></span></td><td class="mono neg">−3.4%</td><td><span class="pill bad">Suspended</span></td></tr></tbody></table></div></div>
+    </section>
 
   </div></div>
 </main>

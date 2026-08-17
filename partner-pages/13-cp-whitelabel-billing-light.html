@@ -145,6 +145,9 @@ body.rail-collapsed #railT svg{transform:rotate(180deg)}
 .ttl{font-size:29px;font-weight:600;letter-spacing:-.03em;line-height:1.16}
 .ttl-row{display:flex;align-items:center;gap:14px}
 .ttl-sub{font-size:14px;color:var(--ink-3);padding-left:14px;border-left:1px solid var(--divider)}
+/* standalone descriptor row under a page head needs the same 20px the head itself
+   carries, otherwise it butts straight into the toolbar or table below */
+.phead+.ttl-sub{margin-bottom:20px}
 .ttl-cap{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
 .upd{font-size:12px;color:var(--ink-4)}
 .svc-pick{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-2)}
@@ -194,6 +197,11 @@ body.rail-collapsed #railT svg{transform:rotate(180deg)}
 
 /* donut cards */
 .dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+/* Column-count modifiers. These must be classes, not inline styles: an inline
+   grid-template-columns outranks the responsive .dgrid rules further down and
+   leaves three cards crammed side by side on a tablet. */
+.dgrid-2{grid-template-columns:repeat(2,1fr)}
+.dgrid-3{grid-template-columns:repeat(3,1fr)}
 .dcard{padding:0;display:flex;flex-direction:column}
 .dcard .dh{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--hair)}
 .dcard .dh .t{font-size:14.5px;font-weight:600}
@@ -269,6 +277,10 @@ tbody tr:hover{background:var(--card-2)}
 [data-theme="dark"] .tw.tint tbody tr{background:rgba(251,113,133,.06)}
 .tw.tint tbody tr:hover{background:rgba(253,234,239,.6)}
 .muted{color:var(--ink-3)} .mono{font-variant-numeric:tabular-nums}
+/* mono table cells are identifiers, counts and percentages — never break them */
+td.mono{white-space:nowrap}
+/* atomic short values (a person, a site) read badly split across two lines */
+.nw{white-space:nowrap}
 .trunc{max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:bottom}
 .cell-ic{display:inline-flex;align-items:center;gap:8px}
 .cell-ic svg{width:15px;height:15px;color:var(--ink-4);flex-shrink:0}
@@ -453,7 +465,7 @@ thead th{position:sticky;top:0;z-index:2;background:var(--surface)}
 @media(prefers-reduced-motion:reduce){.vpage.on{animation:none}}
 
 /* ===================== Billing (Figma: SCP Billing) ===================== */
-.bill-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.bill-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
 .tot{display:flex;flex-direction:column;gap:2px;padding:0 4px}
 .tot-k{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
 .tot-v{font-size:15px;font-weight:600;color:var(--ink-1)}
@@ -941,6 +953,53 @@ th .info-dot{margin-left:5px}
 .ctx .sp{flex:1}
 .ctx .lnk{color:var(--violet);font-weight:600;cursor:pointer}
 
+/* ---------- Clickable breadcrumb hierarchy ----------
+   Every segment before the current page navigates, so a partner can jump back
+   up the partner -> account -> location trail from anywhere. */
+.cr-l{color:var(--ink-3);cursor:pointer;text-decoration:none;border-radius:6px;padding:1px 4px;margin:0 -4px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:background .15s,color .15s}
+.cr-l:hover{color:var(--violet);background:var(--violet-soft)}
+.cr-l:focus-visible{outline:2px solid var(--violet);outline-offset:1px}
+
+/* location picker sitting in the trail, control panel side */
+.cr-sel{position:relative;flex:none}
+.cr-sel > .cr-btn{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;
+  border:1px solid var(--stroke);border-radius:7px;background:var(--surface);cursor:pointer;
+  font:inherit;font-weight:600;color:var(--ink-1);transition:border-color .15s,background .15s}
+.cr-sel > .cr-btn:hover{border-color:var(--violet-tint)}
+.cr-sel > .cr-btn svg{width:14px;height:14px;color:var(--ink-4);flex:none}
+.cr-sel.open > .cr-btn{border-color:var(--violet);background:var(--violet-soft)}
+.cr-menu{position:absolute;top:calc(100% + 6px);left:0;z-index:40;min-width:288px;padding:6px;
+  border:1px solid var(--stroke);border-radius:var(--r-md);background:var(--surface);
+  box-shadow:var(--shadow-pop);display:none}
+.cr-sel.open .cr-menu{display:block}
+.cr-o{display:flex;align-items:center;gap:10px;padding:7px 9px;border-radius:8px;cursor:pointer;
+  font-size:13px;color:var(--ink-2)}
+.cr-o:hover{background:var(--track)}
+.cr-o.on{background:var(--violet-soft);color:var(--violet)}
+.cr-o b{font-weight:600;color:var(--ink-1)}
+.cr-o.on b{color:var(--violet)}
+.cr-o .code{margin-left:auto;font-size:11.5px;color:var(--ink-4);font-variant-numeric:tabular-nums}
+
+/* A partner user belongs to exactly one partner account, so the rail switcher
+   is inert unless a Sangoma admin is troubleshooting. */
+.acct.static{cursor:default}
+.acct.static:hover{background:var(--surface);border-color:var(--stroke)}
+
+/* Long trails must be able to ellipsize rather than clip. */
+.crumb .cr-l{min-width:0}
+
+/* The base stylesheet drops the whole breadcrumb on phones, which is fine for a
+   plain trail but would strand the location picker in a partner session. Keep
+   the picker, drop the ancestor links. */
+@media(max-width:520px){
+  [data-scope="partner"] .crumb{display:flex}
+  [data-scope="partner"] .crumb > .cr-l,
+  [data-scope="partner"] .crumb > svg,
+  [data-scope="partner"] .crumb > #crumbPage{display:none}
+  [data-scope="partner"] .cr-menu{min-width:240px}
+}
+
 /* ============================================================
    Partner portal — login + partner-tier hierarchy
    Additive only. Reuses every token from styles.css / app.css.
@@ -1026,26 +1085,7 @@ tr.drill:hover{background:var(--card-2)}
   text-overflow:ellipsis;white-space:nowrap}
 .acc-nm span{display:block;font-size:12px;color:var(--ink-4);font-variant-numeric:tabular-nums}
 
-/* ---------- Hierarchy strip ---------- */
-.tier{display:flex;align-items:stretch;gap:0;margin-bottom:20px;border-radius:var(--r-md);
-  overflow:hidden;border:1px solid var(--stroke);background:var(--surface)}
-.tier-s{flex:1;padding:13px 16px;display:flex;align-items:center;gap:11px;position:relative;min-width:0}
-.tier-s + .tier-s{border-left:1px solid var(--hair)}
-.tier-s.on{background:var(--violet-soft)}
-.tier-n{width:22px;height:22px;border-radius:999px;flex:none;display:grid;place-items:center;
-  font-size:11px;font-weight:700;background:var(--track);color:var(--ink-4)}
-.tier-s.on .tier-n{background:var(--grad);color:#fff}
-.tier-s.done .tier-n{background:var(--ok-tint);color:var(--ok-ink)}
-.tier-t{min-width:0;display:block}
-.tier-k{display:block;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-4)}
-.tier-v{display:block;margin-top:2px;font-size:13px;font-weight:600;color:var(--ink-1);overflow:hidden;
-  text-overflow:ellipsis;white-space:nowrap}
-.tier-s.on .tier-k{color:var(--violet)}
-
 /* ---------- Misc ---------- */
-.loc-ic{width:30px;height:30px;border-radius:8px;flex:none;display:grid;place-items:center;
-  background:var(--violet-soft);color:var(--violet)}
-.loc-ic svg{width:16px;height:16px}
 .gone{display:none !important}
 .neg{color:var(--bad-ink)}
 /* inline utilisation bar inside a table cell */
@@ -1123,7 +1163,7 @@ body{margin:0;min-width:1280px;background:var(--canvas)}
   <header class="topbar">
     <button class="tb-ic" id="railT" title="Collapse sidebar" aria-label="Collapse sidebar" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(69, 79, 91)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M9 4v16"></path><path d="m14.5 9.5-2.5 2.5 2.5 2.5"></path></svg></button>
     <div class="tb-ic" id="navT" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(69, 79, 91)" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></div>
-    <div class="crumb">Control Panel <svg viewBox="0 0 24 24" fill="none" stroke="rgb(107, 116, 125)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg> <b id="crumbPage">Billing</b></div>
+    <div class="crumb"><a class="cr-l" href="partner.html?view=app&amp;tier=whitelabel#pdash">Acme Telecom</a><svg viewBox="0 0 24 24" fill="none" stroke="rgb(107, 116, 125)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg><a class="cr-l" href="partner.html?view=app&amp;tier=whitelabel#customers">Customer Accounts</a><svg viewBox="0 0 24 24" fill="none" stroke="rgb(107, 116, 125)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg><a class="cr-l" href="partner.html?view=app&amp;tier=whitelabel#customers">Belmont Health</a><svg viewBox="0 0 24 24" fill="none" stroke="rgb(107, 116, 125)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg><span class="cr-sel" id="locSel"><button class="cr-btn" aria-haspopup="true" aria-expanded="false"><span id="locSelV">Riverside Campus</span><svg viewBox="0 0 24 24" fill="none" stroke="rgb(107, 116, 125)" stroke-width="2"><path d="m6 9 6 6 6-6"></path></svg></button><div class="cr-menu" role="menu"><div class="cr-o on" data-loc="Riverside Campus"><b>Riverside Campus</b><span class="code mono">RVS-01</span></div><div class="cr-o" data-loc="Eastgate Clinic"><b>Eastgate Clinic</b><span class="code mono">EST-02</span></div><div class="cr-o" data-loc="Mercy Annex"><b>Mercy Annex</b><span class="code mono">MCY-03</span></div></div></span><svg viewBox="0 0 24 24" fill="none" stroke="rgb(107, 116, 125)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg><b id="crumbPage">Billing</b></div>
     <div class="sp"></div>
     <button class="tsw" id="tsw" role="switch" aria-checked="false" data-tip="Toggle light / dark theme"><span class="l">Light</span>
       <span class="tr"><span class="kn"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="rgb(255, 255, 255)" stroke-width="2.4"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2v2M12 20v2M4 4l1.5 1.5M18.5 18.5 20 20M2 12h2M20 12h2M4 20l1.5-1.5M18.5 5.5 20 4"></path></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="rgb(255, 255, 255)" stroke-width="2.4"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></span></span></button>
@@ -1132,7 +1172,7 @@ body{margin:0;min-width:1280px;background:var(--canvas)}
     <div class="av" data-tip="Your account">MO</div>
   </header>
 
-  <div class="scroll"><div class="page"><div class="ctx"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(122, 31, 134)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"></path><path d="M3 16l9 5 9-5M3 12l9 5 9-5"></path></svg><span>Administering <b>Belmont Health</b> as <b>Acme Telecom</b> · White-label</span><span class="sp"></span><a class="lnk" href="partner.html?view=app#customers">Back to Partner Portal</a></div>
+  <div class="scroll"><div class="page"><div class="ctx"><svg viewBox="0 0 24 24" fill="none" stroke="rgb(122, 31, 134)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"></path><path d="M3 16l9 5 9-5M3 12l9 5 9-5"></path></svg><span>Administering <b>Belmont Health</b> · <b>Riverside Campus</b> as <b>Acme Telecom</b> · White-label</span><span class="sp"></span><a class="lnk" href="partner.html?view=app&amp;tier=whitelabel#customers">Back to Partner Portal</a></div>
 
   <!-- ============================ HOME / DASHBOARD ============================ -->
   

@@ -145,6 +145,9 @@ body.rail-collapsed #railT svg{transform:rotate(180deg)}
 .ttl{font-size:29px;font-weight:600;letter-spacing:-.03em;line-height:1.16}
 .ttl-row{display:flex;align-items:center;gap:14px}
 .ttl-sub{font-size:14px;color:var(--ink-3);padding-left:14px;border-left:1px solid var(--divider)}
+/* standalone descriptor row under a page head needs the same 20px the head itself
+   carries, otherwise it butts straight into the toolbar or table below */
+.phead+.ttl-sub{margin-bottom:20px}
 .ttl-cap{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
 .upd{font-size:12px;color:var(--ink-4)}
 .svc-pick{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-2)}
@@ -194,6 +197,11 @@ body.rail-collapsed #railT svg{transform:rotate(180deg)}
 
 /* donut cards */
 .dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+/* Column-count modifiers. These must be classes, not inline styles: an inline
+   grid-template-columns outranks the responsive .dgrid rules further down and
+   leaves three cards crammed side by side on a tablet. */
+.dgrid-2{grid-template-columns:repeat(2,1fr)}
+.dgrid-3{grid-template-columns:repeat(3,1fr)}
 .dcard{padding:0;display:flex;flex-direction:column}
 .dcard .dh{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--hair)}
 .dcard .dh .t{font-size:14.5px;font-weight:600}
@@ -269,6 +277,10 @@ tbody tr:hover{background:var(--card-2)}
 [data-theme="dark"] .tw.tint tbody tr{background:rgba(251,113,133,.06)}
 .tw.tint tbody tr:hover{background:rgba(253,234,239,.6)}
 .muted{color:var(--ink-3)} .mono{font-variant-numeric:tabular-nums}
+/* mono table cells are identifiers, counts and percentages — never break them */
+td.mono{white-space:nowrap}
+/* atomic short values (a person, a site) read badly split across two lines */
+.nw{white-space:nowrap}
 .trunc{max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:bottom}
 .cell-ic{display:inline-flex;align-items:center;gap:8px}
 .cell-ic svg{width:15px;height:15px;color:var(--ink-4);flex-shrink:0}
@@ -453,7 +465,7 @@ thead th{position:sticky;top:0;z-index:2;background:var(--surface)}
 @media(prefers-reduced-motion:reduce){.vpage.on{animation:none}}
 
 /* ===================== Billing (Figma: SCP Billing) ===================== */
-.bill-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.bill-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
 .tot{display:flex;flex-direction:column;gap:2px;padding:0 4px}
 .tot-k{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
 .tot-v{font-size:15px;font-weight:600;color:var(--ink-1)}
@@ -940,6 +952,53 @@ th .info-dot{margin-left:5px}
 .ctx b{color:var(--ink-1);font-weight:600}
 .ctx .sp{flex:1}
 .ctx .lnk{color:var(--violet);font-weight:600;cursor:pointer}
+
+/* ---------- Clickable breadcrumb hierarchy ----------
+   Every segment before the current page navigates, so a partner can jump back
+   up the partner -> account -> location trail from anywhere. */
+.cr-l{color:var(--ink-3);cursor:pointer;text-decoration:none;border-radius:6px;padding:1px 4px;margin:0 -4px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:background .15s,color .15s}
+.cr-l:hover{color:var(--violet);background:var(--violet-soft)}
+.cr-l:focus-visible{outline:2px solid var(--violet);outline-offset:1px}
+
+/* location picker sitting in the trail, control panel side */
+.cr-sel{position:relative;flex:none}
+.cr-sel > .cr-btn{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;
+  border:1px solid var(--stroke);border-radius:7px;background:var(--surface);cursor:pointer;
+  font:inherit;font-weight:600;color:var(--ink-1);transition:border-color .15s,background .15s}
+.cr-sel > .cr-btn:hover{border-color:var(--violet-tint)}
+.cr-sel > .cr-btn svg{width:14px;height:14px;color:var(--ink-4);flex:none}
+.cr-sel.open > .cr-btn{border-color:var(--violet);background:var(--violet-soft)}
+.cr-menu{position:absolute;top:calc(100% + 6px);left:0;z-index:40;min-width:288px;padding:6px;
+  border:1px solid var(--stroke);border-radius:var(--r-md);background:var(--surface);
+  box-shadow:var(--shadow-pop);display:none}
+.cr-sel.open .cr-menu{display:block}
+.cr-o{display:flex;align-items:center;gap:10px;padding:7px 9px;border-radius:8px;cursor:pointer;
+  font-size:13px;color:var(--ink-2)}
+.cr-o:hover{background:var(--track)}
+.cr-o.on{background:var(--violet-soft);color:var(--violet)}
+.cr-o b{font-weight:600;color:var(--ink-1)}
+.cr-o.on b{color:var(--violet)}
+.cr-o .code{margin-left:auto;font-size:11.5px;color:var(--ink-4);font-variant-numeric:tabular-nums}
+
+/* A partner user belongs to exactly one partner account, so the rail switcher
+   is inert unless a Sangoma admin is troubleshooting. */
+.acct.static{cursor:default}
+.acct.static:hover{background:var(--surface);border-color:var(--stroke)}
+
+/* Long trails must be able to ellipsize rather than clip. */
+.crumb .cr-l{min-width:0}
+
+/* The base stylesheet drops the whole breadcrumb on phones, which is fine for a
+   plain trail but would strand the location picker in a partner session. Keep
+   the picker, drop the ancestor links. */
+@media(max-width:520px){
+  [data-scope="partner"] .crumb{display:flex}
+  [data-scope="partner"] .crumb > .cr-l,
+  [data-scope="partner"] .crumb > svg,
+  [data-scope="partner"] .crumb > #crumbPage{display:none}
+  [data-scope="partner"] .cr-menu{min-width:240px}
+}
 
 body{margin:0;min-width:1280px;background:var(--canvas)}
 /* :indeterminate is a live DOM property and cannot serialise — mirror it statically */

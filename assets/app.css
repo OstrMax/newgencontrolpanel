@@ -401,3 +401,50 @@ th .info-dot{margin-left:5px}
 .ctx b{color:var(--ink-1);font-weight:600}
 .ctx .sp{flex:1}
 .ctx .lnk{color:var(--violet);font-weight:600;cursor:pointer}
+
+/* ---------- Clickable breadcrumb hierarchy ----------
+   Every segment before the current page navigates, so a partner can jump back
+   up the partner -> account -> location trail from anywhere. */
+.cr-l{color:var(--ink-3);cursor:pointer;text-decoration:none;border-radius:6px;padding:1px 4px;margin:0 -4px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:background .15s,color .15s}
+.cr-l:hover{color:var(--violet);background:var(--violet-soft)}
+.cr-l:focus-visible{outline:2px solid var(--violet);outline-offset:1px}
+
+/* location picker sitting in the trail, control panel side */
+.cr-sel{position:relative;flex:none}
+.cr-sel > .cr-btn{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px;
+  border:1px solid var(--stroke);border-radius:7px;background:var(--surface);cursor:pointer;
+  font:inherit;font-weight:600;color:var(--ink-1);transition:border-color .15s,background .15s}
+.cr-sel > .cr-btn:hover{border-color:var(--violet-tint)}
+.cr-sel > .cr-btn svg{width:14px;height:14px;color:var(--ink-4);flex:none}
+.cr-sel.open > .cr-btn{border-color:var(--violet);background:var(--violet-soft)}
+.cr-menu{position:absolute;top:calc(100% + 6px);left:0;z-index:40;min-width:288px;padding:6px;
+  border:1px solid var(--stroke);border-radius:var(--r-md);background:var(--surface);
+  box-shadow:var(--shadow-pop);display:none}
+.cr-sel.open .cr-menu{display:block}
+.cr-o{display:flex;align-items:center;gap:10px;padding:7px 9px;border-radius:8px;cursor:pointer;
+  font-size:13px;color:var(--ink-2)}
+.cr-o:hover{background:var(--track)}
+.cr-o.on{background:var(--violet-soft);color:var(--violet)}
+.cr-o b{font-weight:600;color:var(--ink-1)}
+.cr-o.on b{color:var(--violet)}
+.cr-o .code{margin-left:auto;font-size:11.5px;color:var(--ink-4);font-variant-numeric:tabular-nums}
+
+/* A partner user belongs to exactly one partner account, so the rail switcher
+   is inert unless a Sangoma admin is troubleshooting. */
+.acct.static{cursor:default}
+.acct.static:hover{background:var(--surface);border-color:var(--stroke)}
+
+/* Long trails must be able to ellipsize rather than clip. */
+.crumb .cr-l{min-width:0}
+
+/* The base stylesheet drops the whole breadcrumb on phones, which is fine for a
+   plain trail but would strand the location picker in a partner session. Keep
+   the picker, drop the ancestor links. */
+@media(max-width:520px){
+  [data-scope="partner"] .crumb{display:flex}
+  [data-scope="partner"] .crumb > .cr-l,
+  [data-scope="partner"] .crumb > svg,
+  [data-scope="partner"] .crumb > #crumbPage{display:none}
+  [data-scope="partner"] .cr-menu{min-width:240px}
+}

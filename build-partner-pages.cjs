@@ -27,27 +27,34 @@ const { VECTORIZE, REFLECT_STATE } = fig;
  *          'shell'   → serialise .rail + .main (the application chrome)
  * setup:   name of an in-page routine run before serialisation
  */
+/* the partner hierarchy travels to the control panel in the query string */
+function CPQ(tier, acct, loc, partner){
+  return '?partner=' + encodeURIComponent(partner || 'Northwind Communications') +
+    '&tier=' + tier + '&acct=' + encodeURIComponent(acct) + '&loc=' + encodeURIComponent(loc);
+}
+
 const SCREENS = [
   { slug: '01-partner-signin',      title: 'Partner Sign-in',              app: 'partner', capture: 'auth',  setup: 'cred' },
-  { slug: '02-partner-signin-error',title: 'Partner Sign-in — Error',      app: 'partner', capture: 'auth',  setup: 'crederr' },
-  { slug: '03-partner-mfa',         title: 'Partner Sign-in — MFA',        app: 'partner', capture: 'auth',  setup: 'mfa' },
+  { slug: '02-partner-signin-error',title: 'Partner Sign-in \u2014 Error',  app: 'partner', capture: 'auth',  setup: 'crederr' },
+  { slug: '03-partner-mfa',         title: 'Partner Sign-in \u2014 MFA',    app: 'partner', capture: 'auth',  setup: 'mfa' },
   { slug: '04-partner-dashboard',   title: 'Partner Dashboard',            app: 'partner', capture: 'shell', setup: 'go:pdash' },
   { slug: '05-customer-accounts',   title: 'Customer Accounts',            app: 'partner', capture: 'shell', setup: 'go:customers' },
-  { slug: '06-customer-detail',     title: 'Customer Account — Locations', app: 'partner', capture: 'shell', setup: 'cust' },
-  { slug: '07-location-detail',     title: 'Location — Detail',            app: 'partner', capture: 'shell', setup: 'loc' },
-  { slug: '08-partner-orders',      title: 'Partner Orders',               app: 'partner', capture: 'shell', setup: 'go:orders' },
-  { slug: '09-partner-team',        title: 'Partner Team',                 app: 'partner', capture: 'shell', setup: 'go:team' },
-  { slug: '10-partner-analytics',   title: 'Partner Analytics',            app: 'partner', capture: 'shell', setup: 'go:preports' },
+  { slug: '06-support-tickets',     title: 'Support Tickets',              app: 'partner', capture: 'shell', setup: 'go:tickets' },
+  { slug: '07-partner-orders',      title: 'Partner Orders',               app: 'partner', capture: 'shell', setup: 'go:orders' },
+  { slug: '08-partner-team',        title: 'Partner Team',                 app: 'partner', capture: 'shell', setup: 'go:team' },
+  { slug: '09-partner-analytics',   title: 'Partner Analytics',            app: 'partner', capture: 'shell', setup: 'go:preports' },
 
-  /* customer control panel, entered from the partner portal */
-  { slug: '11-cp-retail-no-billing', title: 'Control Panel — Retail/FSW (no Billing)',
-    app: 'cp', query: '?partner=Northwind+Communications&tier=retail&acct=Acme+Manufacturing', hash: 'home', capture: 'shell' },
-  { slug: '12-cp-retail-users',      title: 'Control Panel — Retail/FSW · Users',
-    app: 'cp', query: '?partner=Northwind+Communications&tier=retail&acct=Acme+Manufacturing', hash: 'users', capture: 'shell' },
-  { slug: '13-cp-whitelabel-billing', title: 'Control Panel — White-label (Billing visible)',
-    app: 'cp', query: '?partner=Acme+Telecom&tier=whitelabel&acct=Belmont+Health', hash: 'billing', capture: 'shell' },
+  /* Drilling into a customer lands in that customer's real control panel, with
+     the partner hierarchy and the location picker carried across. */
+  { slug: '10-cp-retail-no-billing', title: 'Control Panel \u2014 Retail/FSW (no Billing)',
+    app: 'cp', query: CPQ('retail', 'Acme Manufacturing', 'Austin HQ'), hash: 'home', capture: 'shell' },
+  { slug: '11-cp-retail-users',      title: 'Control Panel \u2014 Retail/FSW \u00b7 Users',
+    app: 'cp', query: CPQ('retail', 'Acme Manufacturing', 'Austin HQ'), hash: 'users', capture: 'shell' },
+  { slug: '12-cp-location-picker',   title: 'Control Panel \u2014 Location Picker',
+    app: 'cp', query: CPQ('retail', 'Acme Manufacturing', 'Dallas Depot'), hash: 'home', capture: 'shell', setup: 'picker' },
+  { slug: '13-cp-whitelabel-billing', title: 'Control Panel \u2014 White-label (Billing visible)',
+    app: 'cp', query: CPQ('whitelabel', 'Belmont Health', 'Riverside Campus', 'Acme Telecom'), hash: 'billing', capture: 'shell' },
 ];
-
 function read(p){ return fs.readFileSync(path.join(ROOT, p), 'utf8'); }
 
 /* =========================================================================
@@ -81,20 +88,10 @@ function SETUP(step){
 
   if (step.startsWith('go:')) { window.pGo(step.slice(3)); return sleep(260); }
 
-  if (step === 'cust') {
-    window.pGo('customers');
-    const row = document.querySelector('#custTable tbody tr.drill');
-    if (row) row.click();
-    return sleep(260);
-  }
-
-  if (step === 'loc') {
-    window.pGo('customers');
-    const c = document.querySelector('#custTable tbody tr.drill');
-    if (c) c.click();
-    const l = document.querySelector('#locTable tbody tr.drill');
-    if (l) l.click();
-    return sleep(260);
+  if (step === 'picker') {
+    const btn = document.querySelector('#locSel .cr-btn');
+    if (btn) btn.click();
+    return sleep(200);
   }
 
   return sleep(120);
