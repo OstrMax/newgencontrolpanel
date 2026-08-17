@@ -1,8 +1,9 @@
 /* ===================== Control Panel — routing + page logic ===================== */
 var V_TITLES={
   home:"Home", billing:"Billing", company:"Company Profile", inventory:"Inventory & Usage",
-  security:"Security", users:"Users", prodapps:"Productivity Apps",
-  chat:"Chat", sms:"SMS", video:"Video", voice:"Voice", cpaas:"CPaaS", reports:"Analytics"
+  security:"Security Policies", users:"Users", prodapps:"Productivity Apps",
+  chat:"Chat", sms:"SMS", video:"Video", voice:"Voice", cpaas:"CPaaS", reports:"Analytics",
+  support:"Support", account:"My Account"
 };
 function vgo(k){
   document.querySelectorAll('.vpage').forEach(function(s){s.classList.toggle('on', s.id==='v-'+k);});

@@ -32,7 +32,7 @@ const PAGES = [
   { key: 'company',   slug: '03-company-profile',   title: 'Company Profile' },
   { key: 'inventory', slug: '04-inventory-usage',   title: 'Inventory & Usage' },
   { key: 'users',     slug: '05-users',             title: 'Users' },
-  { key: 'security',  slug: '06-security',          title: 'Security' },
+  { key: 'security',  slug: '06-security',          title: 'Security Policies' },
   { key: 'prodapps',  slug: '07-productivity-apps', title: 'Productivity Apps' },
   { key: 'chat',      slug: '08-chat',              title: 'Sangoma UC — Chat' },
   { key: 'sms',       slug: '09-sms',               title: 'Sangoma UC — SMS' },
@@ -40,6 +40,8 @@ const PAGES = [
   { key: 'voice',     slug: '11-voice',             title: 'Sangoma UC — Voice' },
   { key: 'cpaas',     slug: '12-cpaas',             title: 'CPaaS' },
   { key: 'reports',   slug: '13-analytics',         title: 'Analytics' },
+  { key: 'support',   slug: '22-support',           title: 'Support' },
+  { key: 'account',   slug: '23-my-account',        title: 'My Account' },
 ];
 
 /* states are rendered on top of a base page, after a trigger runs in-page */
@@ -52,6 +54,12 @@ const STATES = [
   { key: 'users',   slug: '19-toast-error',      title: 'Toast — Error',             state: 'terr',     crumb: 'Users' },
   { key: 'home',    slug: '20-tooltip-infodot',  title: 'Contextual Help — Tooltip', state: 'tip',      crumb: 'Dashboard' },
   { key: 'home',    slug: '21-onboarding-tour',  title: 'Onboarding — Coach Mark',   state: 'tour',     crumb: 'Dashboard' },
+  { key: 'home',      slug: '24-dashboard-customize', title: 'Customize Dashboard — Panel', state: 'dash',  crumb: 'Dashboard' },
+  { key: 'inventory', slug: '25-product-drilldown',   title: 'Product — Assigned Users',    state: 'prod',  crumb: 'Inventory & Usage' },
+  { key: 'inventory', slug: '26-product-devices',     title: 'Product — Devices',           state: 'prodd', crumb: 'Inventory & Usage' },
+  { key: 'support',   slug: '27-ticket-detail',       title: 'Support Ticket — Detail',     state: 'tkt',   crumb: 'Support' },
+  { key: 'home',      slug: '28-account-menu',        title: 'Account Menu — Popover',      state: 'acct',  crumb: 'Dashboard' },
+  { key: 'account',   slug: '29-account-security',    title: 'My Account — Password & Security', state: 'accsec', crumb: 'My Account' },
 ];
 
 function read(p){ return fs.readFileSync(path.join(ROOT, p), 'utf8'); }
@@ -101,6 +109,31 @@ function TRIGGER(state){
                 document.querySelector('.info-dot[data-tip]');
     if (dot) { dot.style.opacity = '1'; dot.focus(); }
     return sleep(260);
+  }
+  /* The four panels below all ride the shared #panel-scrim, so each one only
+     needs its own real trigger — the scrim is forced visible afterwards. */
+  if (state === 'dash' || state === 'prod' || state === 'prodd' || state === 'tkt') {
+    if (state === 'dash') {
+      const b = document.getElementById('dashCust'); if (b) b.click();
+    } else if (state === 'prod' || state === 'prodd') {
+      const r = document.querySelector('#v-inventory tr[data-drill]'); if (r) r.click();
+      if (state === 'prodd') {
+        const t = document.querySelector('#prodTabs [data-ptab="devices"]'); if (t) t.click();
+      }
+    } else {
+      const r = document.querySelector('#sup-table tbody tr[data-tkt]'); if (r) r.click();
+    }
+    const s = document.getElementById('panel-scrim');
+    if (s) { s.hidden = false; s.classList.add('show'); }
+    return sleep(300);
+  }
+  if (state === 'acct') {
+    const b = document.getElementById('avBtn'); if (b) b.click();
+    return sleep(220);
+  }
+  if (state === 'accsec') {
+    const t = document.querySelector('#acctTabs [data-tab="security"]'); if (t) t.click();
+    return sleep(220);
   }
   if (state === 'tour') {
     // the tour is an IIFE exposed only via the help button; drive it the same way

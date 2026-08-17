@@ -393,6 +393,110 @@ th .info-dot{margin-left:5px}
 .tour-next:hover{filter:brightness(1.05)}
 .tour-next:active{transform:scale(.97)}
 
+/* ===================== Tab panels ===================== */
+.tabp{display:none}
+.tabp.on{display:block;animation:vin .18s ease}
+
+/* Full-width select that reads as a form control rather than a filter chip. */
+.sel-inp{width:100%;min-width:0;height:42px;padding:0 12px 0 14px;border-radius:var(--r-sm);font-size:14px}
+
+/* ===================== Security policy page ===================== */
+.pol-t{font-size:13px;font-weight:600;color:var(--ink-2);margin:22px 0 2px}
+/* Policy requirements are statements of the rule in force, not live validation,
+   so they render in the satisfied state and never react to typing. */
+/* `.reqs` is a flex column; CSS columns need a block container to take effect. */
+.pol-reqs{display:block;columns:2;column-gap:40px}
+.pol-reqs li{break-inside:avoid;margin-bottom:7px}
+@media(max-width:720px){.pol-reqs{columns:1}}
+
+/* ===================== Account menu (top-right avatar) ===================== */
+.acct-menu{position:relative;display:flex}
+button.av{border:none;cursor:pointer;font-family:inherit;padding:0;transition:box-shadow .15s}
+button.av:hover{box-shadow:0 0 0 3px var(--violet-soft)}
+.acct-menu.open button.av{box-shadow:0 0 0 3px var(--violet-soft)}
+.acct-pop{position:absolute;top:calc(100% + 10px);right:0;width:268px;background:var(--surface);
+  border:1px solid var(--hair);border-radius:var(--r-md);box-shadow:var(--shadow-pop);padding:6px;z-index:70;animation:vin .16s ease}
+[data-theme="dark"] .acct-pop{background:#141b2e}
+.ap-id{display:flex;align-items:center;gap:11px;padding:10px 11px 12px}
+.ap-id .uav{width:38px;height:38px;font-size:13px;flex-shrink:0}
+.ap-id>div{min-width:0}
+.ap-id .nm{font-size:13.5px;font-weight:600;color:var(--ink-1)}
+.ap-id .em{font-size:12px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ap-sep{height:1px;background:var(--hair);margin:2px 0}
+.ap-item{display:flex;align-items:center;gap:11px;width:100%;padding:9px 11px;border:none;background:none;
+  border-radius:8px;cursor:pointer;font:inherit;font-size:13.5px;color:var(--ink-1);text-align:left}
+.ap-item:hover{background:var(--card-2)}
+.ap-item svg{width:17px;height:17px;color:var(--ink-3);flex-shrink:0}
+.ap-item .rt{margin-left:auto;font-size:11.5px;color:var(--ink-4)}
+
+/* ===================== Dashboard customize panel ===================== */
+.dsec.off{display:none}
+/* the topmost *visible* section must not carry the 26px separator that sits
+   between sections — which one that is depends on what the user hid */
+.dsec.lead .sec-t{margin-top:0}
+.dlist{flex:1;overflow-y:auto;margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.drow{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--hair);
+  border-radius:var(--r-md);background:var(--surface);cursor:grab;transition:border-color .15s,box-shadow .15s,opacity .15s}
+[data-theme="dark"] .drow{background:rgba(255,255,255,.045)}
+.drow:hover{border-color:var(--violet-tint)}
+.drow.drag{opacity:.4;cursor:grabbing}
+.drow.over{border-color:var(--violet);box-shadow:0 0 0 3px var(--violet-soft)}
+.drow .grip{color:var(--ink-4);display:grid;place-items:center;flex-shrink:0}
+.drow .grip svg{width:16px;height:16px}
+.drow .dnm{flex:1;min-width:0}
+.drow .dnm b{display:block;font-size:13.5px;font-weight:600;color:var(--ink-1)}
+.drow .dnm span{font-size:12px;color:var(--ink-3)}
+.drow .sw{width:38px;height:22px}
+.drow .sw::after{width:17px;height:17px}
+.drow .sw.on::after{transform:translateX(16px)}
+.drawer-foot{display:flex;gap:10px;padding-top:16px;margin-top:14px;border-top:1px solid var(--hair);flex-shrink:0}
+.drawer-foot .btn{flex:1;justify-content:center}
+.drawer-note{font-size:12.5px;color:var(--ink-3);line-height:1.5;flex-shrink:0}
+
+/* ===================== Drawer tabs + scroll body ===================== */
+.drawer-sub{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.drawer .tabs{margin:16px 0 0;gap:20px;flex-shrink:0}
+.drawer-body{flex:1;overflow-y:auto;margin-top:2px}
+.drawer .tabp{padding-top:14px}
+.dmeta{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;padding:14px 0 4px}
+.dmeta .k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-4)}
+.dmeta .v{font-size:13.5px;color:var(--ink-1);margin-top:3px}
+.dnone{padding:34px 8px;text-align:center;font-size:13px;color:var(--ink-4)}
+
+/* assignment / device rows inside a drawer */
+.arow{display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid var(--hair)}
+.arow:first-child{border-top:none}
+.arow .amain{flex:1;min-width:0}
+.arow .amain b{display:block;font-size:13.5px;font-weight:600;color:var(--ink-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.arow .amain span{font-size:12px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.arow .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex-shrink:0;
+  background:var(--card-2);color:var(--ink-3)}
+.arow .ic svg{width:16px;height:16px}
+.tsum{display:flex;gap:10px;margin-bottom:4px}
+.tsum .tsb{flex:1;background:var(--card-2);border-radius:var(--r-sm);padding:10px 12px}
+.tsum .tsb .k{font-size:11.5px;color:var(--ink-3)}
+.tsum .tsb .v{font-size:19px;font-weight:600;letter-spacing:-.02em;margin-top:2px}
+
+/* ===================== Support ticket thread ===================== */
+.thread{display:flex;flex-direction:column;gap:14px;padding:4px 0 8px}
+.tmsg{display:flex;gap:11px}
+.tmsg .tbody{flex:1;min-width:0;background:var(--card-2);border-radius:12px;padding:11px 13px}
+.tmsg.agent .tbody{background:var(--violet-soft)}
+.tmsg .twho{display:flex;align-items:baseline;gap:8px;margin-bottom:5px}
+.tmsg .twho b{font-size:12.5px;font-weight:600;color:var(--ink-1)}
+.tmsg .twho span{font-size:11.5px;color:var(--ink-4);margin-left:auto}
+.tmsg p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.treply{flex-shrink:0;padding-top:14px;margin-top:12px;border-top:1px solid var(--hair)}
+.treply textarea{width:100%;min-height:74px;resize:vertical;padding:11px 13px;border-radius:var(--r-sm);
+  background:var(--surface);border:1px solid var(--hair);font:inherit;font-size:13.5px;color:var(--ink-1)}
+[data-theme="dark"] .treply textarea{background:rgba(255,255,255,.05)}
+.treply textarea:focus{outline:none;border-color:var(--violet)}
+
+/* rows that open a detail view earn a pointer and a hover tint */
+tr[data-drill]{cursor:pointer}
+tr[data-drill] .chev{color:var(--ink-4);display:grid;place-items:center}
+tr[data-drill] .chev svg{width:16px;height:16px}
+
 /* ---------- Partner context bar (partner-administered sessions) ---------- */
 .ctx{display:flex;align-items:center;gap:10px;padding:9px 14px;margin-bottom:18px;
   border-radius:var(--r-md);background:var(--violet-soft);border:1px solid var(--violet-tint);

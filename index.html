@@ -9,8 +9,8 @@
 <title>Sangoma Control Panel</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%236d28d9'/%3E%3Ctext x='16' y='22' font-family='Inter,Arial' font-size='18' font-weight='700' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="assets/styles.css?v=16">
-<link rel="stylesheet" href="assets/app.css?v=13">
+<link rel="stylesheet" href="assets/styles.css?v=17">
+<link rel="stylesheet" href="assets/app.css?v=15">
 </head>
 <body>
 <svg aria-hidden="true" width="0" height="0" style="position:absolute" focusable="false"><defs><linearGradient id="pgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--g1)"/><stop offset="0.8" stop-color="var(--g2)"/><stop offset="1" stop-color="var(--g3)"/></linearGradient></defs></svg>
@@ -75,6 +75,9 @@
 
   <div class="nav-cap">Reports</div>
   <div class="nav-item" data-key="reports" data-go="reports"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15V8.2M7.6 15V4M12.2 15V9.6M15.2 15H2.8"/></svg><span class="lbl">Analytics</span></div>
+
+  <div class="nav-cap">Support</div>
+  <div class="nav-item" data-key="support" data-go="support"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6.4"/><circle cx="9" cy="9" r="2.6"/><path d="M4.6 4.6 7.2 7.2M13.4 4.6 10.8 7.2M13.4 13.4l-2.6-2.6M4.6 13.4l2.6-2.6"/></svg><span class="lbl">Support</span></div>
 </aside>
 
 <main class="main">
@@ -87,7 +90,19 @@
       <span class="tr"><span class="kn"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 4l1.5 1.5M18.5 18.5 20 20M2 12h2M20 12h2M4 20l1.5-1.5M18.5 5.5 20 4"/></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></span></button>
     <button class="tb-ic" id="helpBtn" aria-label="Help and product tour" data-tip="Help &amp; product tour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.2a2.8 2.8 0 0 1 5.5.8c0 1.9-2.7 2.4-2.7 2.4"/><path d="M12 16.8h.01"/></svg></button>
     <div class="tb-ic" data-tip="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
-    <div class="av" data-tip="Your account">MO</div>
+    <div class="acct-menu" id="acctMenu">
+      <button class="av" id="avBtn" aria-haspopup="menu" aria-expanded="false" aria-label="Your account" data-tip="Your account">MO</button>
+      <div class="acct-pop" id="acctPop" role="menu" hidden>
+        <div class="ap-id"><span class="uav">MO</span><div><div class="nm">Marcus Oyelaran</div><div class="em">marcus.oyelaran@sangoma.com</div></div></div>
+        <div class="ap-sep"></div>
+        <button class="ap-item" role="menuitem" data-acct-tab="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/></svg>My Account</button>
+        <button class="ap-item" role="menuitem" data-acct-tab="prefs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg>Preferences</button>
+        <button class="ap-item" role="menuitem" data-acct-tab="security"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 5.8v4.9c0 4.4 2.9 7.8 7 9.3 4.1-1.5 7-4.9 7-9.3V5.8L12 3Z"/><path d="m9.4 12 1.8 1.8 3.4-3.6"/></svg>Password &amp; Security</button>
+        <button class="ap-item" role="menuitem" data-acct-tab="sessions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="13" rx="2"/><path d="M8 21h8M12 17.5V21"/></svg>Signed-in devices<span class="rt">2</span></button>
+        <div class="ap-sep"></div>
+        <button class="ap-item" role="menuitem" id="acctSignOut"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 8 6 12l4 4M6 12h9"/></svg>Sign out</button>
+      </div>
+    </div>
   </header>
 
   <div class="scroll"><div class="page">
@@ -123,10 +138,12 @@
           </div>
         </div>
         <div class="svc-pick">Service: <span class="sel" data-opts="All,Chat,Meet,SMS,Voice,CPaaS" style="min-width:120px" data-tip="Filter dashboard by service"><span class="lab">All</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></div>
+        <button class="btn btn-ghost" id="dashCust" data-tip="Choose which sections appear on your dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg><span>Customize</span></button>
       </div>
     </div>
 
     <!-- Account Overview -->
+    <div class="dsec" data-sec="overview" data-nm="Account overview" data-ds="Users, calls and cost-per-message summary">
     <div class="ov-grid">
       <div class="glass ov-card">
         <div class="ov-k">Total Users</div>
@@ -149,8 +166,10 @@
         </div>
       </div>
     </div>
+    </div>
 
     <!-- Sangoma Talk -->
+    <div class="dsec" data-sec="talk" data-nm="Sangoma Talk" data-ds="Extensions, DIDs, call log and activity">
     <div class="sec-t first">Sangoma Talk</div>
     <div class="dgrid dgrid-3">
       <div class="card">
@@ -177,7 +196,10 @@
       </div>
     </div>
 
+    </div>
+
     <!-- Sangoma CX -->
+    <div class="dsec" data-sec="cx" data-nm="Sangoma CX" data-ds="Agent occupation, call outcomes and SLA">
     <div class="sec-t">Sangoma CX</div>
     <div class="dgrid dgrid-3">
       <div class="card">
@@ -208,7 +230,10 @@
       </div>
     </div>
 
+    </div>
+
     <!-- Sangoma CPaaS -->
+    <div class="dsec" data-sec="cpaas" data-nm="Sangoma CPaaS" data-ds="SMS and email delivery trends">
     <div class="sec-t">Sangoma CPaaS</div>
     <div class="dgrid dgrid-2">
       <div class="card">
@@ -237,7 +262,10 @@
       </div>
     </div>
 
+    </div>
+
     <!-- Managed Services -->
+    <div class="dsec" data-sec="managed" data-nm="Managed Services" data-ds="Device health, link status and uptime">
     <div class="sec-t">Managed Services</div>
     <div class="dgrid dgrid-3">
       <div class="card">
@@ -265,7 +293,10 @@
       </div>
     </div>
 
+    </div>
+
     <!-- Sales -->
+    <div class="dsec" data-sec="sales" data-nm="Sales" data-ds="Billing and quote totals over three months">
     <div class="sec-t">Sales</div>
     <div class="dgrid dgrid-2">
       <div class="card">
@@ -290,6 +321,7 @@
           <div class="mrow"><span>January 2024</span><b class="mono">$120.1K</b></div>
         </div>
       </div>
+    </div>
     </div>
   </section>
 
@@ -466,14 +498,15 @@
       <div class="glass"><div class="k">DID Numbers<span class="info-dot" data-tip="Direct Inward Dialing numbers — external phone numbers assigned to your account."></span></div><div class="v mono">1,240</div></div>
       <div class="glass"><div class="k">Devices</div><div class="v mono">7,302</div></div>
     </div>
+    <div class="ttl-sub" style="border:none;padding:0;margin-bottom:14px">Open any product to see who holds a licence and which devices are registered against it.</div>
     <div class="tw"><div class="tscroll"><table>
-      <thead><tr><th>Product</th><th>Purchased</th><th>Assigned</th><th>Available</th><th>Utilization<span class="info-dot" data-tip="Assigned ÷ Purchased. Green below 70%, amber 70–90%, red above 90%."></span></th></tr></thead>
+      <thead><tr><th>Product</th><th>Purchased</th><th>Assigned</th><th>Available</th><th>Utilization<span class="info-dot" data-tip="Assigned ÷ Purchased. Green below 70%, amber 70–90%, red above 90%."></span></th><th style="width:40px"></th></tr></thead>
       <tbody>
-        <tr><td>Chat — Advanced</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td></tr>
-        <tr><td>Chat — Premium</td><td class="mono">400</td><td class="mono">200</td><td class="mono">200</td><td><span class="tag warn">50%</span></td></tr>
-        <tr><td>Meet — Advanced</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td></tr>
-        <tr><td>SMS Licenses</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td></tr>
-        <tr><td>Voice Extensions</td><td class="mono">8000</td><td class="mono">7302</td><td class="mono">698</td><td><span class="tag bad">91%</span></td></tr>
+        <tr data-drill="chat-adv"><td>Chat — Advanced</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td><td><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></td></tr>
+        <tr data-drill="chat-prem"><td>Chat — Premium</td><td class="mono">400</td><td class="mono">200</td><td class="mono">200</td><td><span class="tag warn">50%</span></td><td><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></td></tr>
+        <tr data-drill="meet-adv"><td>Meet — Advanced</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td><td><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></td></tr>
+        <tr data-drill="sms"><td>SMS Licenses</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td><td><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></td></tr>
+        <tr data-drill="voice-ext"><td>Voice Extensions</td><td class="mono">8000</td><td class="mono">7302</td><td class="mono">698</td><td><span class="tag bad">91%</span></td><td><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></td></tr>
       </tbody>
     </table></div></div>
   </section>
@@ -513,6 +546,58 @@
     <div id="inv-table"></div>
   </section>
 
+  <!-- ---- One scrim serves every panel; only one can be open at a time ---- -->
+  <div class="drawer-scrim" id="panel-scrim" hidden></div>
+
+  <!-- Dashboard customize panel -->
+  <aside class="drawer" id="dash-drawer" aria-hidden="true" aria-label="Customize dashboard">
+    <div class="drawer-head">
+      <div><h3>Customize dashboard</h3><div class="drawer-sub">Drag to reorder, switch off what you don't need</div></div>
+      <button class="drawer-x" data-panel-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="dlist" id="dashList"></div>
+    <div class="drawer-foot">
+      <button class="btn btn-ghost" id="dashReset">Reset</button>
+      <button class="btn btn-p" id="dashDone"><span class="lbl">Done</span></button>
+    </div>
+  </aside>
+
+  <!-- Inventory product drill-in -->
+  <aside class="drawer" id="prod-drawer" aria-hidden="true" aria-label="Product detail">
+    <div class="drawer-head">
+      <div><h3 id="prodName">Product</h3><div class="drawer-sub" id="prodSub"></div></div>
+      <button class="drawer-x" data-panel-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="tabs" id="prodTabs">
+      <div class="tab on" data-ptab="users" tabindex="0" role="button">Assigned users</div>
+      <div class="tab" data-ptab="devices" tabindex="0" role="button">Devices</div>
+    </div>
+    <div class="drawer-body">
+      <div class="tabp on" data-ptabp="users"><div class="tsum" id="prodUserSum"></div><div id="prodUsers"></div></div>
+      <div class="tabp" data-ptabp="devices"><div class="tsum" id="prodDevSum"></div><div id="prodDevices"></div></div>
+    </div>
+    <div class="drawer-foot"><button class="btn btn-ghost" data-panel-close>Close</button><button class="btn btn-p" data-go="users"><span class="lbl">Manage users</span></button></div>
+  </aside>
+
+  <!-- Support ticket detail -->
+  <aside class="drawer" id="tkt-drawer" aria-hidden="true" aria-label="Ticket detail">
+    <div class="drawer-head">
+      <div><h3 id="tktSubj">Ticket</h3><div class="drawer-sub" id="tktId"></div></div>
+      <button class="drawer-x" data-panel-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="drawer-body">
+      <div class="dmeta" id="tktMeta"></div>
+      <div class="thread" id="tktThread"></div>
+    </div>
+    <div class="treply">
+      <textarea id="tktReply" placeholder="Add a reply for the support engineer…"></textarea>
+      <div class="drawer-foot" style="border:none;margin-top:10px;padding-top:0">
+        <button class="btn btn-ghost" data-panel-close>Close</button>
+        <button class="btn btn-p" id="tktSend"><span class="lbl">Send reply</span></button>
+      </div>
+    </div>
+  </aside>
+
   <!-- Invoice Details drawer -->
   <div class="drawer-scrim" id="inv-scrim" hidden></div>
   <aside class="drawer" id="inv-drawer" aria-hidden="true" aria-label="Invoice Details">
@@ -536,41 +621,140 @@
 
   <!-- ============================ SECURITY ============================ -->
   <section class="vpage" id="v-security" data-active="security">
-    <div class="phead"><div class="ttl-row"><h1 class="ttl">Security</h1></div></div>
+    <div class="phead"><div class="ttl-row"><h1 class="ttl">Security Policies</h1><span class="ttl-sub">Rules enforced on everyone in Sangoma Technologies</span></div></div>
+
     <div class="sec-card">
-      <h3>Authentication</h3><div class="sub">Protect your account with additional verification.</div>
-      <div class="mrow"><span class="lft">Two-factor authentication (2FA)</span><span class="sw on"></span></div>
-      <div class="mrow"><span class="lft">Single Sign-On (SSO)<span class="info-dot" data-tip="Let users sign in with your company identity provider (Okta, Microsoft Entra, Google Workspace)."></span></span><span class="sw"></span></div>
-      <div class="mrow"><span class="lft">Require strong passwords</span><span class="sw on"></span></div>
-      <div class="mrow"><span class="lft">Session timeout after inactivity</span><span class="sw on"></span></div>
+      <h3>Mandatory two-factor authentication</h3>
+      <div class="sub">All users will be required to use two-factor authentication (2FA) for added security. This ensures an extra layer of protection by requiring a verification code in addition to their password.</div>
+      <div class="mrow"><span class="lft">2FA with email</span><span class="sw on"></span></div>
+      <div class="mrow"><span class="lft">2FA with SMS</span><span class="sw"></span></div>
+      <div class="mrow"><span class="lft">2FA with an authenticator app<span class="info-dot" data-tip="Time-based one-time codes from Google Authenticator, Microsoft Authenticator, 1Password and similar apps."></span></span><span class="sw on"></span></div>
     </div>
-    <div class="sec-card" id="pw-card">
-      <h3>Change Password</h3><div class="sub">Use a strong password you don't use elsewhere.</div>
-      <div class="steps">
-        <div class="step done"><span class="n">1</span>Verify</div><span class="step-line"></span>
-        <div class="step on"><span class="n">2</span>New Password</div><span class="step-line"></span>
-        <div class="step"><span class="n">3</span>Done</div>
-      </div>
+
+    <div class="sec-card">
+      <h3>Password policy</h3>
+      <div class="sub">Applied whenever anyone in the organization sets or changes their password.</div>
       <div class="form-grid">
-        <div class="field full"><label>Current Password</label><div class="inp-wrap"><input class="inp" type="password" value="currentpass"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
-        <div class="field"><label>New Password</label><div class="inp-wrap"><input class="inp" type="password" id="newPass" placeholder="Enter new password"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
-        <div class="field"><label>Confirm New Password</label><div class="inp-wrap"><input class="inp" type="password" placeholder="Re-enter new password"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
-        <div class="field full">
-          <ul class="reqs">
-            <li id="r-len"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>At least 8 characters</li>
-            <li id="r-up"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One uppercase letter</li>
-            <li id="r-num"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One number</li>
-            <li id="r-sym"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One special character</li>
-          </ul>
+        <div class="field">
+          <label for="pwComplex">Complexity requirements</label>
+          <span class="sel sel-inp" id="pwComplex" tabindex="0" role="button" data-opts="Basic,Standard,Strong,Custom"><span class="lab">Strong</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+        </div>
+        <div class="field">
+          <label for="pwExpiry">Password expiry</label>
+          <span class="sel sel-inp" id="pwExpiry" tabindex="0" role="button" data-opts="Never,Every 60 days,Every 90 days,Every 180 days"><span class="lab">Every 90 days</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
         </div>
       </div>
-      <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Update Password</span></button></div>
+      <div class="pol-t">What “Strong” enforces</div>
+      <ul class="reqs pol-reqs" id="pwPolicyList"></ul>
     </div>
+
     <div class="sec-card">
-      <h3>Active Sessions</h3><div class="sub">Devices currently signed in to this account.</div>
-      <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>MacBook Pro — Markham, ON</span><span class="tag ok">This device</span></div>
-      <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>iPhone 15 — Markham, ON</span><span class="lnk">Revoke</span></div>
+      <h3>Your own sign-in</h3>
+      <div class="sub">This page sets the rules for the organization. Your personal password, verification method and signed-in devices live in your own account.</div>
+      <button class="btn btn-ghost" data-acct-tab="security"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/></svg><span>Open my account security</span></button>
     </div>
+
+    <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p" id="savePolicy"><span class="lbl">Save changes</span></button></div>
+  </section>
+
+  <!-- ============================ MY ACCOUNT (personal) ============================ -->
+  <section class="vpage" id="v-account" data-active="">
+    <div class="phead"><div class="ttl-row"><h1 class="ttl">My Account</h1><span class="ttl-sub">Settings that apply to you alone, not to the organization</span></div></div>
+
+    <div class="tabs" id="acctTabs">
+      <div class="tab on" data-tab="profile" tabindex="0" role="button">Profile</div>
+      <div class="tab" data-tab="prefs" tabindex="0" role="button">Preferences</div>
+      <div class="tab" data-tab="security" tabindex="0" role="button">Password &amp; Security</div>
+      <div class="tab" data-tab="sessions" tabindex="0" role="button">Signed-in devices</div>
+    </div>
+
+    <div class="tabp on" data-tabp="profile">
+      <div class="sec-card">
+        <h3>Profile</h3><div class="sub">How you appear to other people in this account.</div>
+        <div class="form-grid">
+          <div class="field"><label>Full name</label><input class="inp" value="Marcus Oyelaran"></div>
+          <div class="field"><label>Job title</label><input class="inp" value="IT Operations Manager"></div>
+          <div class="field"><label>Work email</label><input class="inp" value="marcus.oyelaran@sangoma.com"><span class="hint">Used to sign in. Changing it requires re-verification.</span></div>
+          <div class="field"><label>Mobile number</label><input class="inp" value="(647) 555-0142"><span class="hint">Where SMS verification codes are sent.</span></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Save changes</span></button></div>
+      </div>
+    </div>
+
+    <div class="tabp" data-tabp="prefs">
+      <div class="sec-card">
+        <h3>Preferences</h3><div class="sub">Only affects what you see when you sign in.</div>
+        <div class="form-grid">
+          <div class="field"><label for="prefLang">Language</label><span class="sel sel-inp" id="prefLang" tabindex="0" role="button" data-opts="English (US),English (UK),Français,Español,Deutsch"><span class="lab">English (US)</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="field"><label for="prefTz">Time zone</label><span class="sel sel-inp" id="prefTz" tabindex="0" role="button" data-opts="(UTC-05:00) Eastern Time,(UTC-06:00) Central Time,(UTC-08:00) Pacific Time,(UTC+00:00) London"><span class="lab">(UTC-05:00) Eastern Time</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></div>
+        </div>
+        <div class="mrow" style="margin-top:20px"><span class="lft">Email me a weekly usage digest</span><span class="sw on"></span></div>
+        <div class="mrow"><span class="lft">Notify me when a support ticket is updated</span><span class="sw on"></span></div>
+        <div class="mrow"><span class="lft">Show the product tour on new features</span><span class="sw"></span></div>
+        <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Save changes</span></button></div>
+      </div>
+    </div>
+
+    <div class="tabp" data-tabp="security">
+      <div class="sec-card" id="pw-card">
+        <h3>Change password</h3><div class="sub">Use a strong password you don't use anywhere else. Your organization requires at least 8 characters with mixed case, a number and a symbol.</div>
+        <div class="steps">
+          <div class="step done"><span class="n">1</span>Verify</div><span class="step-line"></span>
+          <div class="step on"><span class="n">2</span>New Password</div><span class="step-line"></span>
+          <div class="step"><span class="n">3</span>Done</div>
+        </div>
+        <div class="form-grid">
+          <div class="field full"><label>Current password</label><div class="inp-wrap"><input class="inp" type="password" value="currentpass"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
+          <div class="field"><label>New password</label><div class="inp-wrap"><input class="inp" type="password" id="newPass" placeholder="Enter new password"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
+          <div class="field"><label>Confirm new password</label><div class="inp-wrap"><input class="inp" type="password" placeholder="Re-enter new password"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
+          <div class="field full">
+            <ul class="reqs">
+              <li id="r-len"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>At least 8 characters</li>
+              <li id="r-up"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One uppercase letter</li>
+              <li id="r-num"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One number</li>
+              <li id="r-sym"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One special character</li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Update password</span></button></div>
+      </div>
+      <div class="sec-card">
+        <h3>My verification method</h3>
+        <div class="sub">Two-factor authentication is mandatory for this organization. Choose how you receive your code.</div>
+        <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email to marcus.oyelaran@sangoma.com</span><span class="tag ok">Active</span></div>
+        <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>Authenticator app — iPhone 15</span><span class="tag ok">Active</span></div>
+        <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H4z"/><path d="M8 20h8"/></svg>Recovery codes<span class="info-dot" data-tip="Single-use codes that let you sign in if you lose access to your phone and email."></span></span><span class="lnk">Generate new codes</span></div>
+      </div>
+    </div>
+
+    <div class="tabp" data-tabp="sessions">
+      <div class="sec-card">
+        <h3>Signed-in devices</h3><div class="sub">Everywhere you are currently signed in. Revoking a session signs that device out immediately.</div>
+        <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>MacBook Pro — Markham, ON <span class="ov-sub" style="margin-left:4px">Chrome · active now</span></span><span class="tag ok">This device</span></div>
+        <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>iPhone 15 — Markham, ON <span class="ov-sub" style="margin-left:4px">Sangoma app · 2 hours ago</span></span><span class="lnk">Revoke</span></div>
+        <div class="form-actions"><button class="btn btn-ghost">Sign out everywhere else</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ SUPPORT ============================ -->
+  <section class="vpage" id="v-support" data-active="support">
+    <div class="phead">
+      <div class="ttl-row"><h1 class="ttl">Support</h1><span class="ttl-sub">Raise and track tickets for this account</span></div>
+      <button class="btn btn-p" id="newTicket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">New Ticket</span></button>
+    </div>
+    <div class="lstat">
+      <div class="glass"><div class="k">Open</div><div class="v mono">4</div></div>
+      <div class="glass"><div class="k">Awaiting your reply</div><div class="v mono">1</div></div>
+      <div class="glass"><div class="k">Resolved<span class="info-dot" data-tip="Tickets closed in the last 30 days."></span></div><div class="v mono">12</div></div>
+      <div class="glass"><div class="k">Avg. first response</div><div class="v mono">1h 24m</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input placeholder="Search tickets" id="supSearch"></div>
+      <div class="chip" data-opts="All Statuses,Open,Awaiting you,In progress,Resolved" data-supfilter="st"><span class="lab">All Statuses</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="chip" data-opts="All Priorities,Urgent,High,Normal,Low" data-supfilter="pr"><span class="lab">All Priorities</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div id="sup-table"></div>
   </section>
 
   <!-- ============================ ANALYTICS ============================ -->
@@ -600,7 +784,8 @@
 </main>
 
 <script src="assets/core.js?v=10"></script>
-<script src="assets/pages.js?v=10"></script>
+<script src="assets/pages.js?v=11"></script>
+<script src="assets/panels.js?v=1"></script>
 <script src="assets/portfolio.js?v=1"></script>
 <script src="assets/scope.js?v=2"></script>
 </body>

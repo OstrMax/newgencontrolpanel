@@ -322,8 +322,9 @@ td.mono{white-space:nowrap}
 [data-theme="dark"] .banner{background:rgba(251,191,36,.11);border-left-color:#fbbf24}
 
 /* tabs */
-.tabs{display:flex;gap:26px;border-bottom:1px solid var(--divider);margin-bottom:18px}
-.tab{padding:9px 0;font-size:14px;font-weight:600;color:var(--ink-3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs{display:flex;gap:26px;border-bottom:1px solid var(--divider);margin-bottom:18px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:9px 0;font-size:14px;font-weight:600;color:var(--ink-3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;flex-shrink:0}
 .tab.on{color:var(--violet);border-bottom-color:var(--violet)}
 .back{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;letter-spacing:.06em;
   text-transform:uppercase;color:var(--violet);cursor:pointer;margin-bottom:10px}
@@ -948,6 +949,110 @@ th .info-dot{margin-left:5px}
 .tour-next:hover{filter:brightness(1.05)}
 .tour-next:active{transform:scale(.97)}
 
+/* ===================== Tab panels ===================== */
+.tabp{display:none}
+.tabp.on{display:block;animation:vin .18s ease}
+
+/* Full-width select that reads as a form control rather than a filter chip. */
+.sel-inp{width:100%;min-width:0;height:42px;padding:0 12px 0 14px;border-radius:var(--r-sm);font-size:14px}
+
+/* ===================== Security policy page ===================== */
+.pol-t{font-size:13px;font-weight:600;color:var(--ink-2);margin:22px 0 2px}
+/* Policy requirements are statements of the rule in force, not live validation,
+   so they render in the satisfied state and never react to typing. */
+/* `.reqs` is a flex column; CSS columns need a block container to take effect. */
+.pol-reqs{display:block;columns:2;column-gap:40px}
+.pol-reqs li{break-inside:avoid;margin-bottom:7px}
+@media(max-width:720px){.pol-reqs{columns:1}}
+
+/* ===================== Account menu (top-right avatar) ===================== */
+.acct-menu{position:relative;display:flex}
+button.av{border:none;cursor:pointer;font-family:inherit;padding:0;transition:box-shadow .15s}
+button.av:hover{box-shadow:0 0 0 3px var(--violet-soft)}
+.acct-menu.open button.av{box-shadow:0 0 0 3px var(--violet-soft)}
+.acct-pop{position:absolute;top:calc(100% + 10px);right:0;width:268px;background:var(--surface);
+  border:1px solid var(--hair);border-radius:var(--r-md);box-shadow:var(--shadow-pop);padding:6px;z-index:70;animation:vin .16s ease}
+[data-theme="dark"] .acct-pop{background:#141b2e}
+.ap-id{display:flex;align-items:center;gap:11px;padding:10px 11px 12px}
+.ap-id .uav{width:38px;height:38px;font-size:13px;flex-shrink:0}
+.ap-id>div{min-width:0}
+.ap-id .nm{font-size:13.5px;font-weight:600;color:var(--ink-1)}
+.ap-id .em{font-size:12px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ap-sep{height:1px;background:var(--hair);margin:2px 0}
+.ap-item{display:flex;align-items:center;gap:11px;width:100%;padding:9px 11px;border:none;background:none;
+  border-radius:8px;cursor:pointer;font:inherit;font-size:13.5px;color:var(--ink-1);text-align:left}
+.ap-item:hover{background:var(--card-2)}
+.ap-item svg{width:17px;height:17px;color:var(--ink-3);flex-shrink:0}
+.ap-item .rt{margin-left:auto;font-size:11.5px;color:var(--ink-4)}
+
+/* ===================== Dashboard customize panel ===================== */
+.dsec.off{display:none}
+/* the topmost *visible* section must not carry the 26px separator that sits
+   between sections — which one that is depends on what the user hid */
+.dsec.lead .sec-t{margin-top:0}
+.dlist{flex:1;overflow-y:auto;margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.drow{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--hair);
+  border-radius:var(--r-md);background:var(--surface);cursor:grab;transition:border-color .15s,box-shadow .15s,opacity .15s}
+[data-theme="dark"] .drow{background:rgba(255,255,255,.045)}
+.drow:hover{border-color:var(--violet-tint)}
+.drow.drag{opacity:.4;cursor:grabbing}
+.drow.over{border-color:var(--violet);box-shadow:0 0 0 3px var(--violet-soft)}
+.drow .grip{color:var(--ink-4);display:grid;place-items:center;flex-shrink:0}
+.drow .grip svg{width:16px;height:16px}
+.drow .dnm{flex:1;min-width:0}
+.drow .dnm b{display:block;font-size:13.5px;font-weight:600;color:var(--ink-1)}
+.drow .dnm span{font-size:12px;color:var(--ink-3)}
+.drow .sw{width:38px;height:22px}
+.drow .sw::after{width:17px;height:17px}
+.drow .sw.on::after{transform:translateX(16px)}
+.drawer-foot{display:flex;gap:10px;padding-top:16px;margin-top:14px;border-top:1px solid var(--hair);flex-shrink:0}
+.drawer-foot .btn{flex:1;justify-content:center}
+.drawer-note{font-size:12.5px;color:var(--ink-3);line-height:1.5;flex-shrink:0}
+
+/* ===================== Drawer tabs + scroll body ===================== */
+.drawer-sub{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.drawer .tabs{margin:16px 0 0;gap:20px;flex-shrink:0}
+.drawer-body{flex:1;overflow-y:auto;margin-top:2px}
+.drawer .tabp{padding-top:14px}
+.dmeta{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;padding:14px 0 4px}
+.dmeta .k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-4)}
+.dmeta .v{font-size:13.5px;color:var(--ink-1);margin-top:3px}
+.dnone{padding:34px 8px;text-align:center;font-size:13px;color:var(--ink-4)}
+
+/* assignment / device rows inside a drawer */
+.arow{display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid var(--hair)}
+.arow:first-child{border-top:none}
+.arow .amain{flex:1;min-width:0}
+.arow .amain b{display:block;font-size:13.5px;font-weight:600;color:var(--ink-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.arow .amain span{font-size:12px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.arow .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex-shrink:0;
+  background:var(--card-2);color:var(--ink-3)}
+.arow .ic svg{width:16px;height:16px}
+.tsum{display:flex;gap:10px;margin-bottom:4px}
+.tsum .tsb{flex:1;background:var(--card-2);border-radius:var(--r-sm);padding:10px 12px}
+.tsum .tsb .k{font-size:11.5px;color:var(--ink-3)}
+.tsum .tsb .v{font-size:19px;font-weight:600;letter-spacing:-.02em;margin-top:2px}
+
+/* ===================== Support ticket thread ===================== */
+.thread{display:flex;flex-direction:column;gap:14px;padding:4px 0 8px}
+.tmsg{display:flex;gap:11px}
+.tmsg .tbody{flex:1;min-width:0;background:var(--card-2);border-radius:12px;padding:11px 13px}
+.tmsg.agent .tbody{background:var(--violet-soft)}
+.tmsg .twho{display:flex;align-items:baseline;gap:8px;margin-bottom:5px}
+.tmsg .twho b{font-size:12.5px;font-weight:600;color:var(--ink-1)}
+.tmsg .twho span{font-size:11.5px;color:var(--ink-4);margin-left:auto}
+.tmsg p{font-size:13px;color:var(--ink-2);line-height:1.55}
+.treply{flex-shrink:0;padding-top:14px;margin-top:12px;border-top:1px solid var(--hair)}
+.treply textarea{width:100%;min-height:74px;resize:vertical;padding:11px 13px;border-radius:var(--r-sm);
+  background:var(--surface);border:1px solid var(--hair);font:inherit;font-size:13.5px;color:var(--ink-1)}
+[data-theme="dark"] .treply textarea{background:rgba(255,255,255,.05)}
+.treply textarea:focus{outline:none;border-color:var(--violet)}
+
+/* rows that open a detail view earn a pointer and a hover tint */
+tr[data-drill]{cursor:pointer}
+tr[data-drill] .chev{color:var(--ink-4);display:grid;place-items:center}
+tr[data-drill] .chev svg{width:16px;height:16px}
+
 /* ---------- Partner context bar (partner-administered sessions) ---------- */
 .ctx{display:flex;align-items:center;gap:10px;padding:9px 14px;margin-bottom:18px;
   border-radius:var(--r-md);background:var(--violet-soft);border:1px solid var(--violet-tint);
@@ -1069,6 +1174,9 @@ th .info-dot{margin-left:5px}
 
   <div class="nav-cap">Reports</div>
   <div class="nav-item" data-key="reports" data-go="reports"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15V8.2M7.6 15V4M12.2 15V9.6M15.2 15H2.8"/></svg><span class="lbl">Analytics</span></div>
+
+  <div class="nav-cap">Support</div>
+  <div class="nav-item" data-key="support" data-go="support"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6.4"/><circle cx="9" cy="9" r="2.6"/><path d="M4.6 4.6 7.2 7.2M13.4 4.6 10.8 7.2M13.4 13.4l-2.6-2.6M4.6 13.4l2.6-2.6"/></svg><span class="lbl">Support</span></div>
 </aside>
 
 <main class="main">
@@ -1081,7 +1189,19 @@ th .info-dot{margin-left:5px}
       <span class="tr"><span class="kn"><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4 4l1.5 1.5M18.5 18.5 20 20M2 12h2M20 12h2M4 20l1.5-1.5M18.5 5.5 20 4"/></svg><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></span></button>
     <button class="tb-ic" id="helpBtn" aria-label="Help and product tour" data-tip="Help &amp; product tour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.2a2.8 2.8 0 0 1 5.5.8c0 1.9-2.7 2.4-2.7 2.4"/><path d="M12 16.8h.01"/></svg></button>
     <div class="tb-ic" data-tip="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
-    <div class="av" data-tip="Your account">MO</div>
+    <div class="acct-menu" id="acctMenu">
+      <button class="av" id="avBtn" aria-haspopup="menu" aria-expanded="false" aria-label="Your account" data-tip="Your account">MO</button>
+      <div class="acct-pop" id="acctPop" role="menu" hidden>
+        <div class="ap-id"><span class="uav">MO</span><div><div class="nm">Marcus Oyelaran</div><div class="em">marcus.oyelaran@sangoma.com</div></div></div>
+        <div class="ap-sep"></div>
+        <button class="ap-item" role="menuitem" data-acct-tab="profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/></svg>My Account</button>
+        <button class="ap-item" role="menuitem" data-acct-tab="prefs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg>Preferences</button>
+        <button class="ap-item" role="menuitem" data-acct-tab="security"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 5.8v4.9c0 4.4 2.9 7.8 7 9.3 4.1-1.5 7-4.9 7-9.3V5.8L12 3Z"/><path d="m9.4 12 1.8 1.8 3.4-3.6"/></svg>Password &amp; Security</button>
+        <button class="ap-item" role="menuitem" data-acct-tab="sessions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="13" rx="2"/><path d="M8 21h8M12 17.5V21"/></svg>Signed-in devices<span class="rt">2</span></button>
+        <div class="ap-sep"></div>
+        <button class="ap-item" role="menuitem" id="acctSignOut"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 8 6 12l4 4M6 12h9"/></svg>Sign out</button>
+      </div>
+    </div>
   </header>
 
   <div class="scroll"><div class="page">
@@ -1117,10 +1237,12 @@ th .info-dot{margin-left:5px}
           </div>
         </div>
         <div class="svc-pick">Service: <span class="sel" data-opts="All,Chat,Meet,SMS,Voice,CPaaS" style="min-width:120px" data-tip="Filter dashboard by service"><span class="lab">All</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></div>
+        <button class="btn btn-ghost" id="dashCust" data-tip="Choose which sections appear on your dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg><span>Customize</span></button>
       </div>
     </div>
 
     <!-- Account Overview -->
+    <div class="dsec" data-sec="overview" data-nm="Account overview" data-ds="Users, calls and cost-per-message summary">
     <div class="ov-grid">
       <div class="glass ov-card">
         <div class="ov-k">Total Users</div>
@@ -1143,8 +1265,10 @@ th .info-dot{margin-left:5px}
         </div>
       </div>
     </div>
+    </div>
 
     <!-- Sangoma Talk -->
+    <div class="dsec" data-sec="talk" data-nm="Sangoma Talk" data-ds="Extensions, DIDs, call log and activity">
     <div class="sec-t first">Sangoma Talk</div>
     <div class="dgrid dgrid-3">
       <div class="card">
@@ -1171,7 +1295,10 @@ th .info-dot{margin-left:5px}
       </div>
     </div>
 
+    </div>
+
     <!-- Sangoma CX -->
+    <div class="dsec" data-sec="cx" data-nm="Sangoma CX" data-ds="Agent occupation, call outcomes and SLA">
     <div class="sec-t">Sangoma CX</div>
     <div class="dgrid dgrid-3">
       <div class="card">
@@ -1202,7 +1329,10 @@ th .info-dot{margin-left:5px}
       </div>
     </div>
 
+    </div>
+
     <!-- Sangoma CPaaS -->
+    <div class="dsec" data-sec="cpaas" data-nm="Sangoma CPaaS" data-ds="SMS and email delivery trends">
     <div class="sec-t">Sangoma CPaaS</div>
     <div class="dgrid dgrid-2">
       <div class="card">
@@ -1231,7 +1361,10 @@ th .info-dot{margin-left:5px}
       </div>
     </div>
 
+    </div>
+
     <!-- Managed Services -->
+    <div class="dsec" data-sec="managed" data-nm="Managed Services" data-ds="Device health, link status and uptime">
     <div class="sec-t">Managed Services</div>
     <div class="dgrid dgrid-3">
       <div class="card">
@@ -1259,7 +1392,10 @@ th .info-dot{margin-left:5px}
       </div>
     </div>
 
+    </div>
+
     <!-- Sales -->
+    <div class="dsec" data-sec="sales" data-nm="Sales" data-ds="Billing and quote totals over three months">
     <div class="sec-t">Sales</div>
     <div class="dgrid dgrid-2">
       <div class="card">
@@ -1284,6 +1420,7 @@ th .info-dot{margin-left:5px}
           <div class="mrow"><span>January 2024</span><b class="mono">$120.1K</b></div>
         </div>
       </div>
+    </div>
     </div>
   </section>
 
@@ -1460,14 +1597,15 @@ th .info-dot{margin-left:5px}
       <div class="glass"><div class="k">DID Numbers<span class="info-dot" data-tip="Direct Inward Dialing numbers — external phone numbers assigned to your account."></span></div><div class="v mono">1,240</div></div>
       <div class="glass"><div class="k">Devices</div><div class="v mono">7,302</div></div>
     </div>
+    <div class="ttl-sub" style="border:none;padding:0;margin-bottom:14px">Open any product to see who holds a licence and which devices are registered against it.</div>
     <div class="tw"><div class="tscroll"><table>
-      <thead><tr><th>Product</th><th>Purchased</th><th>Assigned</th><th>Available</th><th>Utilization<span class="info-dot" data-tip="Assigned ÷ Purchased. Green below 70%, amber 70–90%, red above 90%."></span></th></tr></thead>
+      <thead><tr><th>Product</th><th>Purchased</th><th>Assigned</th><th>Available</th><th>Utilization<span class="info-dot" data-tip="Assigned ÷ Purchased. Green below 70%, amber 70–90%, red above 90%."></span></th><th style="width:40px"></th></tr></thead>
       <tbody>
-        <tr><td>Chat — Advanced</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td></tr>
-        <tr><td>Chat — Premium</td><td class="mono">400</td><td class="mono">200</td><td class="mono">200</td><td><span class="tag warn">50%</span></td></tr>
-        <tr><td>Meet — Advanced</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td></tr>
-        <tr><td>SMS Licenses</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td></tr>
-        <tr><td>Voice Extensions</td><td class="mono">8000</td><td class="mono">7302</td><td class="mono">698</td><td><span class="tag bad">91%</span></td></tr>
+        <tr data-drill="chat-adv"><td>Chat — Advanced</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td><td><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></td></tr>
+        <tr data-drill="chat-prem"><td>Chat — Premium</td><td class="mono">400</td><td class="mono">200</td><td class="mono">200</td><td><span class="tag warn">50%</span></td><td><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></td></tr>
+        <tr data-drill="meet-adv"><td>Meet — Advanced</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td><td><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></td></tr>
+        <tr data-drill="sms"><td>SMS Licenses</td><td class="mono">1600</td><td class="mono">560</td><td class="mono">1040</td><td><span class="tag ok">35%</span></td><td><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></td></tr>
+        <tr data-drill="voice-ext"><td>Voice Extensions</td><td class="mono">8000</td><td class="mono">7302</td><td class="mono">698</td><td><span class="tag bad">91%</span></td><td><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></td></tr>
       </tbody>
     </table></div></div>
   </section>
@@ -1507,6 +1645,58 @@ th .info-dot{margin-left:5px}
     <div id="inv-table"></div>
   </section>
 
+  <!-- ---- One scrim serves every panel; only one can be open at a time ---- -->
+  <div class="drawer-scrim" id="panel-scrim" hidden></div>
+
+  <!-- Dashboard customize panel -->
+  <aside class="drawer" id="dash-drawer" aria-hidden="true" aria-label="Customize dashboard">
+    <div class="drawer-head">
+      <div><h3>Customize dashboard</h3><div class="drawer-sub">Drag to reorder, switch off what you don't need</div></div>
+      <button class="drawer-x" data-panel-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="dlist" id="dashList"></div>
+    <div class="drawer-foot">
+      <button class="btn btn-ghost" id="dashReset">Reset</button>
+      <button class="btn btn-p" id="dashDone"><span class="lbl">Done</span></button>
+    </div>
+  </aside>
+
+  <!-- Inventory product drill-in -->
+  <aside class="drawer" id="prod-drawer" aria-hidden="true" aria-label="Product detail">
+    <div class="drawer-head">
+      <div><h3 id="prodName">Product</h3><div class="drawer-sub" id="prodSub"></div></div>
+      <button class="drawer-x" data-panel-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="tabs" id="prodTabs">
+      <div class="tab on" data-ptab="users" tabindex="0" role="button">Assigned users</div>
+      <div class="tab" data-ptab="devices" tabindex="0" role="button">Devices</div>
+    </div>
+    <div class="drawer-body">
+      <div class="tabp on" data-ptabp="users"><div class="tsum" id="prodUserSum"></div><div id="prodUsers"></div></div>
+      <div class="tabp" data-ptabp="devices"><div class="tsum" id="prodDevSum"></div><div id="prodDevices"></div></div>
+    </div>
+    <div class="drawer-foot"><button class="btn btn-ghost" data-panel-close>Close</button><button class="btn btn-p" data-go="users"><span class="lbl">Manage users</span></button></div>
+  </aside>
+
+  <!-- Support ticket detail -->
+  <aside class="drawer" id="tkt-drawer" aria-hidden="true" aria-label="Ticket detail">
+    <div class="drawer-head">
+      <div><h3 id="tktSubj">Ticket</h3><div class="drawer-sub" id="tktId"></div></div>
+      <button class="drawer-x" data-panel-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="drawer-body">
+      <div class="dmeta" id="tktMeta"></div>
+      <div class="thread" id="tktThread"></div>
+    </div>
+    <div class="treply">
+      <textarea id="tktReply" placeholder="Add a reply for the support engineer…"></textarea>
+      <div class="drawer-foot" style="border:none;margin-top:10px;padding-top:0">
+        <button class="btn btn-ghost" data-panel-close>Close</button>
+        <button class="btn btn-p" id="tktSend"><span class="lbl">Send reply</span></button>
+      </div>
+    </div>
+  </aside>
+
   <!-- Invoice Details drawer -->
   <div class="drawer-scrim" id="inv-scrim" hidden></div>
   <aside class="drawer" id="inv-drawer" aria-hidden="true" aria-label="Invoice Details">
@@ -1530,41 +1720,140 @@ th .info-dot{margin-left:5px}
 
   <!-- ============================ SECURITY ============================ -->
   <section class="vpage" id="v-security" data-active="security">
-    <div class="phead"><div class="ttl-row"><h1 class="ttl">Security</h1></div></div>
+    <div class="phead"><div class="ttl-row"><h1 class="ttl">Security Policies</h1><span class="ttl-sub">Rules enforced on everyone in Sangoma Technologies</span></div></div>
+
     <div class="sec-card">
-      <h3>Authentication</h3><div class="sub">Protect your account with additional verification.</div>
-      <div class="mrow"><span class="lft">Two-factor authentication (2FA)</span><span class="sw on"></span></div>
-      <div class="mrow"><span class="lft">Single Sign-On (SSO)<span class="info-dot" data-tip="Let users sign in with your company identity provider (Okta, Microsoft Entra, Google Workspace)."></span></span><span class="sw"></span></div>
-      <div class="mrow"><span class="lft">Require strong passwords</span><span class="sw on"></span></div>
-      <div class="mrow"><span class="lft">Session timeout after inactivity</span><span class="sw on"></span></div>
+      <h3>Mandatory two-factor authentication</h3>
+      <div class="sub">All users will be required to use two-factor authentication (2FA) for added security. This ensures an extra layer of protection by requiring a verification code in addition to their password.</div>
+      <div class="mrow"><span class="lft">2FA with email</span><span class="sw on"></span></div>
+      <div class="mrow"><span class="lft">2FA with SMS</span><span class="sw"></span></div>
+      <div class="mrow"><span class="lft">2FA with an authenticator app<span class="info-dot" data-tip="Time-based one-time codes from Google Authenticator, Microsoft Authenticator, 1Password and similar apps."></span></span><span class="sw on"></span></div>
     </div>
-    <div class="sec-card" id="pw-card">
-      <h3>Change Password</h3><div class="sub">Use a strong password you don't use elsewhere.</div>
-      <div class="steps">
-        <div class="step done"><span class="n">1</span>Verify</div><span class="step-line"></span>
-        <div class="step on"><span class="n">2</span>New Password</div><span class="step-line"></span>
-        <div class="step"><span class="n">3</span>Done</div>
-      </div>
+
+    <div class="sec-card">
+      <h3>Password policy</h3>
+      <div class="sub">Applied whenever anyone in the organization sets or changes their password.</div>
       <div class="form-grid">
-        <div class="field full"><label>Current Password</label><div class="inp-wrap"><input class="inp" type="password" value="currentpass"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
-        <div class="field"><label>New Password</label><div class="inp-wrap"><input class="inp" type="password" id="newPass" placeholder="Enter new password"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
-        <div class="field"><label>Confirm New Password</label><div class="inp-wrap"><input class="inp" type="password" placeholder="Re-enter new password"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
-        <div class="field full">
-          <ul class="reqs">
-            <li id="r-len"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>At least 8 characters</li>
-            <li id="r-up"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One uppercase letter</li>
-            <li id="r-num"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One number</li>
-            <li id="r-sym"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One special character</li>
-          </ul>
+        <div class="field">
+          <label for="pwComplex">Complexity requirements</label>
+          <span class="sel sel-inp" id="pwComplex" tabindex="0" role="button" data-opts="Basic,Standard,Strong,Custom"><span class="lab">Strong</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
+        </div>
+        <div class="field">
+          <label for="pwExpiry">Password expiry</label>
+          <span class="sel sel-inp" id="pwExpiry" tabindex="0" role="button" data-opts="Never,Every 60 days,Every 90 days,Every 180 days"><span class="lab">Every 90 days</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span>
         </div>
       </div>
-      <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Update Password</span></button></div>
+      <div class="pol-t">What “Strong” enforces</div>
+      <ul class="reqs pol-reqs" id="pwPolicyList"></ul>
     </div>
+
     <div class="sec-card">
-      <h3>Active Sessions</h3><div class="sub">Devices currently signed in to this account.</div>
-      <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>MacBook Pro — Markham, ON</span><span class="tag ok">This device</span></div>
-      <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>iPhone 15 — Markham, ON</span><span class="lnk">Revoke</span></div>
+      <h3>Your own sign-in</h3>
+      <div class="sub">This page sets the rules for the organization. Your personal password, verification method and signed-in devices live in your own account.</div>
+      <button class="btn btn-ghost" data-acct-tab="security"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/></svg><span>Open my account security</span></button>
     </div>
+
+    <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p" id="savePolicy"><span class="lbl">Save changes</span></button></div>
+  </section>
+
+  <!-- ============================ MY ACCOUNT (personal) ============================ -->
+  <section class="vpage" id="v-account" data-active="">
+    <div class="phead"><div class="ttl-row"><h1 class="ttl">My Account</h1><span class="ttl-sub">Settings that apply to you alone, not to the organization</span></div></div>
+
+    <div class="tabs" id="acctTabs">
+      <div class="tab on" data-tab="profile" tabindex="0" role="button">Profile</div>
+      <div class="tab" data-tab="prefs" tabindex="0" role="button">Preferences</div>
+      <div class="tab" data-tab="security" tabindex="0" role="button">Password &amp; Security</div>
+      <div class="tab" data-tab="sessions" tabindex="0" role="button">Signed-in devices</div>
+    </div>
+
+    <div class="tabp on" data-tabp="profile">
+      <div class="sec-card">
+        <h3>Profile</h3><div class="sub">How you appear to other people in this account.</div>
+        <div class="form-grid">
+          <div class="field"><label>Full name</label><input class="inp" value="Marcus Oyelaran"></div>
+          <div class="field"><label>Job title</label><input class="inp" value="IT Operations Manager"></div>
+          <div class="field"><label>Work email</label><input class="inp" value="marcus.oyelaran@sangoma.com"><span class="hint">Used to sign in. Changing it requires re-verification.</span></div>
+          <div class="field"><label>Mobile number</label><input class="inp" value="(647) 555-0142"><span class="hint">Where SMS verification codes are sent.</span></div>
+        </div>
+        <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Save changes</span></button></div>
+      </div>
+    </div>
+
+    <div class="tabp" data-tabp="prefs">
+      <div class="sec-card">
+        <h3>Preferences</h3><div class="sub">Only affects what you see when you sign in.</div>
+        <div class="form-grid">
+          <div class="field"><label for="prefLang">Language</label><span class="sel sel-inp" id="prefLang" tabindex="0" role="button" data-opts="English (US),English (UK),Français,Español,Deutsch"><span class="lab">English (US)</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></div>
+          <div class="field"><label for="prefTz">Time zone</label><span class="sel sel-inp" id="prefTz" tabindex="0" role="button" data-opts="(UTC-05:00) Eastern Time,(UTC-06:00) Central Time,(UTC-08:00) Pacific Time,(UTC+00:00) London"><span class="lab">(UTC-05:00) Eastern Time</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></div>
+        </div>
+        <div class="mrow" style="margin-top:20px"><span class="lft">Email me a weekly usage digest</span><span class="sw on"></span></div>
+        <div class="mrow"><span class="lft">Notify me when a support ticket is updated</span><span class="sw on"></span></div>
+        <div class="mrow"><span class="lft">Show the product tour on new features</span><span class="sw"></span></div>
+        <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Save changes</span></button></div>
+      </div>
+    </div>
+
+    <div class="tabp" data-tabp="security">
+      <div class="sec-card" id="pw-card">
+        <h3>Change password</h3><div class="sub">Use a strong password you don't use anywhere else. Your organization requires at least 8 characters with mixed case, a number and a symbol.</div>
+        <div class="steps">
+          <div class="step done"><span class="n">1</span>Verify</div><span class="step-line"></span>
+          <div class="step on"><span class="n">2</span>New Password</div><span class="step-line"></span>
+          <div class="step"><span class="n">3</span>Done</div>
+        </div>
+        <div class="form-grid">
+          <div class="field full"><label>Current password</label><div class="inp-wrap"><input class="inp" type="password" value="currentpass"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
+          <div class="field"><label>New password</label><div class="inp-wrap"><input class="inp" type="password" id="newPass" placeholder="Enter new password"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
+          <div class="field"><label>Confirm new password</label><div class="inp-wrap"><input class="inp" type="password" placeholder="Re-enter new password"><span class="eye"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
+          <div class="field full">
+            <ul class="reqs">
+              <li id="r-len"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>At least 8 characters</li>
+              <li id="r-up"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One uppercase letter</li>
+              <li id="r-num"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One number</li>
+              <li id="r-sym"><span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>One special character</li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-p"><span class="lbl">Update password</span></button></div>
+      </div>
+      <div class="sec-card">
+        <h3>My verification method</h3>
+        <div class="sub">Two-factor authentication is mandatory for this organization. Choose how you receive your code.</div>
+        <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Email to marcus.oyelaran@sangoma.com</span><span class="tag ok">Active</span></div>
+        <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>Authenticator app — iPhone 15</span><span class="tag ok">Active</span></div>
+        <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H4z"/><path d="M8 20h8"/></svg>Recovery codes<span class="info-dot" data-tip="Single-use codes that let you sign in if you lose access to your phone and email."></span></span><span class="lnk">Generate new codes</span></div>
+      </div>
+    </div>
+
+    <div class="tabp" data-tabp="sessions">
+      <div class="sec-card">
+        <h3>Signed-in devices</h3><div class="sub">Everywhere you are currently signed in. Revoking a session signs that device out immediately.</div>
+        <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>MacBook Pro — Markham, ON <span class="ov-sub" style="margin-left:4px">Chrome · active now</span></span><span class="tag ok">This device</span></div>
+        <div class="mrow"><span class="lft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>iPhone 15 — Markham, ON <span class="ov-sub" style="margin-left:4px">Sangoma app · 2 hours ago</span></span><span class="lnk">Revoke</span></div>
+        <div class="form-actions"><button class="btn btn-ghost">Sign out everywhere else</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ SUPPORT ============================ -->
+  <section class="vpage" id="v-support" data-active="support">
+    <div class="phead">
+      <div class="ttl-row"><h1 class="ttl">Support</h1><span class="ttl-sub">Raise and track tickets for this account</span></div>
+      <button class="btn btn-p" id="newTicket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">New Ticket</span></button>
+    </div>
+    <div class="lstat">
+      <div class="glass"><div class="k">Open</div><div class="v mono">4</div></div>
+      <div class="glass"><div class="k">Awaiting your reply</div><div class="v mono">1</div></div>
+      <div class="glass"><div class="k">Resolved<span class="info-dot" data-tip="Tickets closed in the last 30 days."></span></div><div class="v mono">12</div></div>
+      <div class="glass"><div class="k">Avg. first response</div><div class="v mono">1h 24m</div></div>
+    </div>
+    <div class="toolbar">
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input placeholder="Search tickets" id="supSearch"></div>
+      <div class="chip" data-opts="All Statuses,Open,Awaiting you,In progress,Resolved" data-supfilter="st"><span class="lab">All Statuses</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="chip" data-opts="All Priorities,Urgent,High,Normal,Low" data-supfilter="pr"><span class="lab">All Priorities</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+    </div>
+    <div id="sup-table"></div>
   </section>
 
   <!-- ============================ ANALYTICS ============================ -->
@@ -1632,8 +1921,9 @@ function donut(el,segs,size,sw){var C=2*Math.PI*((size-sw)/2),r=(size-sw)/2,c=si
 /* ===================== Control Panel — routing + page logic ===================== */
 var V_TITLES={
   home:"Home", billing:"Billing", company:"Company Profile", inventory:"Inventory & Usage",
-  security:"Security", users:"Users", prodapps:"Productivity Apps",
-  chat:"Chat", sms:"SMS", video:"Video", voice:"Voice", cpaas:"CPaaS", reports:"Analytics"
+  security:"Security Policies", users:"Users", prodapps:"Productivity Apps",
+  chat:"Chat", sms:"SMS", video:"Video", voice:"Voice", cpaas:"CPaaS", reports:"Analytics",
+  support:"Support", account:"My Account"
 };
 function vgo(k){
   document.querySelectorAll('.vpage').forEach(function(s){s.classList.toggle('on', s.id==='v-'+k);});
@@ -2270,6 +2560,549 @@ document.querySelectorAll('input[data-search]').forEach(function(inp){var t=inp.
   var hb=document.getElementById('helpBtn'); if(hb)hb.addEventListener('click',start);
   window.addEventListener('resize',function(){ if(ring)render(); });
   try{ if(!localStorage.getItem('cpTourDone'))setTimeout(start,650); }catch(e){}
+})();
+
+</script>
+<script>
+/* ==========================================================
+   Control panel — side panels and personal account.
+
+   Four things live here, all of which sit on top of the pages
+   defined in pages.js and reuse its globals (CEV, vgo, toast,
+   initials, ddOpen):
+
+     · the top-right account menu and the My Account page,
+     · the dashboard "Customize" panel,
+     · the Inventory & Usage product drill-in,
+     · the customer-side Support section.
+
+   Loaded after pages.js so those globals already exist.
+   ========================================================== */
+(function () {
+  'use strict';
+
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+
+  function esc(t) {
+    return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* ---------------------------------------------------------
+     Shared panel plumbing — one scrim, one open drawer.
+     The invoice drawer predates this and keeps its own scrim;
+     closeAll() below still shuts it so Escape behaves once.
+     --------------------------------------------------------- */
+  var SCRIM = $('#panel-scrim');
+  var openPanel = null;
+
+  function panelOpen(id) {
+    panelClose();
+    var d = document.getElementById(id);
+    if (!d || !SCRIM) return;
+    SCRIM.hidden = false;
+    requestAnimationFrame(function () { SCRIM.classList.add('show'); });
+    d.classList.add('open');
+    d.setAttribute('aria-hidden', 'false');
+    openPanel = d;
+    var f = d.querySelector('.tab, textarea, .drawer-x');
+    if (f) f.focus();
+  }
+  function panelClose() {
+    if (!openPanel) return;
+    openPanel.classList.remove('open');
+    openPanel.setAttribute('aria-hidden', 'true');
+    openPanel = null;
+    if (SCRIM) {
+      SCRIM.classList.remove('show');
+      setTimeout(function () { if (!openPanel) SCRIM.hidden = true; }, 300);
+    }
+  }
+  if (SCRIM) SCRIM.addEventListener('click', panelClose);
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-panel-close]')) panelClose();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') panelClose();
+  });
+
+  /* Generic tab strips: `data-tab` marks the button, `data-tabp` the panel.
+     A `group` attribute keeps the account tabs and the drawer tabs apart. */
+  function wireTabs(stripSel, btnAttr, panelAttr, onSwitch) {
+    var strip = $(stripSel);
+    if (!strip) return;
+    var scope = strip.parentNode;
+    function show(v) {
+      $$('[' + btnAttr + ']', strip).forEach(function (t) {
+        t.classList.toggle('on', t.getAttribute(btnAttr) === v);
+      });
+      $$('[' + panelAttr + ']', scope).forEach(function (p) {
+        p.classList.toggle('on', p.getAttribute(panelAttr) === v);
+      });
+      if (onSwitch) onSwitch(v);
+    }
+    strip.addEventListener('click', function (e) {
+      var t = e.target.closest('[' + btnAttr + ']');
+      if (t) show(t.getAttribute(btnAttr));
+    });
+    strip.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var t = e.target.closest('[' + btnAttr + ']');
+      if (t) { e.preventDefault(); show(t.getAttribute(btnAttr)); }
+    });
+    return show;
+  }
+
+  /* =========================================================
+     1. Account menu + My Account
+     ========================================================= */
+  var showAcctTab = wireTabs('#acctTabs', 'data-tab', 'data-tabp');
+
+  (function accountMenu() {
+    var wrap = $('#acctMenu'), btn = $('#avBtn'), pop = $('#acctPop');
+    if (!wrap || !btn || !pop) return;
+
+    function open() { wrap.classList.add('open'); pop.hidden = false; btn.setAttribute('aria-expanded', 'true'); }
+    function close() { wrap.classList.remove('open'); pop.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      wrap.classList.contains('open') ? close() : open();
+    });
+    document.addEventListener('click', function (e) {
+      if (!wrap.classList.contains('open')) return;
+      if (!wrap.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+
+    /* Every menu row (and the pointer from Security Policies) lands on the
+       same page with the right tab already selected. */
+    document.addEventListener('click', function (e) {
+      var it = e.target.closest('[data-acct-tab]');
+      if (!it) return;
+      close();
+      if (typeof vgo === 'function') vgo('account');
+      if (showAcctTab) showAcctTab(it.getAttribute('data-acct-tab'));
+    });
+
+    var out = $('#acctSignOut');
+    if (out) out.addEventListener('click', function () {
+      close();
+      if (typeof toast === 'function') toast('ok', 'Signed out. Reload the page to sign back in.', true);
+    });
+  })();
+
+  /* =========================================================
+     2. Security policy page — the complexity checklist
+     ========================================================= */
+  (function passwordPolicy() {
+    var list = $('#pwPolicyList');
+    if (!list) return;
+    var TICK = '<span class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>';
+    var RULES = {
+      Basic: ['Minimum length: 6 characters', 'Does not contain common passwords'],
+      Standard: ['Lowercase letter', 'Uppercase letter', 'Number (0-9)',
+        'Minimum length: 8 characters', 'Does not contain common passwords'],
+      Strong: ['Lowercase letter', 'Uppercase letter', 'Number (0-9)', 'Symbol (e.g. !@#$)',
+        'Minimum length: 8 characters', 'Does not contain part of email',
+        'Does not contain first name', 'Does not contain last name',
+        'Does not contain common passwords'],
+      Custom: ['Lowercase letter', 'Uppercase letter', 'Number (0-9)', 'Symbol (e.g. !@#$)',
+        'Minimum length: 12 characters', 'Does not contain part of email',
+        'Does not reuse the last 5 passwords']
+    };
+    var head = $('.pol-t');
+    function render(level) {
+      list.innerHTML = (RULES[level] || RULES.Strong).map(function (r) {
+        return '<li class="ok">' + TICK + esc(r) + '</li>';
+      }).join('');
+      if (head) head.textContent = 'What \u201C' + level + '\u201D enforces';
+    }
+    render('Strong');
+
+    /* ddOpen writes the chosen value back onto the anchor, so watching the
+       anchor's label is enough — no need to duplicate the menu wiring. */
+    var sel = $('#pwComplex');
+    if (sel) new MutationObserver(function () {
+      render((sel.querySelector('.lab') || {}).textContent || 'Strong');
+    }).observe(sel, { subtree: true, childList: true, characterData: true });
+
+    var save = $('#savePolicy');
+    if (save) save.addEventListener('click', function () {
+      if (typeof toast === 'function') toast('ok', 'Security policy saved. It applies at each user\u2019s next sign-in.', true);
+    });
+  })();
+
+  /* =========================================================
+     3. Dashboard customize panel
+     ========================================================= */
+  (function customizeDashboard() {
+    var btn = $('#dashCust'), list = $('#dashList');
+    if (!btn || !list) return;
+    var home = $('#v-home');
+    var KEY = 'cp.dash.v1';
+    var DEFAULT = $$('.dsec', home).map(function (s) { return s.dataset.sec; });
+
+    function load() {
+      try {
+        var raw = JSON.parse(localStorage.getItem(KEY));
+        if (!raw || !raw.order) return null;
+        /* A stored layout can outlive the sections it names, so intersect it
+           with what actually exists and append anything new at the end. */
+        var order = raw.order.filter(function (k) { return DEFAULT.indexOf(k) >= 0; });
+        DEFAULT.forEach(function (k) { if (order.indexOf(k) < 0) order.push(k); });
+        return { order: order, off: (raw.off || []).filter(function (k) { return DEFAULT.indexOf(k) >= 0; }) };
+      } catch (e) { return null; }
+    }
+    function save(st) {
+      try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { /* private mode */ }
+    }
+
+    var state = load() || { order: DEFAULT.slice(), off: [] };
+
+    function apply() {
+      var secs = {};
+      $$('.dsec', home).forEach(function (s) { secs[s.dataset.sec] = s; });
+      var anchor = null;
+      state.order.forEach(function (k) {
+        var s = secs[k];
+        if (!s) return;
+        s.classList.toggle('off', state.off.indexOf(k) >= 0);
+        if (anchor) anchor.after(s); /* keeps the phead above them all */
+        anchor = s;
+      });
+      var vis = $$('.dsec:not(.off)', home);
+      $$('.dsec', home).forEach(function (s) { s.classList.remove('lead'); });
+      if (vis[0]) vis[0].classList.add('lead');
+    }
+
+    function paint() {
+      var secs = {};
+      $$('.dsec', home).forEach(function (s) { secs[s.dataset.sec] = s; });
+      list.innerHTML = state.order.map(function (k) {
+        var s = secs[k];
+        if (!s) return '';
+        var on = state.off.indexOf(k) < 0;
+        return '<div class="drow" draggable="true" data-k="' + esc(k) + '">' +
+          '<span class="grip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h.01M9 12h.01M9 18h.01M15 6h.01M15 12h.01M15 18h.01"/></svg></span>' +
+          '<span class="dnm"><b>' + esc(s.dataset.nm) + '</b><span>' + esc(s.dataset.ds) + '</span></span>' +
+          '<span class="sw' + (on ? ' on' : '') + '" role="switch" aria-checked="' + on + '" aria-label="Show ' + esc(s.dataset.nm) + '"></span>' +
+          '</div>';
+      }).join('');
+    }
+
+    list.addEventListener('click', function (e) {
+      var sw = e.target.closest('.sw');
+      if (!sw) return;
+      var k = sw.closest('.drow').dataset.k;
+      var i = state.off.indexOf(k);
+      if (i >= 0) state.off.splice(i, 1); else state.off.push(k);
+      sw.classList.toggle('on', i >= 0);
+      sw.setAttribute('aria-checked', String(i >= 0));
+      save(state); apply();
+    });
+
+    /* Drag to reorder. The dragged row is the only source of truth for
+       position; state.order is rebuilt from the DOM once the drop lands. */
+    var dragged = null;
+    list.addEventListener('dragstart', function (e) {
+      dragged = e.target.closest('.drow');
+      if (!dragged) return;
+      dragged.classList.add('drag');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', dragged.dataset.k);
+    });
+    list.addEventListener('dragover', function (e) {
+      if (!dragged) return;
+      e.preventDefault();
+      var over = e.target.closest('.drow');
+      if (!over || over === dragged) return;
+      var r = over.getBoundingClientRect();
+      var after = (e.clientY - r.top) > r.height / 2;
+      list.insertBefore(dragged, after ? over.nextSibling : over);
+    });
+    list.addEventListener('dragend', function () {
+      if (!dragged) return;
+      dragged.classList.remove('drag');
+      dragged = null;
+      state.order = $$('.drow', list).map(function (r) { return r.dataset.k; });
+      save(state); apply();
+    });
+
+    btn.addEventListener('click', function () { paint(); panelOpen('dash-drawer'); });
+    var done = $('#dashDone');
+    if (done) done.addEventListener('click', panelClose);
+    var reset = $('#dashReset');
+    if (reset) reset.addEventListener('click', function () {
+      state = { order: DEFAULT.slice(), off: [] };
+      save(state); apply(); paint();
+    });
+
+    apply();
+  })();
+
+  /* =========================================================
+     4. Inventory & Usage — product drill-in
+     ========================================================= */
+  var PRODUCTS = {
+    'chat-adv': {
+      nm: 'Chat — Advanced', sub: '560 of 1,600 licences assigned',
+      users: [
+        ['Leslie Alexander', 'lalexander@sangoma.com', 'Austin HQ', 'Active'],
+        ['Theresa Webb', 'twebb@sangoma.com', 'Austin HQ', 'Active'],
+        ['Cody Fisher', 'cfisher@sangoma.com', 'Denver Branch', 'Active'],
+        ['Arlene McCoy', 'amccoy@sangoma.com', 'Denver Branch', 'Idle 14d'],
+        ['Jacob Jones', 'jjones@sangoma.com', 'Remote', 'Idle 31d'],
+        ['Cameron Williamson', 'cwilliamson@sangoma.com', 'Austin HQ', 'Active']
+      ],
+      devices: [
+        ['MacBook Pro 14"', 'Desktop app 7.4.1', 'Leslie Alexander', 'Online'],
+        ['Windows 11 Desktop', 'Desktop app 7.4.1', 'Theresa Webb', 'Online'],
+        ['iPhone 15', 'Mobile app 4.9.0', 'Cody Fisher', 'Online'],
+        ['Pixel 8', 'Mobile app 4.8.2', 'Arlene McCoy', 'Offline']
+      ]
+    },
+    'chat-prem': {
+      nm: 'Chat — Premium', sub: '200 of 400 licences assigned',
+      users: [
+        ['Guy Hawkins', 'ghawkins@sangoma.com', 'Austin HQ', 'Active'],
+        ['Darlene Robertson', 'drobertson@sangoma.com', 'Portland Office', 'Active'],
+        ['Savannah Nguyen', 'snguyen@sangoma.com', 'Remote', 'Idle 9d']
+      ],
+      devices: [
+        ['MacBook Air 13"', 'Desktop app 7.4.1', 'Guy Hawkins', 'Online'],
+        ['iPad Pro', 'Mobile app 4.9.0', 'Darlene Robertson', 'Online']
+      ]
+    },
+    'meet-adv': {
+      nm: 'Meet — Advanced', sub: '560 of 1,600 licences assigned',
+      users: [
+        ['Ralph Edwards', 'redwards@sangoma.com', 'Austin HQ', 'Active'],
+        ['Leslie Alexander', 'lalexander@sangoma.com', 'Austin HQ', 'Active'],
+        ['Cameron Williamson', 'cwilliamson@sangoma.com', 'Denver Branch', 'Active'],
+        ['Jacob Jones', 'jjones@sangoma.com', 'Remote', 'Idle 22d']
+      ],
+      devices: [
+        ['Meet Room — Boardroom A', 'Room system 3.2', 'Austin HQ', 'Online'],
+        ['Meet Room — Huddle 2', 'Room system 3.1', 'Denver Branch', 'Offline'],
+        ['MacBook Pro 16"', 'Desktop app 7.4.1', 'Ralph Edwards', 'Online']
+      ]
+    },
+    'sms': {
+      nm: 'SMS Licenses', sub: '560 of 1,600 licences assigned',
+      users: [
+        ['Leslie Alexander', 'lalexander@sangoma.com', '(207) 555-0119', 'Active'],
+        ['Theresa Webb', 'twebb@sangoma.com', '(684) 555-0102', 'Active'],
+        ['Guy Hawkins', 'ghawkins@sangoma.com', '(307) 555-0133', 'Active'],
+        ['Cody Fisher', 'cfisher@sangoma.com', '(252) 555-0126', 'Idle 6d']
+      ],
+      devices: [
+        ['Sangoma Mobile — iOS', 'Mobile app 4.9.0', 'Leslie Alexander', 'Online'],
+        ['Sangoma Mobile — Android', 'Mobile app 4.8.2', 'Theresa Webb', 'Online']
+      ]
+    },
+    'voice-ext': {
+      nm: 'Voice Extensions', sub: '7,302 of 8,000 extensions assigned',
+      users: [
+        ['Ralph Edwards', 'Ext. 1042', 'Austin HQ', 'Active'],
+        ['Leslie Alexander', 'Ext. 1043', 'Austin HQ', 'Active'],
+        ['Theresa Webb', 'Ext. 1088', 'Denver Branch', 'Active'],
+        ['Guy Hawkins', 'Ext. 1120', 'Portland Office', 'Active'],
+        ['Savannah Nguyen', 'Ext. 1204', 'Remote', 'Idle 45d'],
+        ['Darlene Robertson', 'Ext. 1250', 'Portland Office', 'Active']
+      ],
+      devices: [
+        ['Sangoma P330', 'Desk phone · FW 2.8.1', 'Ext. 1042', 'Online'],
+        ['Sangoma P370', 'Desk phone · FW 2.8.1', 'Ext. 1043', 'Online'],
+        ['Sangoma D80', 'Desk phone · FW 2.6.4', 'Ext. 1088', 'Online'],
+        ['Sangoma S705', 'Desk phone · FW 2.6.4', 'Ext. 1120', 'Offline'],
+        ['Analog gateway A200', 'Gateway · FW 1.9.0', 'Portland Office', 'Online']
+      ]
+    }
+  };
+
+  var USER_IC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>';
+  var DEV_IC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>';
+
+  function stateTag(s) {
+    if (s === 'Active' || s === 'Online') return '<span class="tag ok">' + esc(s) + '</span>';
+    if (/^Idle/.test(s)) return '<span class="tag warn">' + esc(s) + '</span>';
+    return '<span class="tag" style="background:var(--deg-tint);color:var(--ink-3)">' + esc(s) + '</span>';
+  }
+  function arow(ic, a, b, c, st) {
+    return '<div class="arow"><span class="ic">' + ic + '</span>' +
+      '<span class="amain"><b>' + esc(a) + '</b><span>' + esc(b) + ' \u00b7 ' + esc(c) + '</span></span>' +
+      stateTag(st) + '</div>';
+  }
+  function sumbox(pairs) {
+    return pairs.map(function (p) {
+      return '<div class="tsb"><div class="k">' + esc(p[0]) + '</div><div class="v mono">' + esc(p[1]) + '</div></div>';
+    }).join('');
+  }
+
+  wireTabs('#prodTabs', 'data-ptab', 'data-ptabp');
+
+  (function inventoryDrill() {
+    var page = $('#v-inventory');
+    if (!page) return;
+    page.addEventListener('click', function (e) {
+      var tr = e.target.closest('tr[data-drill]');
+      if (!tr) return;
+      var p = PRODUCTS[tr.dataset.drill];
+      if (!p) return;
+
+      $('#prodName').textContent = p.nm;
+      $('#prodSub').textContent = p.sub;
+
+      var idle = p.users.filter(function (u) { return /^Idle/.test(u[3]); }).length;
+      $('#prodUserSum').innerHTML = sumbox([['Assigned', p.users.length], ['Idle 7d+', idle]]);
+      $('#prodUsers').innerHTML = p.users.map(function (u) {
+        return arow(USER_IC, u[0], u[1], u[2], u[3]);
+      }).join('');
+
+      var off = p.devices.filter(function (d) { return d[3] === 'Offline'; }).length;
+      $('#prodDevSum').innerHTML = sumbox([['Registered', p.devices.length], ['Offline', off]]);
+      $('#prodDevices').innerHTML = p.devices.length
+        ? p.devices.map(function (d) { return arow(DEV_IC, d[0], d[1], d[2], d[3]); }).join('')
+        : '<div class="dnone">No devices registered against this product.</div>';
+
+      panelOpen('prod-drawer');
+    });
+  })();
+
+  /* =========================================================
+     5. Support — customer-side tickets
+     ========================================================= */
+  var CS_TICKETS = [
+    { id: 'TCK-51288', sub: 'Inbound calls drop after 30 seconds on the Austin trunk', pr: 'Urgent', st: 'In progress', prod: 'Voice', by: 'Marcus Oyelaran', upd: '18 min ago', opened: '12 May 2024', eng: 'Priya Raman',
+      thread: [
+        ['you', 'Marcus Oyelaran', '12 May, 09:14', 'Since this morning every inbound call on the Austin HQ trunk cuts out at almost exactly 30 seconds. Outbound is fine. Roughly 40 calls affected so far.'],
+        ['agent', 'Priya Raman — Sangoma Support', '12 May, 09:41', 'Thanks Marcus. A 30-second cut-off almost always means SIP ACK is not reaching us, usually a firewall rule. I have pulled the SIP traces for the trunk and can confirm we send 200 OK but see no ACK.'],
+        ['agent', 'Priya Raman — Sangoma Support', '12 May, 10:02', 'Could you confirm whether anything changed on the edge firewall in the last 24 hours? In the meantime I have raised the trunk to priority monitoring.']
+      ] },
+    { id: 'TCK-51241', sub: 'Add 25 Chat Premium licences to the Denver branch', pr: 'Normal', st: 'Awaiting you', prod: 'Chat', by: 'Marcus Oyelaran', upd: '2 hours ago', opened: '11 May 2024', eng: 'Tom Alvarez',
+      thread: [
+        ['you', 'Marcus Oyelaran', '11 May, 14:20', 'We are onboarding 25 people in Denver on 20 May and need Chat Premium seats ready for them.'],
+        ['agent', 'Tom Alvarez — Sangoma Support', '11 May, 15:05', 'Happy to help. That takes the Denver site to 225 Premium seats. It is a mid-term change so it will be prorated on the June invoice. Can you confirm you want the seats live from 20 May?']
+      ] },
+    { id: 'TCK-51190', sub: 'SMS delivery receipts missing for the marketing short code', pr: 'High', st: 'Open', prod: 'CPaaS', by: 'Dana Whitfield', upd: 'Yesterday', opened: '10 May 2024', eng: 'Unassigned',
+      thread: [
+        ['you', 'Dana Whitfield', '10 May, 16:48', 'Delivery receipts stopped arriving on our webhook for the marketing short code some time on Thursday. Sends themselves are still going out.']
+      ] },
+    { id: 'TCK-51102', sub: 'Meet room system in Boardroom A shows offline', pr: 'Normal', st: 'Open', prod: 'Meet', by: 'Dana Whitfield', upd: '2 days ago', opened: '9 May 2024', eng: 'Priya Raman',
+      thread: [
+        ['you', 'Dana Whitfield', '9 May, 11:02', 'The Boardroom A room system has been showing offline in the control panel since the weekend, although the screen itself works.'],
+        ['agent', 'Priya Raman — Sangoma Support', '9 May, 13:30', 'The device last checked in on Friday at 18:40. A power-cycle usually re-registers it. Could you try that and let me know?']
+      ] },
+    { id: 'TCK-50944', sub: 'Export call detail records for Q1 audit', pr: 'Low', st: 'Resolved', prod: 'Voice', by: 'Marcus Oyelaran', upd: '6 days ago', opened: '2 May 2024', eng: 'Tom Alvarez',
+      thread: [
+        ['you', 'Marcus Oyelaran', '2 May, 10:15', 'Our auditors need the full CDR export for January to March.'],
+        ['agent', 'Tom Alvarez — Sangoma Support', '2 May, 12:40', 'Generated and sent to your registered email as an encrypted archive. Marking this resolved — reopen any time if the auditors need a different format.']
+      ] }
+  ];
+
+  function prioTag(p) {
+    var c = { Urgent: 'bad', High: 'warn', Normal: 'ok', Low: '' }[p];
+    return c ? '<span class="tag ' + c + '">' + p + '</span>'
+             : '<span class="tag" style="background:var(--deg-tint);color:var(--ink-3)">' + p + '</span>';
+  }
+  function stTag(s) {
+    if (s === 'Resolved') return '<span class="tag ok nw">Resolved</span>';
+    if (s === 'Awaiting you') return '<span class="tag warn nw">Awaiting you</span>';
+    if (s === 'In progress') return '<span class="tag nw" style="background:var(--info-tint);color:var(--info-ink)">In progress</span>';
+    return '<span class="tag nw" style="background:var(--deg-tint);color:var(--ink-3)">Open</span>';
+  }
+
+  (function support() {
+    var mount = $('#sup-table');
+    if (!mount) return;
+    var filt = { q: '', st: '', pr: '' };
+
+    function render() {
+      var rows = CS_TICKETS.filter(function (t) {
+        if (filt.st && filt.st.indexOf('All') < 0 && t.st !== filt.st) return false;
+        if (filt.pr && filt.pr.indexOf('All') < 0 && t.pr !== filt.pr) return false;
+        if (filt.q && (t.sub + ' ' + t.id + ' ' + t.by).toLowerCase().indexOf(filt.q) < 0) return false;
+        return true;
+      });
+      var head = '<th>Ticket</th><th>Subject</th><th>Product</th><th>Priority</th>' +
+                 '<th>Status</th><th>Raised by</th><th>Updated</th><th style="width:40px"></th>';
+      var body = rows.map(function (t) {
+        return '<tr data-tkt="' + t.id + '">' +
+          '<td class="mono">' + t.id + '</td>' +
+          '<td><b style="font-weight:600">' + esc(t.sub) + '</b></td>' +
+          '<td class="muted nw">' + t.prod + '</td>' +
+          '<td>' + prioTag(t.pr) + '</td>' +
+          '<td>' + stTag(t.st) + '</td>' +
+          '<td class="muted nw">' + esc(t.by) + '</td>' +
+          '<td class="muted nw">' + t.upd + '</td>' +
+          '<td><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></td></tr>';
+      }).join('');
+      mount.innerHTML = rows.length
+        ? '<div class="tw"><div class="tscroll"><table><thead><tr>' + head + '</tr></thead><tbody>' + body + '</tbody></table></div></div>'
+        : '<div class="tw"><div class="state empty"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span><h3>No matching tickets</h3><p>Try a different search term or clear the status and priority filters.</p></div></div>';
+      $$('tr[data-tkt]', mount).forEach(function (tr) { tr.setAttribute('data-drill', ''); });
+    }
+
+    var search = $('#supSearch');
+    if (search) search.addEventListener('input', function () {
+      filt.q = search.value.trim().toLowerCase(); render();
+    });
+
+    /* ddOpen stores the pick on the chip; re-read it after the menu closes. */
+    $$('[data-supfilter]').forEach(function (chip) {
+      new MutationObserver(function () {
+        filt[chip.getAttribute('data-supfilter')] = (chip.querySelector('.lab') || {}).textContent || '';
+        render();
+      }).observe(chip, { subtree: true, childList: true, characterData: true });
+    });
+
+    mount.addEventListener('click', function (e) {
+      var tr = e.target.closest('tr[data-tkt]');
+      if (!tr) return;
+      var t = CS_TICKETS.filter(function (x) { return x.id === tr.dataset.tkt; })[0];
+      if (!t) return;
+
+      $('#tktSubj').textContent = t.sub;
+      $('#tktId').textContent = t.id + ' \u00b7 opened ' + t.opened;
+      $('#tktMeta').innerHTML = [
+        ['Status', stTag(t.st)], ['Priority', prioTag(t.pr)],
+        ['Product', esc(t.prod)], ['Support engineer', esc(t.eng)],
+        ['Raised by', esc(t.by)], ['Last update', esc(t.upd)]
+      ].map(function (p) {
+        return '<div><div class="k">' + p[0] + '</div><div class="v">' + p[1] + '</div></div>';
+      }).join('');
+      $('#tktThread').innerHTML = t.thread.map(function (m) {
+        return '<div class="tmsg ' + m[0] + '"><span class="uav">' + initials(m[1]) + '</span>' +
+          '<div class="tbody"><div class="twho"><b>' + esc(m[1]) + '</b><span>' + esc(m[2]) + '</span></div>' +
+          '<p>' + esc(m[3]) + '</p></div></div>';
+      }).join('');
+
+      var reply = $('#tktReply');
+      if (reply) reply.value = '';
+      panelOpen('tkt-drawer');
+    });
+
+    var send = $('#tktSend');
+    if (send) send.addEventListener('click', function () {
+      var reply = $('#tktReply');
+      if (!reply || !reply.value.trim()) {
+        if (typeof toast === 'function') toast('err', 'Write a reply before sending.', true);
+        return;
+      }
+      reply.value = '';
+      panelClose();
+      if (typeof toast === 'function') toast('ok', 'Reply sent. The support engineer has been notified.', true);
+    });
+
+    var nt = $('#newTicket');
+    if (nt) nt.addEventListener('click', function () {
+      if (typeof toast === 'function') toast('ok', 'Ticket draft started \u2014 pick a product and priority to continue.', true);
+    });
+
+    render();
+  })();
 })();
 
 </script>
