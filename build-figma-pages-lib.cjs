@@ -37,9 +37,13 @@ function VECTORIZE(){
     return [rnd(cx + rad * Math.sin(t)), rnd(cy - rad * Math.cos(t))];
   }
 
-  /* rounded-cap annulus sector -> filled path 'd' */
+  /* Rounded-cap annulus sector -> filled path 'd'.
+   * A sector spanning a full turn has coincident endpoints, and an SVG arc
+   * between two identical points renders nothing — so a 100% slice would
+   * silently disappear. Those degenerate to a plain ring instead. */
   function wedge(cx, cy, rMid, sw, t0, t1){
     const R = rMid + sw / 2, ri = rMid - sw / 2, cap = sw / 2;
+    if (t1 - t0 >= 2 * Math.PI - 1e-6) return ring(cx, cy, rMid, sw);
     const large = (t1 - t0) > Math.PI ? 1 : 0;
     const o0 = pt(cx, cy, R, t0),  o1 = pt(cx, cy, R, t1);
     const i0 = pt(cx, cy, ri, t0), i1 = pt(cx, cy, ri, t1);
@@ -53,13 +57,17 @@ function VECTORIZE(){
     ].join(' ');
   }
 
-  /* full ring (track) -> evenodd donut path, no stroke */
+  /* Full ring (track, or a slice that covers the whole circle).
+   * The two subpaths are wound in OPPOSITE directions so the hole survives
+   * under nonzero as well as evenodd. Figma flattens imported vectors with
+   * nonzero, so a same-winding donut arrives as a solid disc — which is how
+   * the earlier exports lost their centres. */
   function ring(cx, cy, rMid, sw){
     const R = rMid + sw / 2, ri = rMid - sw / 2;
-    const c = (rad) =>
-      `M${rnd(cx - rad)},${rnd(cy)} A${rnd(rad)},${rnd(rad)} 0 1 0 ${rnd(cx + rad)},${rnd(cy)} ` +
-      `A${rnd(rad)},${rnd(rad)} 0 1 0 ${rnd(cx - rad)},${rnd(cy)} Z`;
-    return c(R) + ' ' + c(ri);
+    const c = (rad, sweep) =>
+      `M${rnd(cx - rad)},${rnd(cy)} A${rnd(rad)},${rnd(rad)} 0 1 ${sweep} ${rnd(cx + rad)},${rnd(cy)} ` +
+      `A${rnd(rad)},${rnd(rad)} 0 1 ${sweep} ${rnd(cx - rad)},${rnd(cy)} Z`;
+    return c(R, 0) + ' ' + c(ri, 1);
   }
 
   /* ---- 1. resolve gradient stops, then inline each referenced gradient into
@@ -154,6 +162,65 @@ function VECTORIZE(){
     circles.forEach(c => c.remove());
     frag.forEach(p => svg.appendChild(p));
     if (rotated) svg.removeAttribute('style');       // rotation is baked into geometry
+  });
+
+  /* ---- 2b. outline stroked chart lines into filled shapes ----
+   * Line and sparkline series are <polyline stroke>. A stroke is a rendering
+   * instruction, not geometry: importers re-derive it from their own join and
+   * cap rules, so the curve arrives a different weight or with mitred corners.
+   * Emitting the swept area as fill makes the shape final.
+   *
+   * Each segment becomes a quad and each vertex a disc. All subpaths are wound
+   * the same way, so nonzero unions them into exactly the stroked region —
+   * no fill-rule dependency, and joins/caps come out round for free. */
+  function disc(cx, cy, r){
+    return `M${rnd(cx - r)},${rnd(cy)} A${rnd(r)},${rnd(r)} 0 1 0 ${rnd(cx + r)},${rnd(cy)} ` +
+           `A${rnd(r)},${rnd(r)} 0 1 0 ${rnd(cx - r)},${rnd(cy)} Z`;
+  }
+  function outline(pts, w){
+    const h = w / 2, subs = [];
+    for (let i = 0; i < pts.length - 1; i++) {
+      const [x1, y1] = pts[i], [x2, y2] = pts[i + 1];
+      const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy);
+      if (L < 1e-9) continue;
+      const nx = -dy / L * h, ny = dx / L * h;
+      /* order the quad so its signed area always has the same sign as disc() */
+      const q = [[x1 + nx, y1 + ny], [x2 + nx, y2 + ny], [x2 - nx, y2 - ny], [x1 - nx, y1 - ny]];
+      let a = 0;
+      for (let k = 0; k < 4; k++) {
+        const p = q[k], n = q[(k + 1) % 4];
+        a += p[0] * n[1] - n[0] * p[1];
+      }
+      if (a > 0) q.reverse();
+      subs.push('M' + q.map(p => `${rnd(p[0])},${rnd(p[1])}`).join(' L') + ' Z');
+    }
+    pts.forEach(p => subs.push(disc(p[0], p[1], h)));
+    return subs.join(' ');
+  }
+
+  document.querySelectorAll('svg polyline, svg polygon').forEach(el => {
+    const cs = getComputedStyle(el);
+    const stroke = literal(el, el.getAttribute('stroke') || cs.stroke);
+    if (!stroke || stroke === 'none' || stroke === 'transparent') return;
+    const w = parseFloat(el.getAttribute('stroke-width') || cs.strokeWidth) || 1;
+    const pts = (el.getAttribute('points') || '').trim().split(/[\s,]+/).map(Number);
+    if (pts.length < 4) return;
+    const P = [];
+    for (let i = 0; i + 1 < pts.length; i += 2) P.push([pts[i], pts[i + 1]]);
+    if (el.tagName.toLowerCase() === 'polygon') P.push(P[0]);
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p.setAttribute('d', outline(P, w));
+    p.setAttribute('fill', stroke);
+    /* a polygon may also carry an area fill — keep it beneath the outline */
+    const fill = literal(el, el.getAttribute('fill') || cs.fill);
+    if (fill && fill !== 'none' && fill !== 'transparent') {
+      const base = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      base.setAttribute('d', 'M' + P.map(q => `${rnd(q[0])},${rnd(q[1])}`).join(' L') + ' Z');
+      base.setAttribute('fill', fill);
+      el.parentNode.insertBefore(base, el);
+    }
+    el.parentNode.insertBefore(p, el);
+    el.remove();
   });
 
   /* ---- 3. resolve remaining var()/currentColor on every SVG node ---- */

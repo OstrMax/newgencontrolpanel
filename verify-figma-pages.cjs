@@ -4,10 +4,17 @@ const fs = require('fs');
 const path = require('path');
 /* usage: node verify-figma-pages.cjs [dir] [census-file] */
 const DIR = path.join(__dirname, process.argv[2] || 'figma-pages');
-const CENSUS = process.argv[3] || '01-dashboard-light.html';
+const CENSUS = process.argv[3] || '01-dashboard/page-light.html';
 
 let bad = 0;
-const files = fs.readdirSync(DIR).filter(f => f.endsWith('.html') && f !== 'index.html');
+/* exports are one folder per page, so walk into the folders; index.html files
+ * are the browse pages, not screens, and have nothing to validate */
+const files = fs.readdirSync(DIR, { withFileTypes: true })
+  .filter(e => e.isDirectory())
+  .flatMap(e => fs.readdirSync(path.join(DIR, e.name))
+    .filter(f => f.endsWith('.html') && f !== 'index.html')
+    .map(f => path.join(e.name, f)))
+  .sort();
 
 for (const f of files) {
   const h = fs.readFileSync(path.join(DIR, f), 'utf8');

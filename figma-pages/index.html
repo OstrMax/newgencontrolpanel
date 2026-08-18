@@ -1,49 +1,39 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><title>Control Panel — Figma export</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Control Panel — Figma export</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-body{font-family:Inter,system-ui,sans-serif;margin:0;padding:48px;background:#f6f7f9;color:#001221}
+<style>body{font-family:Inter,system-ui,sans-serif;margin:0;padding:48px;background:#f6f7f9;color:#001221}
 h1{font-size:24px;margin:0 0 6px}p{color:#5c6572;margin:0 0 28px;font-size:14px}
-table{border-collapse:collapse;width:100%;max-width:860px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-th,td{text-align:left;padding:12px 16px;font-size:13.5px;border-bottom:1px solid #eceef1}
+a{color:#7a1f86}
+table{border-collapse:collapse;width:100%;max-width:880px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+th,td{text-align:left;padding:12px 16px;font-size:13.5px;border-bottom:1px solid #eceef1;vertical-align:top}
 th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#6b747d;font-weight:600}
 tr:last-child td{border-bottom:none}
-td:first-child{font-variant-numeric:tabular-nums;color:#6b747d}
+td.sl{font-variant-numeric:tabular-nums;color:#6b747d;white-space:nowrap}
 .lk a{display:inline-block;padding:4px 12px;margin-right:6px;border:1px solid #e3e6ea;border-radius:20px;
-  text-decoration:none;color:#7a1f86;font-size:12.5px;font-weight:500}
+  text-decoration:none;color:#7a1f86;font-size:12.5px;font-weight:500;white-space:nowrap}
 .lk a:hover{background:#faf5fb;border-color:#7a1f86}
-</style></head><body>
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;background:#f3eef6;color:#7a1f86;font-size:11.5px;font-weight:600}</style></head><body>
 <h1>Sangoma Control Panel — Figma export</h1>
-<p>58 files · 29 screens × light/dark. Charts are flattened to filled vector paths with literal colors for clean Figma import.</p>
+<p>58 files across 15 page folders, each in light and dark.
+Every popup, drawer and panel sits inside its parent page's folder.
+Charts are flattened to filled vector paths with literal colours so they import into Figma as clean geometry.</p>
 <p>See also: <a href="../partner-pages/index.html">partner portal export</a> — partner sign-in, account/location hierarchy, and Billing gating by partner tier.</p>
-<table><thead><tr><th>Screen</th><th>Name</th><th>Theme</th></tr></thead><tbody>
-<tr><td>01-dashboard</td><td>Dashboard</td><td class="lk"><a href="01-dashboard-dark.html">dark</a><a href="01-dashboard-light.html">light</a></td></tr>
-<tr><td>02-billing</td><td>Billing</td><td class="lk"><a href="02-billing-dark.html">dark</a><a href="02-billing-light.html">light</a></td></tr>
-<tr><td>03-company-profile</td><td>Company Profile</td><td class="lk"><a href="03-company-profile-dark.html">dark</a><a href="03-company-profile-light.html">light</a></td></tr>
-<tr><td>04-inventory-usage</td><td>Inventory & Usage</td><td class="lk"><a href="04-inventory-usage-dark.html">dark</a><a href="04-inventory-usage-light.html">light</a></td></tr>
-<tr><td>05-users</td><td>Users</td><td class="lk"><a href="05-users-dark.html">dark</a><a href="05-users-light.html">light</a></td></tr>
-<tr><td>06-security</td><td>Security Policies</td><td class="lk"><a href="06-security-dark.html">dark</a><a href="06-security-light.html">light</a></td></tr>
-<tr><td>07-productivity-apps</td><td>Productivity Apps</td><td class="lk"><a href="07-productivity-apps-dark.html">dark</a><a href="07-productivity-apps-light.html">light</a></td></tr>
-<tr><td>08-chat</td><td>Sangoma UC — Chat</td><td class="lk"><a href="08-chat-dark.html">dark</a><a href="08-chat-light.html">light</a></td></tr>
-<tr><td>09-sms</td><td>Sangoma UC — SMS</td><td class="lk"><a href="09-sms-dark.html">dark</a><a href="09-sms-light.html">light</a></td></tr>
-<tr><td>10-video</td><td>Sangoma UC — Video</td><td class="lk"><a href="10-video-dark.html">dark</a><a href="10-video-light.html">light</a></td></tr>
-<tr><td>11-voice</td><td>Sangoma UC — Voice</td><td class="lk"><a href="11-voice-dark.html">dark</a><a href="11-voice-light.html">light</a></td></tr>
-<tr><td>12-cpaas</td><td>CPaaS</td><td class="lk"><a href="12-cpaas-dark.html">dark</a><a href="12-cpaas-light.html">light</a></td></tr>
-<tr><td>13-analytics</td><td>Analytics</td><td class="lk"><a href="13-analytics-dark.html">dark</a><a href="13-analytics-light.html">light</a></td></tr>
-<tr><td>14-invoice-drawer</td><td>Invoice Details — Drawer</td><td class="lk"><a href="14-invoice-drawer-dark.html">dark</a><a href="14-invoice-drawer-light.html">light</a></td></tr>
-<tr><td>15-invoice-lightbox</td><td>Invoice — Full View</td><td class="lk"><a href="15-invoice-lightbox-dark.html">dark</a><a href="15-invoice-lightbox-light.html">light</a></td></tr>
-<tr><td>16-period-popover</td><td>Date Period — Popover</td><td class="lk"><a href="16-period-popover-dark.html">dark</a><a href="16-period-popover-light.html">light</a></td></tr>
-<tr><td>17-bulk-select</td><td>Licenses — Bulk Selection</td><td class="lk"><a href="17-bulk-select-dark.html">dark</a><a href="17-bulk-select-light.html">light</a></td></tr>
-<tr><td>18-toast-success</td><td>Toast — Success</td><td class="lk"><a href="18-toast-success-dark.html">dark</a><a href="18-toast-success-light.html">light</a></td></tr>
-<tr><td>19-toast-error</td><td>Toast — Error</td><td class="lk"><a href="19-toast-error-dark.html">dark</a><a href="19-toast-error-light.html">light</a></td></tr>
-<tr><td>20-tooltip-infodot</td><td>Contextual Help — Tooltip</td><td class="lk"><a href="20-tooltip-infodot-dark.html">dark</a><a href="20-tooltip-infodot-light.html">light</a></td></tr>
-<tr><td>21-onboarding-tour</td><td>Onboarding — Coach Mark</td><td class="lk"><a href="21-onboarding-tour-dark.html">dark</a><a href="21-onboarding-tour-light.html">light</a></td></tr>
-<tr><td>22-support</td><td>Support</td><td class="lk"><a href="22-support-dark.html">dark</a><a href="22-support-light.html">light</a></td></tr>
-<tr><td>23-my-account</td><td>My Account</td><td class="lk"><a href="23-my-account-dark.html">dark</a><a href="23-my-account-light.html">light</a></td></tr>
-<tr><td>24-dashboard-customize</td><td>Customize Dashboard — Panel</td><td class="lk"><a href="24-dashboard-customize-dark.html">dark</a><a href="24-dashboard-customize-light.html">light</a></td></tr>
-<tr><td>25-product-drilldown</td><td>Product — Assigned Users</td><td class="lk"><a href="25-product-drilldown-dark.html">dark</a><a href="25-product-drilldown-light.html">light</a></td></tr>
-<tr><td>26-product-devices</td><td>Product — Devices</td><td class="lk"><a href="26-product-devices-dark.html">dark</a><a href="26-product-devices-light.html">light</a></td></tr>
-<tr><td>27-ticket-detail</td><td>Support Ticket — Detail</td><td class="lk"><a href="27-ticket-detail-dark.html">dark</a><a href="27-ticket-detail-light.html">light</a></td></tr>
-<tr><td>28-account-menu</td><td>Account Menu — Popover</td><td class="lk"><a href="28-account-menu-dark.html">dark</a><a href="28-account-menu-light.html">light</a></td></tr>
-<tr><td>29-account-security</td><td>My Account — Password & Security</td><td class="lk"><a href="29-account-security-dark.html">dark</a><a href="29-account-security-light.html">light</a></td></tr>
-</tbody></table></body></html>
+<table><thead><tr><th>Folder</th><th>Page</th><th>States</th><th>Open page</th></tr></thead><tbody>
+<tr><td class="sl"><a href="01-dashboard/index.html">01-dashboard/</a></td><td>Dashboard</td><td class="sl">5 popups</td><td class="lk"><a href="01-dashboard/page-light.html">light</a><a href="01-dashboard/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="02-billing/index.html">02-billing/</a></td><td>Billing</td><td class="sl">2 popups</td><td class="lk"><a href="02-billing/page-light.html">light</a><a href="02-billing/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="03-company-profile/index.html">03-company-profile/</a></td><td>Company Profile</td><td class="sl">0 popups</td><td class="lk"><a href="03-company-profile/page-light.html">light</a><a href="03-company-profile/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="04-inventory-usage/index.html">04-inventory-usage/</a></td><td>Inventory & Usage</td><td class="sl">2 popups</td><td class="lk"><a href="04-inventory-usage/page-light.html">light</a><a href="04-inventory-usage/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="05-users/index.html">05-users/</a></td><td>Users</td><td class="sl">2 popups</td><td class="lk"><a href="05-users/page-light.html">light</a><a href="05-users/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="06-security/index.html">06-security/</a></td><td>Security Policies</td><td class="sl">0 popups</td><td class="lk"><a href="06-security/page-light.html">light</a><a href="06-security/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="07-productivity-apps/index.html">07-productivity-apps/</a></td><td>Productivity Apps</td><td class="sl">0 popups</td><td class="lk"><a href="07-productivity-apps/page-light.html">light</a><a href="07-productivity-apps/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="08-chat/index.html">08-chat/</a></td><td>Sangoma UC — Chat</td><td class="sl">1 popup</td><td class="lk"><a href="08-chat/page-light.html">light</a><a href="08-chat/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="09-sms/index.html">09-sms/</a></td><td>Sangoma UC — SMS</td><td class="sl">0 popups</td><td class="lk"><a href="09-sms/page-light.html">light</a><a href="09-sms/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="10-video/index.html">10-video/</a></td><td>Sangoma UC — Video</td><td class="sl">0 popups</td><td class="lk"><a href="10-video/page-light.html">light</a><a href="10-video/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="11-voice/index.html">11-voice/</a></td><td>Sangoma UC — Voice</td><td class="sl">0 popups</td><td class="lk"><a href="11-voice/page-light.html">light</a><a href="11-voice/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="12-cpaas/index.html">12-cpaas/</a></td><td>CPaaS</td><td class="sl">0 popups</td><td class="lk"><a href="12-cpaas/page-light.html">light</a><a href="12-cpaas/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="13-analytics/index.html">13-analytics/</a></td><td>Analytics</td><td class="sl">0 popups</td><td class="lk"><a href="13-analytics/page-light.html">light</a><a href="13-analytics/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="14-support/index.html">14-support/</a></td><td>Support</td><td class="sl">1 popup</td><td class="lk"><a href="14-support/page-light.html">light</a><a href="14-support/page-dark.html">dark</a></td></tr>
+<tr><td class="sl"><a href="15-my-account/index.html">15-my-account/</a></td><td>My Account</td><td class="sl">1 popup</td><td class="lk"><a href="15-my-account/page-light.html">light</a><a href="15-my-account/page-dark.html">dark</a></td></tr>
+</tbody></table>
+</body></html>
