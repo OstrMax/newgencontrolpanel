@@ -890,6 +890,9 @@
 
   function netopsSrc() {
     var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    /* the self-contained build inlines both docs as data URIs on window.__NETOPS__
+       so the single-file partner portal has no external dependencies */
+    if (window.__NETOPS__) return dark ? window.__NETOPS__.dark : window.__NETOPS__.light;
     return dark ? 'netops/dark.html' : 'netops/index.html';
   }
 
