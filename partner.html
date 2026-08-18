@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="assets/styles.css?v=17">
 <link rel="stylesheet" href="assets/app.css?v=15">
-<link rel="stylesheet" href="assets/partner.css?v=6">
+<link rel="stylesheet" href="assets/partner.css?v=7">
 </head>
 <body data-view="login">
 <svg aria-hidden="true" width="0" height="0" style="position:absolute" focusable="false"><defs><linearGradient id="pgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--g1)"/><stop offset="0.8" stop-color="var(--g2)"/><stop offset="1" stop-color="var(--g3)"/></linearGradient></defs></svg>
@@ -104,6 +104,9 @@
 
   <div class="nav-cap">Reports</div>
   <div class="nav-item" data-key="preports" data-go="preports"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15V8.2M7.6 15V4M12.2 15V9.6M15.2 15H2.8"/></svg><span class="lbl">Analytics</span></div>
+
+  <div class="nav-cap">Network</div>
+  <div class="nav-item" data-key="netops" data-go="netops"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6.4"/><path d="M2.6 9h12.8"/><path d="M9 2.6c1.7 1.7 2.6 4 2.6 6.4S10.7 13.7 9 15.4C7.3 13.7 6.4 11.4 6.4 9S7.3 4.3 9 2.6Z"/></svg><span class="lbl">NetOps Dashboard</span><span class="nav-ext" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></span></div>
 </aside>
 
 <main class="main" id="pMain">
@@ -253,14 +256,32 @@
 
     <!-- ==================== ORDERS ==================== -->
     <section class="vpage" id="v-orders">
-      <div class="phead"><div class="ttl-row"><h1 class="ttl">Orders</h1></div>
-        <div style="display:flex;gap:10px"><button class="btn btn-p"><span class="lbl">New Order</span></button></div></div>
-      <div class="ttl-sub">Provisioning and porting requests raised on behalf of your customers.</div>
-      <div class="toolbar">
-        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input placeholder="Search orders"></div>
-        <div class="chip"><span class="lab">All Statuses</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="phead"><div class="ttl-row"><h1 class="ttl">Orders &amp; Quotes</h1></div>
+        <div style="display:flex;gap:10px"><button class="btn btn-p" id="ordNew"><span class="lbl">New Quote</span></button></div></div>
+      <div class="ttl-sub">Quotes and provisioning orders raised on behalf of your customers.</div>
+      <div class="toolbar" id="ordToolbar">
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="ordSearch" placeholder="Search RQQID, customer, title…"></div>
+        <div class="chip" data-filter="st"><span class="lab">Status</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <div class="dd-menu"><div class="dd-i" data-v="">All statuses</div><div class="dd-i" data-v="Draft">Draft</div><div class="dd-i" data-v="Submitted">Submitted</div><div class="dd-i" data-v="In Review">In Review</div><div class="dd-i" data-v="Approved">Approved</div><div class="dd-i" data-v="Ordered">Ordered</div><div class="dd-i" data-v="Rejected">Rejected</div></div></div>
+        <div class="chip" data-filter="ot"><span class="lab">Order Type</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <div class="dd-menu"><div class="dd-i" data-v="">All order types</div><div class="dd-i" data-v="New">New</div><div class="dd-i" data-v="Upgrade">Upgrade</div><div class="dd-i" data-v="Renewal">Renewal</div><div class="dd-i" data-v="Port">Port</div></div></div>
+        <div class="chip" data-filter="qt"><span class="lab">Quote Type</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          <div class="dd-menu"><div class="dd-i" data-v="">All quote types</div><div class="dd-i" data-v="Standard">Standard</div><div class="dd-i" data-v="Bundle">Bundle</div><div class="dd-i" data-v="Amendment">Amendment</div></div></div>
+        <div class="sp"></div>
+        <button class="ico-btn" id="ordRefresh" data-tip="Refresh" aria-label="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v5h-5"/></svg></button>
       </div>
-      <div class="tw"><div class="tscroll"><table id="ordTable"></table></div></div>
+      <div class="bulkbar" id="ordBulk" hidden>
+        <span class="bulk-n"><b id="ordSelN">0</b> selected</span>
+        <div class="bulk-acts">
+          <button class="btn btn-ghost btn-sm" data-bulk="submit"><span class="lbl">Submit</span></button>
+          <button class="btn btn-ghost btn-sm" data-bulk="export"><span class="lbl">Export</span></button>
+          <button class="btn btn-ghost btn-sm danger" data-bulk="delete"><span class="lbl">Delete</span></button>
+        </div>
+        <button class="bulk-x" id="ordClearSel" aria-label="Clear selection"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+      <div class="tw"><div class="tscroll"><table id="ordTable" class="grid"></table></div>
+        <div class="pager" id="ordPager"></div>
+      </div>
     </section>
 
     <!-- ==================== PARTNER TEAM ==================== -->
@@ -317,11 +338,31 @@
       <div class="tw"><div class="tscroll"><table id="prTable"></table></div></div>
     </section>
 
+    <section class="vpage" id="v-netops">
+      <div class="phead">
+        <div class="ttl-row"><h1 class="ttl">NetOps Dashboard</h1></div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-ghost" id="netopsReload" data-tip="Reload dashboard"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 9a6 6 0 1 1-1.8-4.3"/><path d="M15 3v3.4h-3.4"/></svg><span class="lbl">Reload</span></button>
+          <a class="btn btn-p" id="netopsOpen" href="netops/index.html" target="_blank" rel="noopener"><span class="lbl">Open in new tab</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+        </div>
+      </div>
+      <div class="ttl-sub">Live network operations for your managed customer estate.</div>
+      <div class="netops-frame">
+        <div class="netops-load" id="netopsLoad">
+          <div class="nl-badge"><span class="nl-orbit"></span><span class="nl-mark">S</span></div>
+          <div class="nl-title">Opening NetOps Dashboard</div>
+          <div class="nl-sub">Connecting to your BV portal &mdash; this can take up to a minute.</div>
+          <div class="nl-bar"><span></span></div>
+          <div class="nl-step" id="nlStep">Establishing secure session&hellip;</div>
+        </div>
+      </div>
+    </section>
+
   </div></div>
 </main>
 
 <script src="assets/core.js?v=10"></script>
 <script src="assets/portfolio.js?v=1"></script>
-<script src="assets/partner.js?v=6"></script>
+<script src="assets/partner.js?v=7"></script>
 </body>
 </html>
